@@ -14,10 +14,13 @@ class Game {
 public:
 	using Action = std::function<void(void)>;
 	using Pred = std::function<bool(void)>;
+
+	Map mMap;
+	ALLEGRO_TIMER *timer;
+	ALLEGRO_EVENT_QUEUE *event_queue;
 private:
 	Action render, anim, input, ai, physics, destruct, collisions, user;
 	Pred done;
-	Map mMap;
 	void Invoke (const Action& f) { if (f) f(); }
 	int iViewWindowX;
 public:

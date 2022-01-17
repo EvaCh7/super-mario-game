@@ -6,11 +6,19 @@
 #include "DisplayTools.h"
 
 void Game::InputHandler(void) {
+	ALLEGRO_EVENT events;
+	al_wait_for_event(event_queue, &events);
 	al_get_keyboard_state(&ksKeyboardState);
 
-	if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-		std::cout << "SPACE PRESSED" << std::endl;
-		this->iViewWindowX++;
+	
+
+	//if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
+	if(events.type == ALLEGRO_EVENT_KEY_UP){
+		//if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
+		if(events.keyboard.keycode == ALLEGRO_KEY_SPACE){
+			std::cout << "SPACE PRESSED" << std::endl;
+			this->iViewWindowX++;
+		}
 	}
 
 	return;
