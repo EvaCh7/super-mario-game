@@ -52,7 +52,7 @@ int main()
 	
 	std::map<int, ALLEGRO_BITMAP *> tiles;
 
-	ALLEGRO_DISPLAY *display = NULL;
+	ALLEGRO_DISPLAY *display= al_create_display(640, 480);;
 
 	Map mFirstStage(cfg.GetConfig(cfg.GetConfig("config/game.json")["maps"][0]["cfg"]));
 
@@ -69,7 +69,7 @@ int main()
 	//}
 
 
-	display = al_create_display(640, 480);
+
 	Bitmap *map = al_create_bitmap(100 * TILE_SIZE, 100 * TILE_SIZE);
 	DrawCSV("first_stage_Background.csv", mFirstStage.GetTiles(), map);
 	DrawCSV("first_stage_Foreground.csv", mFirstStage.GetTiles(), map);
@@ -83,11 +83,12 @@ int main()
 
 
 	for (int i = 0; i < 100; i++) {
-		Blit(display, 0, 0, map, 0 + i * 16, 101 * 16 - 480, 640, 480);
+		Blit(display, 0, 0, map, 0 + i * 16, 100 * 16 - 480, 640, 480);
 		al_rest(0.1);
 	}
 
 	al_destroy_display(display);
+
 
 	std::cout << cfg.GetConfig("config/game.json")["windowName"] << std::endl;
 	std::cin >> a;
