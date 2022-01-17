@@ -13,10 +13,10 @@ void Game::InputHandler(void) {
 	if (events.type == ALLEGRO_EVENT_KEY_UP) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT:
-			this->iViewWindowX++;
+			//this->iViewWindowX++;
 			break;
 		case ALLEGRO_KEY_LEFT:
-			this->iViewWindowX--;
+			//this->iViewWindowX--;
 			break;
 		case ALLEGRO_KEY_SPACE:
 			break;
@@ -25,7 +25,12 @@ void Game::InputHandler(void) {
 
 	if (events.type == ALLEGRO_EVENT_TIMER) {
 		al_get_keyboard_state(&ksKeyboardState);
-		
+		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
+			this->iViewWindowX++;
+		}
+		else if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
+			this->iViewWindowX--;
+		}
 	}
 
 	return;
