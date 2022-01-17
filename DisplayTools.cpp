@@ -15,3 +15,11 @@ void Blit(ALLEGRO_DISPLAY *dest, unsigned int destX, unsigned int destY, Bitmap 
 
 	return;
 }
+
+void DrawViewWindow(Display *dDisplay, unsigned int iDestX, unsigned int iDestY, Bitmap *bSource, unsigned int iSrcX, unsigned int iSrcY, unsigned int iWidth, unsigned int iHeight) {
+	Blit(dDisplay, 0, 0, bSource, iSrcX, iSrcY, 640, 480);
+}
+
+void RenderHandler(void) {
+
+}

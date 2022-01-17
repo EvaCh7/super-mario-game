@@ -156,9 +156,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="App.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="csv_parser.cpp" />
     <ClCompile Include="DisplayTools.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
@@ -175,10 +178,13 @@
     <None Include="resources\map\first_stage_Sea.csv" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="csv_parser.h" />
     <ClInclude Include="DisplayTools.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="include\handlers\Handlers.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Structs.h" />

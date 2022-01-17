@@ -31,6 +31,9 @@
     <Filter Include="Resource Files\resources\sprite">
       <UniqueIdentifier>{05b05f3c-c1d9-4b5a-a19d-af2865c841c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\handlers">
+      <UniqueIdentifier>{d3dae0d6-faf2-4e6f-9c92-55a2c49a7703}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,6 +49,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,6 +112,15 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\handlers\Handlers.h">
+      <Filter>Header Files\handlers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

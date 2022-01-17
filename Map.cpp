@@ -3,6 +3,10 @@
 #include <fstream>
 #include "csv_parser.h"
 
+Map::Map() {
+
+}
+
 Map::Map(json jConfig) {
 	ALLEGRO_BITMAP *bm = al_load_bitmap(std::string(jConfig["tiles"]["path"]).c_str());
 

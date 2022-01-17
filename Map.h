@@ -14,6 +14,7 @@ private:
 
 public:
 	Map(json jConfig);
+	Map();
 
 	std::map<int, Bitmap *> GetTiles();
 

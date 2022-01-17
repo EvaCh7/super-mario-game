@@ -11,12 +11,9 @@ private:
 
 public:
 	
-	json GetConfig(std::string path);
+	static json GetConfig(std::string path);
 
 
 };
-
-extern Config cfg;
-
 
 #endif
