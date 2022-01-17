@@ -7,11 +7,17 @@
 class Map {
 private:
 	std::map<int, Bitmap *> mTiles;
+	Bitmap *bMap;
+	int iTileWidth, iTileHeight;
+
+	void DrawTilemapToMap(Bitmap *bTarget, std::string sTilemapPath);
 
 public:
 	Map(json jConfig);
 
 	std::map<int, Bitmap *> GetTiles();
+
+	Bitmap *GetMap();
 };
 
 #endif
