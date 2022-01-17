@@ -13,12 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\config">
+      <UniqueIdentifier>{bedf68fd-1262-4bbe-a09a-d6941c0be982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\resources">
+      <UniqueIdentifier>{3c4d557d-afae-493c-a5d1-0b7d0410861c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\resources\map">
+      <UniqueIdentifier>{df7c846f-2067-45dc-9b37-ac57414420d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\config\map">
+      <UniqueIdentifier>{6cf1e3a0-1021-4d83-b2d7-132fab6a4877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\config\sprite">
+      <UniqueIdentifier>{b35328be-14ce-47ee-a9ca-8959ba4b0700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\resources\sprite">
+      <UniqueIdentifier>{05b05f3c-c1d9-4b5a-a19d-af2865c841c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="csv_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayTools.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,5 +50,22 @@
     <ClInclude Include="csv_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DisplayTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="super_mario_sprite_sheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

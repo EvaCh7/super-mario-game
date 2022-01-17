@@ -1,0 +1,13 @@
+{
+	"windowName":"hello",
+	"config" : [
+		"mario" : [
+			"normal": "resources/sprite/mario/normal/mario.json"
+		]
+	],
+	"art" : [
+		"mario" : [
+			"normal": "resources/sprite/mario/normal/mario.png"
+		]
+	],
+}
