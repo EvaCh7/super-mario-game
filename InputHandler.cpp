@@ -8,17 +8,24 @@
 void Game::InputHandler(void) {
 	ALLEGRO_EVENT events;
 	al_wait_for_event(event_queue, &events);
-	al_get_keyboard_state(&ksKeyboardState);
 
-	
 
-	//if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-	if(events.type == ALLEGRO_EVENT_KEY_UP){
-		//if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-		if(events.keyboard.keycode == ALLEGRO_KEY_SPACE){
-			std::cout << "SPACE PRESSED" << std::endl;
+	if (events.type == ALLEGRO_EVENT_KEY_UP) {
+		switch (events.keyboard.keycode) {
+		case ALLEGRO_KEY_RIGHT:
 			this->iViewWindowX++;
+			break;
+		case ALLEGRO_KEY_LEFT:
+			this->iViewWindowX--;
+			break;
+		case ALLEGRO_KEY_SPACE:
+			break;
 		}
+	}
+
+	if (events.type == ALLEGRO_EVENT_TIMER) {
+		al_get_keyboard_state(&ksKeyboardState);
+		
 	}
 
 	return;
