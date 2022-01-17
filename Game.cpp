@@ -18,7 +18,7 @@ void Game::MainLoop(void) {
 }
 
 void Game::MainLoopIteration(void) {
-	//Render();
+	this->RenderHandler();
 	this->InputHandler();
 	//ProgressAnimations();
 	//AI();

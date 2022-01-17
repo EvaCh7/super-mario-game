@@ -22,7 +22,7 @@ private:
 	int iViewWindowX;
 public:
 	void InputHandler(void);
-
+	void RenderHandler(void);
 
 	void SetRender (const Action & f) { render = f; }
 	void SetProgressAnimations (const Action & f) { anim = f; }
