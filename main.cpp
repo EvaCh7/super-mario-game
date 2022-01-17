@@ -11,6 +11,8 @@
 #include <map>
 #include "DisplayTools.h"
 #include "Structs.h"
+#include "Config.h"
+#include "Map.h"
 
 #define TILE_SIZE 16
 
@@ -41,6 +43,9 @@ void DrawCSV(string name, std::map<int, ALLEGRO_BITMAP *> tiles, ALLEGRO_BITMAP*
 int main()
 {
 	int a;
+
+	cfg = Config();
+
 	al_init();
 	al_init_image_addon();
 	al_init_font_addon();
@@ -49,26 +54,30 @@ int main()
 
 	ALLEGRO_DISPLAY *display = NULL;
 
+	Map mFirstStage(cfg.GetConfig(cfg.GetConfig("config/game.json")["maps"][0]["cfg"]));
 
-	ALLEGRO_BITMAP *bm = al_load_bitmap("super_mario_sprite_sheet.png");
 
-	//std::cout << "Height: " << al_get_bitmap_height(bm) << " Width: " << al_get_bitmap_width(bm);
-	int counter = 0;
-	for (int i = 0; i < al_get_bitmap_height(bm) / TILE_SIZE; i++) {
-		for (int j = 0; j < al_get_bitmap_width(bm) / TILE_SIZE; j++) {
-			tiles.insert({counter, al_create_sub_bitmap(bm, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE)});
-			counter++;
-		}
-	}
+	//allegro_bitmap *bm = al_load_bitmap("super_mario_sprite_sheet.png");
+
+	////std::cout << "height: " << al_get_bitmap_height(bm) << " width: " << al_get_bitmap_width(bm);
+	//int counter = 0;
+	//for (int i = 0; i < al_get_bitmap_height(bm) / tile_size; i++) {
+	//	for (int j = 0; j < al_get_bitmap_width(bm) / tile_size; j++) {
+	//		tiles.insert({counter, al_create_sub_bitmap(bm, j * tile_size, i * tile_size, tile_size, tile_size)});
+	//		counter++;
+	//	}
+	//}
+
+
 	display = al_create_display(640, 480);
 	Bitmap *map = al_create_bitmap(100 * TILE_SIZE, 100 * TILE_SIZE);
-	DrawCSV("first_stage_Background.csv", tiles, map);
-	DrawCSV("first_stage_Foreground.csv", tiles, map);
-	DrawCSV("first_stage_Clouds.csv", tiles, map);
-	DrawCSV("first_stage_Blocks.csv", tiles, map);
-	DrawCSV("first_stage_Sea.csv", tiles, map);
-	DrawCSV("first_stage_Castle.csv", tiles, map);
-	DrawCSV("first_stage_Coins.csv", tiles, map);
+	DrawCSV("first_stage_Background.csv", mFirstStage.GetTiles(), map);
+	DrawCSV("first_stage_Foreground.csv", mFirstStage.GetTiles(), map);
+	DrawCSV("first_stage_Clouds.csv", mFirstStage.GetTiles(), map);
+	DrawCSV("first_stage_Blocks.csv", mFirstStage.GetTiles(), map);
+	DrawCSV("first_stage_Sea.csv", mFirstStage.GetTiles(), map);
+	DrawCSV("first_stage_Castle.csv", mFirstStage.GetTiles(), map);
+	DrawCSV("first_stage_Coins.csv", mFirstStage.GetTiles(), map);
 
 	//BlitDisplay(display, 0, 0, map, 0, 100*16 - 480, 640, 460);
 
@@ -79,7 +88,8 @@ int main()
 	}
 
 	al_destroy_display(display);
-	al_destroy_bitmap(bm);
+
+	std::cout << cfg.GetConfig("config/game.json")["windowName"] << std::endl;
 	std::cin >> a;
 
 	return 0;

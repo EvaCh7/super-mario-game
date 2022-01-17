@@ -1,13 +1,8 @@
 {
-	"windowName":"hello",
-	"config" : [
-		"mario" : [
-			"normal": "resources/sprite/mario/normal/mario.json"
-		]
-	],
-	"art" : [
-		"mario" : [
-			"normal": "resources/sprite/mario/normal/mario.png"
-		]
-	],
+	"windowName": "hello",
+	"maps": [
+		{
+			"cfg": "config/map/first_stage.json"
+		}
+	]
 }

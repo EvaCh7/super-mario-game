@@ -42,9 +42,42 @@
     <ClCompile Include="DisplayTools.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="config\game.json">
+      <Filter>Resource Files\config</Filter>
+    </None>
+    <None Include="config\map\first_stage.json">
+      <Filter>Resource Files\config\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Background.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Blocks.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Castle.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Clouds.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Coins.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Foreground.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\first_stage_Sea.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csv_parser.h">
@@ -59,13 +92,22 @@
     <ClInclude Include="Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="json.hpp">
+    <ClInclude Include="json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="super_mario_sprite_sheet.png">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\map\super_mario_sprite_sheet.png">
+      <Filter>Resource Files\resources\map</Filter>
     </Image>
   </ItemGroup>
 </Project>
