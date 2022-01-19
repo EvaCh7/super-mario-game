@@ -1,7 +1,7 @@
-#include "Map.h"
-#include "json.h"
 #include <fstream>
-#include "csv_parser.h"
+#include "engine/Map.h"
+#include "tools/json.h"
+#include "tools/csv_parser.h"
 
 Map::Map() {
 

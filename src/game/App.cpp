@@ -1,9 +1,9 @@
-#include "App.h"
-#include "include/handlers/Handlers.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
-#include "DisplayTools.h"
+#include "display/DisplayTools.h"
+#include "game/App.h"
+#include "handlers/Handlers.h"
 
 void SuperMario::Initialise(void) {
 	al_init();
@@ -19,7 +19,8 @@ void SuperMario::Initialise(void) {
 }
 
 void SuperMario::Load(void) {
-	this->game.SetRender(RenderHandler);
+	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
+	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
 	this->game.SetMap(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][0]["cfg"]));
 
 }

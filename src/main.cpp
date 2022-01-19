@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
-#include "App.h"
+#include "game/App.h"
 
 int main(){
 	SuperMario smApp;

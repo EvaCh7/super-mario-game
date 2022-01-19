@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <allegro5/allegro.h>
-#include "csv_parser.h"
+#include "tools/csv_parser.h"
 
 
 CSVParser::CSVParser(ifstream f) {

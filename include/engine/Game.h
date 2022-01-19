@@ -4,7 +4,7 @@
 #include <iostream>
 #include <functional>
 #include "Structs.h"
-#include "include/handlers/Handlers.h"
+#include "handlers/Handlers.h"
 #include "Map.h"
 
 extern Display *display;
@@ -23,10 +23,29 @@ private:
 	Pred done;
 	void Invoke (const Action& f) { if (f) f(); }
 	int iViewWindowX;
+	int iJumpVel;
 public:
 	void InputHandler(void);
 	void RenderHandler(void);
 
+	/*
+	* Getters
+	*/
+	void Render(void) { Invoke(render); }
+	void ProgressAnimations(void) { Invoke(anim); }
+	void Input(void) { Invoke(input); }
+	void AI(void) { Invoke(ai); }
+	void Physics(void) { Invoke(physics); }
+	void CollisionChecking(void) { Invoke(collisions); }
+	void CommitDestructions(void) { Invoke(destruct); }
+	void UserCode(void) { Invoke(user); }
+	bool IsFinished(void) const { return !done(); }
+	void MainLoop(void);
+	void MainLoopIteration(void);
+
+	/*
+	* Setters
+	*/
 	void SetRender (const Action & f) { render = f; }
 	void SetProgressAnimations (const Action & f) { anim = f; }
 	void SetInput (const Action &f) { input = f; }
@@ -36,17 +55,5 @@ public:
 	void SetCommitDestructions (const Action &f) { destruct = f; }
 	void SetUserCode (const Action &f) { user = f; }
 	void SetMap(Map map) { mMap = map; }
-	// -----------------------------------------------
-	void Render (void) { Invoke(render); }
-	void ProgressAnimations (void) { Invoke(anim); }
-	void Input (void) { Invoke(input); }
-	void AI (void) { Invoke(ai); }
-	void Physics (void) { Invoke(physics); }
-	void CollisionChecking (void) { Invoke(collisions); }
-	void CommitDestructions (void) { Invoke(destruct); }
-	void UserCode (void) { Invoke(user); }
-	bool IsFinished (void) const { return !done(); }
-	void MainLoop (void);
-	void MainLoopIteration (void);
 };
 #endif

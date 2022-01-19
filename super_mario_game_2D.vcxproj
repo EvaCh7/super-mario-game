@@ -74,11 +74,13 @@
     <LinkIncremental>true</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <IncludePath>C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <IncludePath>C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -93,11 +95,13 @@
     <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
     <Allegro_AddonColor>true</Allegro_AddonColor>
     <Allegro_AddonVideo>true</Allegro_AddonVideo>
+    <IncludePath>C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <IncludePath>C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -156,14 +160,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp" />
-    <ClCompile Include="Config.cpp" />
-    <ClCompile Include="csv_parser.cpp" />
-    <ClCompile Include="DisplayTools.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="src\config\Config.cpp" />
+    <ClCompile Include="src\display\DisplayTools.cpp" />
+    <ClCompile Include="src\engine\Game.cpp" />
+    <ClCompile Include="src\engine\Map.cpp" />
+    <ClCompile Include="src\game\App.cpp" />
+    <ClCompile Include="src\handlers\InputHandler.cpp" />
+    <ClCompile Include="src\handlers\RenderHandler.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\tools\csv_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config\game.json" />
@@ -178,20 +183,18 @@
     <None Include="resources\map\first_stage_Sea.csv" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h" />
-    <ClInclude Include="Config.h" />
-    <ClInclude Include="csv_parser.h" />
-    <ClInclude Include="DisplayTools.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="include\config\Config.h" />
+    <ClInclude Include="include\display\DisplayTools.h" />
+    <ClInclude Include="include\engine\Game.h" />
+    <ClInclude Include="include\engine\Map.h" />
+    <ClInclude Include="include\engine\Structs.h" />
+    <ClInclude Include="include\game\App.h" />
     <ClInclude Include="include\handlers\Handlers.h" />
-    <ClInclude Include="json.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Structs.h" />
+    <ClInclude Include="include\tools\csv_parser.h" />
+    <ClInclude Include="include\tools\json.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\map\super_mario_sprite_sheet.png" />
-    <Image Include="super_mario_sprite_sheet.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

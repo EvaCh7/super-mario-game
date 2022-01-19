@@ -1,5 +1,5 @@
 #include <allegro5/allegro.h>
-#include "DisplayTools.h"
+#include "display/DisplayTools.h"
 
 void Blit(Bitmap *dest, unsigned int destX, unsigned int destY, Bitmap *src, unsigned int srcX, unsigned int srcY, unsigned int width, unsigned int height) {
 	al_set_target_bitmap(dest);

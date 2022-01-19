@@ -31,33 +31,69 @@
     <Filter Include="Resource Files\resources\sprite">
       <UniqueIdentifier>{05b05f3c-c1d9-4b5a-a19d-af2865c841c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\handlers">
+    <Filter Include="Header Files\Handlers">
       <UniqueIdentifier>{d3dae0d6-faf2-4e6f-9c92-55a2c49a7703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Display">
+      <UniqueIdentifier>{a1e4c177-8a72-496a-acf2-01268d525960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{5c4a690d-5933-4010-be31-ca7b9eca3ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{ef2a7d53-5365-4c32-ba16-890a1135fc9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tools">
+      <UniqueIdentifier>{52a6d71a-578a-446c-87f5-980dfe89a0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Config">
+      <UniqueIdentifier>{f3c247be-e20b-4cfa-a8a8-b933ae805d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Handlers">
+      <UniqueIdentifier>{d5601eec-b1b7-4225-b642-55061a8bfa71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Display">
+      <UniqueIdentifier>{91a07679-7cc3-47a2-88a0-788eb8967059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{c3fd4eb4-63ea-4cd1-b939-cc5e9ed97ae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{739e9e99-cf0e-4089-b734-94ab180ed9a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Config">
+      <UniqueIdentifier>{a6b5818d-b438-449f-a28d-156813c6506c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{96bce52e-ae14-4d8f-8d97-c543e652b485}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\handlers\RenderHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
     </ClCompile>
-    <ClCompile Include="csv_parser.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\handlers\InputHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
     </ClCompile>
-    <ClCompile Include="DisplayTools.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\display\DisplayTools.cpp">
+      <Filter>Source Files\Display</Filter>
     </ClCompile>
-    <ClCompile Include="Config.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\game\App.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\engine\Game.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\engine\Map.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\config\Config.cpp">
+      <Filter>Source Files\Config</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
+    <ClCompile Include="src\tools\csv_parser.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,41 +128,35 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="csv_parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DisplayTools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Structs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="json.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="App.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\handlers\Handlers.h">
-      <Filter>Header Files\handlers</Filter>
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\display\DisplayTools.h">
+      <Filter>Header Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Game.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Map.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Structs.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\App.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tools\csv_parser.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\config\Config.h">
+      <Filter>Header Files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tools\json.h">
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="super_mario_sprite_sheet.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="resources\map\super_mario_sprite_sheet.png">
       <Filter>Resource Files\resources\map</Filter>
     </Image>

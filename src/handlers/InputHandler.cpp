@@ -1,9 +1,9 @@
-#include "include/handlers/Handlers.h"
-#include "Game.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
-#include "DisplayTools.h"
+#include "display/DisplayTools.h"
+#include "handlers/Handlers.h"
+#include "engine/Game.h"
 
 void Game::InputHandler(void) {
 	ALLEGRO_EVENT events;
@@ -12,13 +12,11 @@ void Game::InputHandler(void) {
 
 	if (events.type == ALLEGRO_EVENT_KEY_UP) {
 		switch (events.keyboard.keycode) {
-		case ALLEGRO_KEY_RIGHT:
-			//this->iViewWindowX++;
-			break;
-		case ALLEGRO_KEY_LEFT:
-			//this->iViewWindowX--;
+		case ALLEGRO_KEY_ESCAPE:
+
 			break;
 		case ALLEGRO_KEY_SPACE:
+			
 			break;
 		}
 	}
@@ -31,6 +29,7 @@ void Game::InputHandler(void) {
 		else if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
 			this->iViewWindowX--;
 		}
+
 	}
 
 	return;

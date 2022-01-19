@@ -1,8 +1,8 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include "Config.h"
-#include "Structs.h"
+#include "config/Config.h"
+#include "engine/Structs.h"
 
 class Map {
 private:
