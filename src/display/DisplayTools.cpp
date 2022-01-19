@@ -8,7 +8,7 @@ void Blit(Bitmap *dest, unsigned int destX, unsigned int destY, Bitmap *src, uns
 	return;
 }
 
-void Blit(ALLEGRO_DISPLAY *dest, unsigned int destX, unsigned int destY, Bitmap *src, unsigned int srcX, unsigned int srcY, unsigned int width, unsigned int height) {
+void Blit(Display *dest, unsigned int destX, unsigned int destY, Bitmap *src, unsigned int srcX, unsigned int srcY, unsigned int width, unsigned int height) {
 	al_set_target_backbuffer(dest);
 	al_draw_bitmap_region(src, srcX, srcY, width, height, destX, destY, 0);
 	al_flip_display();
@@ -16,10 +16,15 @@ void Blit(ALLEGRO_DISPLAY *dest, unsigned int destX, unsigned int destY, Bitmap 
 	return;
 }
 
-void DrawViewWindow(Display *dDisplay, unsigned int iDestX, unsigned int iDestY, Bitmap *bSource, unsigned int iSrcX, unsigned int iSrcY, unsigned int iWidth, unsigned int iHeight) {
-	Blit(dDisplay, 0, 0, bSource, iSrcX, iSrcY, 640, 480);
+void Blit(Bitmap *dDest, Rect& rDest,
+		Bitmap *dSrc, Rect& rSrc)
+{
+	al_set_target_bitmap(dDest);
+	al_draw_bitmap_region(dSrc, rSrc.x, rSrc.y, rSrc.w, rSrc.h, rDest.x, rDest.y, 0);
+
+	return;
 }
 
-void RenderHandler(void) {
-
+void DrawViewWindow(Display *dDisplay, unsigned int iDestX, unsigned int iDestY, Bitmap *bSource, unsigned int iSrcX, unsigned int iSrcY, unsigned int iWidth, unsigned int iHeight) {
+	Blit(dDisplay, 0, 0, bSource, iSrcX, iSrcY, 640, 480);
 }

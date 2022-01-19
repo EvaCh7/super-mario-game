@@ -3,7 +3,6 @@
 #include <allegro5/allegro_font.h>
 #include "display/DisplayTools.h"
 #include "game/App.h"
-#include "handlers/Handlers.h"
 
 void SuperMario::Initialise(void) {
 	al_init();

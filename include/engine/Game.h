@@ -4,7 +4,6 @@
 #include <iostream>
 #include <functional>
 #include "Structs.h"
-#include "handlers/Handlers.h"
 #include "Map.h"
 
 extern Display *display;

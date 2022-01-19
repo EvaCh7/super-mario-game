@@ -2,7 +2,6 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include "display/DisplayTools.h"
-#include "handlers/Handlers.h"
 #include "engine/Game.h"
 
 void Game::InputHandler(void) {
@@ -32,10 +31,5 @@ void Game::InputHandler(void) {
 
 	}
 
-	return;
-}
-
-void Game::RenderHandler(void) {
-	Blit(display, 0, 0, this->mMap.GetMap(), 0 + this->iViewWindowX * 16, 100 * 16 - 480, 640, 480);
 	return;
 }

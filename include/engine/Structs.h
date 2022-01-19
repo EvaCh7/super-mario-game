@@ -8,4 +8,17 @@
 typedef ALLEGRO_BITMAP		Bitmap;
 typedef ALLEGRO_DISPLAY		Display;
 
+class Rect {
+public:
+	int x, y, w, h;
+
+	Rect(int, int, int, int);
+};
+
+class Point {
+public:
+	int x, y;
+
+	Point(int xx, int yy);
+};
 #endif

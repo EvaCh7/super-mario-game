@@ -31,9 +31,6 @@
     <Filter Include="Resource Files\resources\sprite">
       <UniqueIdentifier>{05b05f3c-c1d9-4b5a-a19d-af2865c841c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Handlers">
-      <UniqueIdentifier>{d3dae0d6-faf2-4e6f-9c92-55a2c49a7703}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Display">
       <UniqueIdentifier>{a1e4c177-8a72-496a-acf2-01268d525960}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\Structs.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -128,9 +128,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\handlers\Handlers.h">
-      <Filter>Header Files\Handlers</Filter>
-    </ClInclude>
     <ClInclude Include="include\display\DisplayTools.h">
       <Filter>Header Files\Display</Filter>
     </ClInclude>
@@ -154,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="include\tools\json.h">
       <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Sprite.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
