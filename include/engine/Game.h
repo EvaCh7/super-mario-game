@@ -13,7 +13,9 @@ class Game {
 public:
 	using Action = std::function<void(void)>;
 	using Pred = std::function<bool(void)>;
-
+	Action	pauseResume;
+	bool		isPaused = false;
+	uint64_t	pauseTime = 0;
 	Map mMap;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;
@@ -41,7 +43,26 @@ public:
 	bool IsFinished(void) const { return !done(); }
 	void MainLoop(void);
 	void MainLoopIteration(void);
-
+	void SetOnPauseResume(const Action& f)
+	{
+		pauseResume = f;
+	}
+	void Pause(uint64_t t)
+	{
+		isPaused = true; pauseTime = t; Invoke(pauseResume);
+	}
+	void Resume(void)
+	{
+		isPaused = false; Invoke(pauseResume); pauseTime = 0;
+	}
+	bool IsPaused(void) const
+	{
+		return isPaused;
+	}
+	uint64_t GetPauseTime(void) const
+	{
+		return pauseTime;
+	}
 	/*
 	* Setters
 	*/
