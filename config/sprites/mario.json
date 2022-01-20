@@ -1,0 +1,150 @@
+{
+    "small_mario": {
+        "mario_left1": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 6,
+            "y_pos": 25
+        },
+        "mario_left2": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 37,
+            "y_pos": 25
+        },
+        "mario_left3": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 67,
+            "y_pos": 25
+        },
+        "mario_left_jump1": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 37,
+            "y_pos": 0
+        },
+        "mario_left_jump2": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 6,
+            "y_pos": 0
+        },
+        "mario_left_stand": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 97,
+            "y_pos": 25
+        },
+        "mario_right_stand": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 127,
+            "y_pos": 25
+        },
+        "mario_right1": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 215,
+            "y_pos": 0
+        },
+        "mario_right2": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 244,
+            "y_pos": 0
+        },
+        "mario_right3": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 275,
+            "y_pos": 0
+        },
+        "mario_right_jump1": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 67,
+            "y_pos": 0
+        },
+        "mario_right_jump2": {
+            "width": 16,
+            "height": 16,
+            "x_pos": 98,
+            "y_pos": 0
+        }
+    },
+    "big_mario": {
+        "big_mario_left1": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 6,
+            "y_pos": 88
+        },
+        "big_mario_left2": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 36,
+            "y_pos": 88
+        },
+        "big_mario_left3": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 66,
+            "y_pos": 88
+        },
+        "big_mario_left_jump1": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 147,
+            "y_pos": 88
+        },
+        "big_mario_left_jump2": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 197,
+            "y_pos": 88
+        },
+        "big_mario_left_stand": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 96,
+            "y_pos": 88
+        },
+        "big_mario_right_stand": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 185,
+            "y_pos": 51
+        },
+        "big_mario_right1": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 215,
+            "y_pos": 51
+        },
+        "big_mario_right2": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 244,
+            "y_pos": 51
+        },
+        "big_mario_right3": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 275,
+            "y_pos": 51
+        },
+        "big_mario_right_jump1": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 135,
+            "y_pos": 51
+        },
+        "big_mario_right_jump2": {
+            "width": 16,
+            "height": 32,
+            "x_pos": 83,
+            "y_pos": 51
+        }
+    }
+}
