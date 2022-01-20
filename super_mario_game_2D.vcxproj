@@ -187,9 +187,11 @@
     <ClInclude Include="include\config\Config.h" />
     <ClInclude Include="include\display\DisplayTools.h" />
     <ClInclude Include="include\engine\Game.h" />
+    <ClInclude Include="include\engine\Grid.h" />
     <ClInclude Include="include\engine\Map.h" />
     <ClInclude Include="include\engine\Sprite.h" />
     <ClInclude Include="include\engine\Structs.h" />
+    <ClInclude Include="include\engine\Tile.h" />
     <ClInclude Include="include\game\App.h" />
     <ClInclude Include="include\tools\csv_parser.h" />
     <ClInclude Include="include\tools\json.h" />

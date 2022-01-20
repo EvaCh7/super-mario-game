@@ -5,8 +5,14 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 
+#define MAX_WIDTH	1024
+#define MAX_HEIGHT	256
+
+typedef unsigned char		byte;
 typedef ALLEGRO_BITMAP		Bitmap;
 typedef ALLEGRO_DISPLAY		Display;
+typedef unsigned char		Index;
+typedef Index				TileMap[MAX_WIDTH][MAX_HEIGHT];
 
 class Rect {
 public:
