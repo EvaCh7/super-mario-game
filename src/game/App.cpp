@@ -20,7 +20,7 @@ void SuperMario::Initialise(void) {
 	al_init_acodec_addon();
 	
 	Audio audio_sample;
-	audio_sample.playSample("config/sound.mp3");
+	//audio_sample.playSample("config/sound.mp3");
 
 	display = al_create_display(640, 480);
 	this->game.timer = al_create_timer(1.0 / 60);
@@ -35,7 +35,7 @@ void SuperMario::Initialise(void) {
 void SuperMario::Load(void) {
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
-	this->game.SetMap(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][0]["cfg"]));
+	this->game.SetMap(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"]));
 
 }
 

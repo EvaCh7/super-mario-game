@@ -1,0 +1,21 @@
+{
+  "map": [
+    {
+      "path": "resources/map/first_map/first_map_Sky.csv"
+    },
+    {
+      "path": "resources/map/first_map/first_map_Back.csv"
+    },
+    {
+      "path": "resources/map/first_map/first_map_Front.csv"
+    },
+    {
+      "path": "resources/map/first_map/first_map_Objects.csv"
+    }
+  ],
+  "tiles": {
+    "path": "resources/map/super_mario_sprite_sheet.png",
+    "width": 16,
+    "height": 16
+  }
+}
