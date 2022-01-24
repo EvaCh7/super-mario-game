@@ -63,7 +63,7 @@ void SuperMario::Load(void) {
 	std::string str = "right1";
 
 	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm);
-	//addItemToTypeList("big_mario", js_mario["big_mario"]["mario_right_stand"]["x_pos"], js_mario["big_mario"]["mario_right_stand"]["y_pos"], js_mario["big_mario"]["mario_right_stand"]["width"], js_mario["big_mario"]["mario_right_stand"]["height"], bm);
+	addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
 	
 	addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies);
 	addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
