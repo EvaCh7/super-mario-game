@@ -33,6 +33,17 @@ void SuperMario::Initialise(void) {
 }
 
 void SuperMario::Load(void) {
+
+	Bitmap* bm = al_load_bitmap(("resources/sprites/marioi.png"));
+
+	json js = Config::GetConfig("config/sprites/mario.json")["small_mario"]["mario_right1"];
+
+
+
+	bm=al_create_sub_bitmap(bm, js["x_pos"], js["y_pos"], js["width"], js["height"]);
+	Blit(display,0,0 , bm,0,0,16,16);
+
+	this->game.mario = new Sprite(0, 0, bm, js["width"], js["height"]);
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
 	this->game.SetMap(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"]));

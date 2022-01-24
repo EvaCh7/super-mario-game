@@ -170,6 +170,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="src\config\Config.cpp" />
     <ClCompile Include="src\display\DisplayTools.cpp" />
     <ClCompile Include="src\engine\Game.cpp" />
@@ -184,6 +185,8 @@
   <ItemGroup>
     <None Include="config\game.json" />
     <None Include="config\map\first_stage.json" />
+    <None Include="config\sprites\enemies.json" />
+    <None Include="config\sprites\mario.json" />
     <None Include="packages.config" />
     <None Include="resources\map\first_stage_Background.csv" />
     <None Include="resources\map\first_stage_Blocks.csv" />
@@ -201,7 +204,6 @@
     <ClInclude Include="include\engine\Map.h" />
     <ClInclude Include="include\engine\Sprite.h" />
     <ClInclude Include="include\engine\Structs.h" />
-    <ClInclude Include="include\engine\Tile.h" />
     <ClInclude Include="include\game\App.h" />
     <ClInclude Include="include\game\Audio.h" />
     <ClInclude Include="include\tools\csv_parser.h" />
@@ -209,6 +211,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\map\super_mario_sprite_sheet.png" />
+    <Image Include="resources\sprites\enemies.png" />
+    <Image Include="resources\sprites\marioi.png" />
+    <Image Include="resources\sprites\mario_sprites.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

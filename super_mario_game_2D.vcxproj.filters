@@ -99,6 +99,9 @@
     <ClCompile Include="Audio.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -128,6 +131,12 @@
     </None>
     <None Include="resources\map\first_stage_Sea.csv">
       <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="config\sprites\enemies.json">
+      <Filter>Resource Files\config\sprite</Filter>
+    </None>
+    <None Include="config\sprites\mario.json">
+      <Filter>Resource Files\config\sprite</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +170,6 @@
     <ClInclude Include="include\engine\Grid.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\engine\Tile.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="include\game\Audio.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
@@ -171,6 +177,15 @@
   <ItemGroup>
     <Image Include="resources\map\super_mario_sprite_sheet.png">
       <Filter>Resource Files\resources\map</Filter>
+    </Image>
+    <Image Include="resources\sprites\enemies.png">
+      <Filter>Resource Files\resources\sprite</Filter>
+    </Image>
+    <Image Include="resources\sprites\mario_sprites.png">
+      <Filter>Resource Files\resources\sprite</Filter>
+    </Image>
+    <Image Include="resources\sprites\marioi.png">
+      <Filter>Resource Files\resources\sprite</Filter>
     </Image>
   </ItemGroup>
 </Project>

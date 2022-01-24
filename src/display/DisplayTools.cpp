@@ -16,6 +16,15 @@ void Blit(Display *dest, unsigned int destX, unsigned int destY, Bitmap *src, un
 	return;
 }
 
+
+void Blit(Display* dest, Rect& rDest, Bitmap* src, Rect& rSrc) {
+	al_set_target_backbuffer(dest);
+	al_draw_bitmap_region(src, rSrc.x, rSrc.y, rSrc.w, rSrc.h, rDest.x, rDest.y, 0);
+	al_flip_display();
+
+	return;
+}
+
 void Blit(Bitmap *dDest, Rect& rDest,
 		Bitmap *dSrc, Rect& rSrc)
 {
