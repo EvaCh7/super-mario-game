@@ -99,6 +99,8 @@ bool TileLayer::ParseCSV(std::string sPath)
 		}
 	}
 
+	this->glLayer.ComputeTileGridBlocks(this->iTileMap);
+	this->glLayer.Print();
 	return false;
 }
 
@@ -114,6 +116,7 @@ void TileLayer::Scroll(float fDx, float fDy)
 
 TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet) :
 	rViewWindow(Rect{ 0, 0, 0, 0 }),
+	glLayer(iRows * 4, iCols * 4),
 	mTileSet(mTileSet),
 	iRows(iRows),
 	iCols(iCols)
@@ -128,6 +131,72 @@ TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet) :
 }
 
 TileLayer::TileLayer(void):
-	rViewWindow({0, 0, 0, 0})
+	rViewWindow({0, 0, 0, 0}),
+	glLayer(0, 0)
 {
+}
+
+void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
+{
+	for (int i = 0; i < 100; ++i) {
+		for (int j = 0; j < 300; ++j) {
+			if (tlTileMap[i][j] == 79) {
+				this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
+			}
+		}
+	}
+}
+
+void GridLayer::SetGridTileBlock(int iCol, int iRow, int iFlag)
+{
+	for (int i = iRow; i < iRow + 4; ++i) {
+		for (int j = iCol; j < iCol + 4; ++j) {
+			this->SetGridTile(j, i, iFlag);
+		}
+	}
+}
+
+void GridLayer::Print(void)
+{
+	for (int i = 0; i < this->iRows; ++i) {
+		std::cout << "[";
+		for (int j = 0; j < this->iCols; ++j) {
+			if(this->vGrid[i][j] == GridLayer::GRID_SOLID_TILE) std::cout << this->vGrid[i][j] << ", ";
+		}
+		std::cout << "]" << std::endl;
+	}
+}
+
+GridLayer::GridLayer(int iRows, int iCols) :
+	iRows(iRows),
+	iCols(iCols)
+{
+	// Allocate
+	this->sTotal = iRows * iCols;
+	this->vGrid = new int* [iRows];
+	for (int i = 0; i < iRows; ++i) {
+		this->vGrid[i] = new int[iCols];
+		memset(this->vGrid[i], GridLayer::GRID_EMPTY_TILE, iCols * sizeof(int)); // not sure if needed
+	}
+}
+
+void GridLayer::SetGridTile(int iCol, int iRow, int iIndex)
+{
+	this->vGrid[iRow][iCol] = iIndex;
+	return;
+}
+
+int GridLayer::GetGridTile(int iCol, int iRow)
+{
+	return this->vGrid[iRow][iCol];
+}
+
+void GridLayer::SetSolidGridTile(int iCol, int iRow)
+{
+	this->SetGridTile(iCol, iRow, GridLayer::GRID_SOLID_TILE);
+}
+
+void GridLayer::SetGridTileFlags(int iCol, int iRow, int fFlags)
+{
+	this->SetGridTile(iCol, iRow, fFlags);
 }
