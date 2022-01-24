@@ -100,7 +100,7 @@ bool TileLayer::ParseCSV(std::string sPath)
 	}
 
 	this->glLayer.ComputeTileGridBlocks(this->iTileMap);
-	this->glLayer.Print();
+	//this->glLayer.Print();
 	return false;
 }
 

@@ -39,18 +39,19 @@ void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitm
 
 	std::list <Sprite*> tmp_list;
 
-	tmp_list.push_back(new Sprite(0, 0, pngBitmap, width, height));
+	
 	Bitmap * bm = al_create_sub_bitmap(pngBitmap,x,y,width,height );
-
+	tmp_list.push_back(new Sprite(0, 0, bm, width, height));
+	//Blit(display, 0, 0, bm, 0, 0, 16, 16);
 	SpriteManager::GetSingleton().Add(new Sprite(0, 0, bm, width,height));
 	SpriteManager::GetSingleton().AddTypeList(id, tmp_list);
 	tmp_list.clear();
 }
 void SuperMario::Load(void) {
 
-	Bitmap* bm = al_load_bitmap(("resources/sprites/marioi.png"));
+	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 
-	Bitmap* bm_enemies = al_load_bitmap(("resources/sprites/enemies.png"));
+	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
 
 
@@ -82,13 +83,13 @@ void SuperMario::Load(void) {
 
 
 
-	for (auto obj : SpriteManager::GetSingleton().GetTypeList("big_mario")) {
+	//for (auto obj : SpriteManager::GetSingleton().GetTypeList("big_mario")) {
 
 			//Blit(display, 0, 0, obj->getBitamp(), 0, 0, obj->GetBox().w, obj->GetBox().h);
-			Blit(display, 0, 0, obj->getBitamp(), 0, 0, 16, 16);
+			//Blit(display, 0, 0, obj->getBitamp(), 0, 0, 16, 16);
 
 
-	}
+	//}
 
 
 
