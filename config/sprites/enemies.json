@@ -1,36 +1,36 @@
 {
     "enemy_turtle": {
-        "turtle_left1": {
+        "left1": {
             "width": 16,
             "height": 23,
             "x_pos": 212,
             "y_pos": 58
         },
-        "turtle_left2": {
+        "left2": {
             "width": 16,
             "height": 23,
             "x_pos": 242,
             "y_pos": 58
         },
-        "turtle_left_wings": {
+        "left_wings": {
             "width": 16,
             "height": 23,
             "x_pos": 182,
             "y_pos": 58
         },
-        "turtle_right1": {
+        "right1": {
             "width": 16,
             "height": 23,
             "x_pos": 179,
             "y_pos": 28
         },
-        "turtle_right2": {
+        "right2": {
             "width": 16,
             "height": 23,
             "x_pos": 209,
             "y_pos": 28
         },
-        "turtle_right_wings": {
+        "right_wings": {
             "width": 16,
             "height": 23,
             "x_pos": 239,
@@ -38,19 +38,19 @@
         }
     },
     "enemy_mushroom": {
-        "mushroom_walk1": {
+        "walk1": {
             "width": 16,
             "height": 16,
             "x_pos": 6,
             "y_pos": 0
         },
-        "mushroom_walk2": {
+        "walk2": {
             "width": 16,
             "height": 16,
             "x_pos": 38,
             "y_pos": 0
         },
-        "mushroom_smashed": {
+        "smashed": {
             "width": 16,
             "height": 16,
             "x_pos": 182,
@@ -58,13 +58,13 @@
         }
     },
     "enemy_piranha_plant":{
-        "piranha_plant_state1": {
+        "state1": {
             "width": 16,
             "height": 24,
             "x_pos": 126,
             "y_pos": 141
         },
-        "piranha_plant_state2": {
+        "state2": {
             "width": 16,
             "height": 24,
             "x_pos": 126,
@@ -72,19 +72,19 @@
         }
     },
     "enemy_bird":{
-        "bird_left1": {
+        "left1": {
             "width": 16,
             "height": 16,
             "x_pos": 98,
             "y_pos": 114
         },
-        "bird_left2": {
+        "left2": {
             "width": 16,
             "height": 16,
             "x_pos": 127,
             "y_pos": 114
         },
-        "bird_right1": {
+        "right1": {
             "width": 16,
             "height": 16,
             "x_pos": 158,

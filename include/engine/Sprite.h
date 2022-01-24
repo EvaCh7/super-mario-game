@@ -34,7 +34,7 @@ public:
 		//quantizer.Move(GetBox(), &dx, &dy);
 	}
 	
-
+	Bitmap * getBitamp() { return this->bitmap; }
 
 	void SetPos(int _x, int _y) { x = _x; y = _y; }
 	void SetZorder(unsigned z) { zorder = z; }
@@ -76,8 +76,8 @@ public:
 
 	//_x _y poy sponarei o mario
 	//100*16 -480 
-	Sprite(int _x, int _y, Bitmap * mario,int width,int height) :
-		x(_x), y(_y), mario(mario)
+	Sprite(int _x, int _y, Bitmap * bitmap,int width,int height) :
+		x(_x), y(_y), bitmap(bitmap)
 	{
 		this->frameBox = Rect(_x, _y, width, height);
 		//frameNo = currFilm->GetTotalFrames(); SetFrame(0);
@@ -102,7 +102,7 @@ private:
 	std::string typeId, stateId;
 	Mover mover;
 	//MotionQuantizer quantizer;
-	Bitmap* mario;
+	Bitmap* bitmap;
 
 
 
@@ -112,13 +112,17 @@ public:
 	using SpriteList = std::list<Sprite*>;
 	using TypeLists = std::map<std::string, SpriteList>;
 private:
-	SpriteList dpyList;
-	TypeLists types;
-	static SpriteManager singleton;
+	std::list<Sprite*> dpyList;
+	std::map<std::string, std::list<Sprite*> > types;
+	static  SpriteManager singleton;
+
 public:
+
 
 	void Add(Sprite* s); // insert by ascending zorder
 	void Remove(Sprite* s);
+	void AddTypeList(std::string id, std::list< Sprite * >  ); // insert by ascending zorder
+	void RemoveTypeList(std::string id, Sprite* sprite);
 	auto GetDisplayList(void) -> const SpriteList&
 	{
 		return dpyList;

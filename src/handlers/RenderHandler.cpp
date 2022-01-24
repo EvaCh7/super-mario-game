@@ -9,7 +9,15 @@ void Game::RenderHandler(void) {
 	//no 16x16 
 
 
-	this->mario->Display(display, Rect(16, 480-4*16, 16, 16));
+
+	for (auto obj : SpriteManager::GetSingleton().GetTypeList("enemy_bird")) {
+	
+		//obj->Display(display, Rect(16, 480 - 4 * 16, obj->GetBox().w, obj->GetBox().h));
+	
+
+		obj->Display(display, Rect(16, 480 - 4 * 16, 16, 16));
+
+	}
 
 
 	// Display Sprites

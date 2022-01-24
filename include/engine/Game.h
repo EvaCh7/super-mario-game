@@ -19,8 +19,6 @@ public:
 	uint64_t	pauseTime = 0;
 	Map mMap;
 
-	Sprite * mario;
-
 	
 
 	ALLEGRO_TIMER *timer;

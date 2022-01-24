@@ -2,6 +2,11 @@
 #include <engine/Map.h>
 #include<display/DisplayTools.h>
 
+void SpriteManager::AddTypeList(std::string id, std::list< Sprite*> sprite) {
+
+	this->types.insert({ id,sprite });
+	
+}
 void SpriteManager::Add(Sprite* s) {
 	dpyList.push_back(s);
 	// insert by ascending zorder
@@ -92,7 +97,7 @@ void Sprite::Display(ALLEGRO_DISPLAY* dest, const Rect& dpyArea) const {
 	Blit(
 		dest,
 		(Rect&)dpyArea, //
-		this->mario,
+		this->bitmap,
 		(Rect&)GetBox()
 		);
 	//currFilm->GetBitmap(),//returns mitmap of mariooooooo
