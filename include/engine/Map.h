@@ -51,6 +51,10 @@ public:
 	TileLayer(void);
 };
 
+class Grid {
+
+};
+
 class Map {
 private:
 
