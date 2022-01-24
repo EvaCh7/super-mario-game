@@ -3,7 +3,7 @@
 
 class Sprite {
 
-
+	int x, y;
 
 
 
