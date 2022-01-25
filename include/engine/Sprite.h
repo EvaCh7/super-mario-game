@@ -7,7 +7,7 @@
 #include<functional>
 
 #include <engine/Structs.h>
-
+#include <engine/Map.h>
 
 //class Clipper;
 //class MotionQuantizer;
@@ -19,9 +19,14 @@ class Sprite {
 
 public:
 	using Mover = std::function<void(const Rect&, int* dx, int* dy)>;
+
+
+	Mover BUDGETMOVER;
+
 	template <typename Tfunc>
 	void SetMover(const Tfunc& f)
 	{
+		BUDGETMOVER = f;
 		//quantizer.SetMover(mover = f);
 	}
 	const Rect GetBox(void) const
@@ -86,6 +91,8 @@ public:
 		//frameNo = currFilm->GetTotalFrames(); SetFrame(0);
 	}
 	*/
+
+	Mover MakeSpriteGridLayerMover(GridLayer* glLayer);
 
 	int x = 0, y = 0;
 private:

@@ -14,9 +14,21 @@ void SpriteManager::Add(Sprite* s) {
 
 void Sprite::Move(int dx, int dy)
 {
-	
-	this->x += dx;
-	this->y += dy;
+	this->BUDGETMOVER(this->GetBox(), &dx, &dy);
+	/*this->x += dx;
+	this->y += dy;*/
+}
+
+Sprite::Mover Sprite::MakeSpriteGridLayerMover(GridLayer* glLayer) {
+	Sprite* s = this;
+	return [glLayer, s](Rect r, int* dx, int* dy) {
+		glLayer->FilterGridMotion(r, dx, dy);
+		if (*dx || *dy) {
+			//s->Move(*dx, *dy);
+			s->x += *dx;
+			s->y += *dy;
+		}
+	};
 }
 
 void SpriteManager::Remove(Sprite* s) {

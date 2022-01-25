@@ -45,6 +45,9 @@ Map::Map(json jConfig) {
 		tlLayer->ParseCSV(itMap["path"]);
 	}
 	this->tlLayer = tlLayer;
+	//tlLayer->GetGridLayer()->ComputeTileGridBlocks(tlLayer->GetTileMap());
+	
+	printf("|||%d|||", tlLayer->GetGridLayer()->GetGridTile(360, 43));
 }
 
 
@@ -73,26 +76,7 @@ Rect TileLayer::GetViewWindow(void)
 		sMario = obj;
 	}
 
-
-
-
-
-	if (sMario->x > this->rViewWindow.x + this->rViewWindow.w) {
-		ScrollWithBoundsCheck(&this->rViewWindow, 16, 0);
-		//this->SetViewWindow(Rect{this->rViewWindow.x + 640, this->rViewWindow.y, this->rViewWindow.w, this->rViewWindow.h});
-	}
-	else if (sMario->x <= this->rViewWindow.x) {
-		ScrollWithBoundsCheck(&this->rViewWindow, -16, 0);
-		//this->SetViewWindow(Rect{ this->rViewWindow.x - 640, this->rViewWindow.y, this->rViewWindow.w, this->rViewWindow.h });
-	}
-	else if (sMario->y > this->rViewWindow.y + this->rViewWindow.h) {
-		ScrollWithBoundsCheck(&this->rViewWindow, 0, 16);
-		//this->SetViewWindow(Rect{ this->rViewWindow.x, this->rViewWindow.y + 480, this->rViewWindow.w, this->rViewWindow.h });
-	}
-	else if (sMario->y <= this->rViewWindow.y) {
-		ScrollWithBoundsCheck(&this->rViewWindow, 0, -16);
-		//this->SetViewWindow(Rect{ this->rViewWindow.x, this->rViewWindow.y - 480, this->rViewWindow.w, this->rViewWindow.h });
-	}
+	ScrollWithBoundsCheck(&this->rViewWindow, sMario->x - (this->rViewWindow.x + this->rViewWindow.w / 2), sMario->y - (this->rViewWindow.y + this->rViewWindow.h / 2));
 
 	return this->rViewWindow;
 }
@@ -106,6 +90,11 @@ void TileLayer::SetViewWindow(Rect rRect)
 Bitmap* TileLayer::GetBuffer(void)
 {
 	return this->bBuffer;
+}
+
+GridLayer* TileLayer::GetGridLayer(void)
+{
+	return &this->glLayer;
 }
 
 bool TileLayer::ParseCSV(std::string sPath)
@@ -127,8 +116,9 @@ bool TileLayer::ParseCSV(std::string sPath)
 	}
 
 	Render();
+	this->GetGridLayer()->ComputeTileGridBlocks(this->iTileMap);
 
-	this->glLayer.ComputeTileGridBlocks(this->iTileMap);
+	
 	//this->glLayer.Print();
 	return false;
 }
@@ -218,15 +208,46 @@ void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 {
 	for (int i = 0; i < 100; ++i) {
 		for (int j = 0; j < 300; ++j) {
+			
+			int tile = tlTileMap[i][j];
+
+			if (tile == -1) continue;
+
+			this->SetGridTileBlock(j, i, GridLayer::GRID_EMPTY_TILE);
 			if (tlTileMap[i][j] == 79) {
 				this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
 			}
+			if (tile == 0 || tile == 1 || tile == 2) {
+				std::cout << "aa";
+				this->SetGridTileBlock(j, i, GridLayer::GRID_RIGHT_SOLID_MASK);
+			}
+			if (tile == 21) {
+				//this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
+			}
+			if (tile == 22) {
+				this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
+			}
 		}
 	}
+
+	/*std::ofstream outfile;
+	outfile.open("grid.txt");
+	for (int i = 0; i < 100 * 4; ++i) {
+		outfile << "[";
+		for (int j = 0; j < 300 * 4; ++j) {
+			outfile << vGrid[i][j] << ", ";
+		}
+		outfile << "]\n";
+	}
+	outfile.close();*/
+
+
 }
 
 void GridLayer::SetGridTileBlock(int iCol, int iRow, int iFlag)
 {
+	iCol *= 4;
+	iRow *= 4;
 	for (int i = iRow; i < iRow + 4; ++i) {
 		for (int j = iCol; j < iCol + 4; ++j) {
 			this->SetGridTile(j, i, iFlag);
@@ -254,7 +275,7 @@ GridLayer::GridLayer(int iRows, int iCols) :
 	this->vGrid = new int* [iRows];
 	for (int i = 0; i < iRows; ++i) {
 		this->vGrid[i] = new int[iCols];
-		memset(this->vGrid[i], GridLayer::GRID_EMPTY_TILE, iCols * sizeof(int)); // not sure if needed
+		//memset(this->vGrid[i], GridLayer::GRID_EMPTY_TILE, iCols * sizeof(int)); // not sure if needed
 	}
 }
 
@@ -277,4 +298,134 @@ void GridLayer::SetSolidGridTile(int iCol, int iRow)
 void GridLayer::SetGridTileFlags(int iCol, int iRow, int fFlags)
 {
 	this->SetGridTile(iCol, iRow, fFlags);
+}
+
+int GridLayer::CanPassGridTile(int iCol, int iRow, int fFlags)
+{
+	return GetGridTile(iCol, iRow) & fFlags;
+}
+
+void GridLayer::FilterGridMotion(Rect rRect, int* dx, int* dy)
+{
+	if (*dx < 0)
+		FilterGridMotionLeft(rRect, dx);
+	else if (*dx > 0)
+		FilterGridMotionRight(rRect, dx);
+	if (*dy < 0)
+		FilterGridMotionUp(rRect, dy);
+	else if (*dy > 0)
+		FilterGridMotionDown(rRect, dy);
+
+
+}
+
+void GridLayer::FilterGridMotionLeft(Rect rRect, int* dx)
+{
+	auto x1_next = rRect.x + *dx;
+	if (x1_next < 0) {
+		//*dx = -rRect.x;
+	}
+	else {
+		auto newCol = x1_next >> 2; // 4
+		auto currCol = rRect.x >> 2; // 4
+		if (newCol != currCol) {
+			auto startRow = rRect.y >> 2;
+			auto endRow = (rRect.y + rRect.h - 1) >> 2;
+
+			for (auto row = startRow; row <= endRow; ++row) {
+				//printf("Comparing {%d, %d = %d}\n", GetGridTile(newCol, row), GRID_RIGHT_SOLID_MASK, CanPassGridTile(newCol, row, GRID_RIGHT_SOLID_MASK));
+				if (!CanPassGridTile(newCol, row, GRID_SOLID_TILE)) {
+					*dx = (newCol << 2) - rRect.x;
+					break;
+				}
+				else {
+					*dx = 0;
+					break;
+				}
+			}
+		}
+	}
+}
+
+void GridLayer::FilterGridMotionRight(Rect rRect, int* dx)
+{
+	auto x2 = rRect.x + rRect.w - 1;
+	auto x2_next = x2 + *dx;
+	if (x2_next >= 300 * 4) {
+		//*dx = ((300 * 4 – 1) - x2);
+		//*dx = ((300 * 4 - 1) - x2);
+	}
+	else {
+		auto newCol = x2_next >> 2;
+		auto currCol = x2 >> 2;
+		if (newCol != currCol) {
+			//assert(newCol - 1 == currCol); // we really move right
+			auto startRow = rRect.y >> 2;
+			auto endRow = (rRect.y + rRect.h - 1) >> 2;
+			for (auto row = startRow; row <= endRow; ++row)
+				if (!CanPassGridTile(newCol, row, GRID_SOLID_TILE)) {
+					*dx = (((newCol << 2) - 1) - x2);
+					//*dx = ((newCol << 2) – 1) - x2;
+					break;
+				}
+				else {
+					*dx = 0;
+					break;
+				}
+				
+		}
+	}
+}
+
+void GridLayer::FilterGridMotionDown(Rect rRect, int* dy) {
+	auto y1_next = rRect.y + *dy;
+	if (y1_next < 0)
+		*dy = -rRect.y;
+	else {
+		auto newRow = y1_next >> 2; // 4
+		auto currRow = rRect.y >> 2; // 4
+		if (newRow != currRow) {
+			auto startCol = rRect.x >> 2;
+			auto endCol = (rRect.x + rRect.w - 1) >> 2;
+
+			for (auto col = startCol; col <= endCol; ++col) {
+				printf("Comparing {%d, %d = %d}\n", GetGridTile(col, newRow), GRID_RIGHT_SOLID_MASK, CanPassGridTile(col, newRow, GRID_RIGHT_SOLID_MASK));
+				if (!CanPassGridTile(col, newRow, GRID_SOLID_TILE)) {
+					*dy = (newRow << 2) - rRect.y;
+					break;
+				}
+				else {
+					*dy = 0;
+					break;
+				}
+			}
+		}
+	}
+}
+
+
+void GridLayer::FilterGridMotionUp(Rect rRect, int* dy) {
+	auto y1_next = rRect.y + *dy;
+	if (y1_next < 0)
+		*dy = -rRect.y;
+	else {
+		auto newRow = y1_next >> 2; // 4
+		auto currRow = rRect.y >> 2; // 4
+		if (newRow != currRow) {
+			auto startCol = rRect.x >> 2;
+			auto endCol = (rRect.x + rRect.w - 1) >> 2;
+
+			for (auto col = startCol; col <= endCol; ++col) {
+				printf("Comparing {%d, %d = %d}\n", GetGridTile(col, newRow), GRID_RIGHT_SOLID_MASK, CanPassGridTile(col, newRow, GRID_RIGHT_SOLID_MASK));
+				if (!CanPassGridTile(col, newRow, GRID_SOLID_TILE)) {
+					*dy = (newRow << 2) - rRect.y;
+					break;
+				}
+				else {
+					*dy = 0;
+					break;
+				}
+			}
+		}
+	}
 }

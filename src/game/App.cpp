@@ -49,12 +49,17 @@ void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
+	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
+	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
+	//this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"])));
+	this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][2]["cfg"])));
+
 	json js_mario = Config::GetConfig("config/sprites/mario.json");
 	json js_enemies = Config::GetConfig("config/sprites/enemies.json");
 
 	std::string str = "right_stand";
 
-	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm, 16 * 3, 100 * 16 - 4 * 16);
+	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm, 16 * 3, 100 * 16 - 10 * 16);
 	//addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
 	
 	//addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies);
@@ -66,12 +71,13 @@ void SuperMario::Load(void) {
 
 	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
 
+	for (Sprite *s : SpriteManager::GetSingleton().GetDisplayList()) {
+		s->SetMover(s->MakeSpriteGridLayerMover(this->game.mMap->GetTileLayer()->GetGridLayer()));
+	}
 
 
 	//this->game.mario = new Sprite(0, 0, bm, js["width"], js["height"]);
-	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
-	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
-	this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"])));
+
 
 }
 

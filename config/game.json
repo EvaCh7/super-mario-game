@@ -5,7 +5,10 @@
 			"cfg": "config/map/first_stage.json"
 		},
 		{
-			"cfg":	"config/map/first_map.json"
+			"cfg": "config/map/first_map.json"
+		},
+		{
+			"cfg": "config/map/final_map.json"
 		}
 	]
 }

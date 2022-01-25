@@ -32,9 +32,17 @@ public:
 	void SetEmptyGridTile(int iCol, int iRow);
 	void SetGridTileFlags(int iCol, int iRow, int fFlags);
 	void SetGridTileTopSolidOnly(int iCol, int iRow);
-	bool CanPassGridTile(int iCol, int iRow, int fFlags);
 
-	void FilterGridMotion(const Rect& rRect, int iDx, int iDy) const;
+	int CanPassGridTile(int iCol, int iRow, int fFlags);
+	void FilterGridMotion(Rect rRect, int *dx, int *dy);
+	void FilterGridMotionLeft(Rect rRect, int *dx);
+	void FilterGridMotionRight(Rect rRect, int* dx);
+	void FilterGridMotionDown(Rect rRect, int* dy);
+	void FilterGridMotionUp(Rect rRect, int* dy);
+
+
+
+
 	bool IsOnSolidGround(const Rect& rRect) const;
 	
 	int** GetBuffer(void);
@@ -87,6 +95,8 @@ public:
 
 	void Render(void);
 
+	int** GetTileMap(void) { return this->iTileMap; }
+
 	/*
 	* Tile Map
 	*/
@@ -104,6 +114,8 @@ public:
 	*/
 	Bitmap* GetBuffer(void);
 	
+	GridLayer* GetGridLayer(void);
+
 
 	/*
 	* Parse Tile Map
