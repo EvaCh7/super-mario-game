@@ -56,6 +56,7 @@ public:
 
 class TileLayer {
 private:
+	Rect rViewWindow;
 
 	/*
 	* Tile Map
@@ -70,10 +71,19 @@ private:
 
 	std::map<int, Bitmap*> mTileSet; // Tile set
 
-	Rect rViewWindow;
+	
 	Bitmap* bBuffer;
 
 public:
+	/*
+	* Scrolling
+	*/
+	void Scroll(Rect* rViewWindow, int iDx, int iDy);
+	bool CanScrollHorizontal(Rect rViewWindow, int iDx);
+	bool CanScrollVertical(Rect rViewWindow, int iDy);
+	static void FilterScrollDistance(int viewStartCoord, int viewSize, int* d, int maxMapSize);
+	void FilterScroll(Rect rViewWindow, int *dx, int *dy);
+	void ScrollWithBoundsCheck(Rect* rViewWindow, int dx, int dy);
 
 	void Render(void);
 
@@ -105,7 +115,7 @@ public:
 	void Scroll(float fDx, float fDy);
 
 	TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet);
-	TileLayer(void);
+	//TileLayer(void);
 };
 
 class Map {
@@ -114,7 +124,7 @@ private:
 	/*
 	* Tile Layer
 	*/
-	TileLayer tlLayer;
+	TileLayer *tlLayer;
 
 	std::map<int, Bitmap *> mTiles;
 
@@ -126,7 +136,7 @@ public:
 	/*
 	* Tile Layer
 	*/
-	TileLayer GetTileLayer(void);
+	TileLayer *GetTileLayer(void);
 
 	Map(json jConfig);
 

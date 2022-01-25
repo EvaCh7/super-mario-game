@@ -23,8 +23,17 @@
     }
   ],
   "tiles": {
-    "path" : "resources/map/super_mario_sprite_sheet.png",
+    "path": "resources/map/super_mario_sprite_sheet.png",
     "width": 16,
-    "height" : 16
+    "height": 16
+  },
+  "grid": {
+    "solid": [
+      79,
+      22
+    ],
+    "empty": [
+      349
+    ]
   }
 }

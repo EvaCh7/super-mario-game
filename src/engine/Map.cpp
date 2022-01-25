@@ -9,10 +9,10 @@
 
 void Map::Display(Rect rViewWindow)
 {
-	Blit(this->bMap, rViewWindow, this->GetTileLayer().GetBuffer(), rViewWindow);
+	Blit(this->bMap, rViewWindow, this->GetTileLayer()->GetBuffer(), rViewWindow);
 }
 
-TileLayer Map::GetTileLayer(void)
+TileLayer *Map::GetTileLayer(void)
 {
 	return this->tlLayer;
 }
@@ -38,11 +38,11 @@ Map::Map(json jConfig) {
 	/*
 	* Create Tile Layer and parse layers
 	*/
-	TileLayer tlLayer(100, 300, this->mTiles);
-	tlLayer.SetViewWindow(Rect{0, 100 * 16 - 480, 640, 480});
+	TileLayer *tlLayer = new TileLayer(100, 300, this->mTiles);
+	tlLayer->SetViewWindow(Rect{0, 100 * 16 - 480, 640, 480});
 	json jMaps = jConfig["map"];
 	for (auto& itMap : jMaps) {
-		tlLayer.ParseCSV(itMap["path"]);
+		tlLayer->ParseCSV(itMap["path"]);
 	}
 	this->tlLayer = tlLayer;
 }
@@ -73,15 +73,26 @@ Rect TileLayer::GetViewWindow(void)
 		sMario = obj;
 	}
 
-	
-	
-	printf("Mario X: %d, VW: {%d %d %d %d}\n", sMario->x, this->rViewWindow.x, this->rViewWindow.y, this->rViewWindow.h, this->rViewWindow.w);
-	//this->rViewWindow.x = 5;
+
+
+
+
 	if (sMario->x > this->rViewWindow.x + this->rViewWindow.w) {
-		//this->rViewWindow.x = 5;
-		this->SetViewWindow(Rect{this->rViewWindow.x + 640, this->rViewWindow.y, this->rViewWindow.w, this->rViewWindow.h});
+		ScrollWithBoundsCheck(&this->rViewWindow, 16, 0);
+		//this->SetViewWindow(Rect{this->rViewWindow.x + 640, this->rViewWindow.y, this->rViewWindow.w, this->rViewWindow.h});
 	}
-	//printf("Mario X: %d, VW: {%d %d %d %d}\n", sMario->x, this->rViewWindow.x, this->rViewWindow.y, this->rViewWindow.h, this->rViewWindow.w);
+	else if (sMario->x <= this->rViewWindow.x) {
+		ScrollWithBoundsCheck(&this->rViewWindow, -16, 0);
+		//this->SetViewWindow(Rect{ this->rViewWindow.x - 640, this->rViewWindow.y, this->rViewWindow.w, this->rViewWindow.h });
+	}
+	else if (sMario->y > this->rViewWindow.y + this->rViewWindow.h) {
+		ScrollWithBoundsCheck(&this->rViewWindow, 0, 16);
+		//this->SetViewWindow(Rect{ this->rViewWindow.x, this->rViewWindow.y + 480, this->rViewWindow.w, this->rViewWindow.h });
+	}
+	else if (sMario->y <= this->rViewWindow.y) {
+		ScrollWithBoundsCheck(&this->rViewWindow, 0, -16);
+		//this->SetViewWindow(Rect{ this->rViewWindow.x, this->rViewWindow.y - 480, this->rViewWindow.w, this->rViewWindow.h });
+	}
 
 	return this->rViewWindow;
 }
@@ -122,6 +133,49 @@ bool TileLayer::ParseCSV(std::string sPath)
 	return false;
 }
 
+void TileLayer::Scroll(Rect* rViewWindow, int iDx, int iDy)
+{
+	rViewWindow->x += iDx;
+	rViewWindow->y += iDy;
+	return;
+}
+
+bool TileLayer::CanScrollHorizontal(Rect rViewWindow, int iDx)
+{
+	return rViewWindow.x >= -iDx &&
+			(rViewWindow.x + rViewWindow.w + iDx) <= 300 * 16;
+}
+
+bool TileLayer::CanScrollVertical(Rect rViewWindow, int iDy)
+{
+	return rViewWindow.y >= -iDy &&
+		(rViewWindow.y + rViewWindow.h + iDy) <= 100 * 16;
+}
+
+void TileLayer::FilterScrollDistance(int viewStartCoord, int viewSize, int* d, int maxMapSize)
+{
+	auto val = *d + viewStartCoord;
+	if (val < 0)
+		*d = viewStartCoord;
+	else if (viewSize >= maxMapSize)
+		*d = 0;
+	else if ((val + viewSize) >= maxMapSize)
+		*d = maxMapSize - (viewStartCoord + viewSize);
+
+}
+
+void TileLayer::FilterScroll(Rect rViewWindow, int* dx, int* dy)
+{
+	FilterScrollDistance(rViewWindow.x, rViewWindow.w, dx, 300 * 16);
+	FilterScrollDistance(rViewWindow.y, rViewWindow.h, dy, 100 * 16);
+}
+
+void TileLayer::ScrollWithBoundsCheck(Rect* rViewWindow, int dx, int dy)
+{
+	FilterScroll(*rViewWindow, &dx, &dy);
+	Scroll(rViewWindow, dx, dy);
+}
+
 void TileLayer::Render(void) {
 
 	for (int i = 0; i < this->iRows; ++i) {
@@ -158,12 +212,7 @@ TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet) :
 	this->bBuffer = al_create_bitmap(300 * 16, 100 * 16); // screen buffer (to zwgrafismeno to-be map)
 }
 
-TileLayer::TileLayer(void):
-	rViewWindow(Rect{0, 0, 0, 0}),
-	glLayer(0, 0)
-{
 
-}
 
 void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 {
