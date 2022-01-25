@@ -18,6 +18,9 @@
         "width": 16,
         "height": 16
     },
+    "sprites": {
+        "path":"config/sprites/sprites.json"
+    },
     "grid": {
         "solid": [
             80,
