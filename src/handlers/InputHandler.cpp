@@ -20,12 +20,19 @@ void Game::InputHandler(void) {
 		}
 	}
 
+	Sprite* sMario = nullptr;
+	for (auto obj : SpriteManager::GetSingleton().GetTypeList("mario")) {
+		sMario = obj;
+	}
+
 	if (events.type == ALLEGRO_EVENT_TIMER) {
 		al_get_keyboard_state(&ksKeyboardState);
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
+			sMario->Move(16, 0);
 			this->iViewWindowX++;
 		}
 		else if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
+			sMario->Move(-16, 0);
 			this->iViewWindowX--;
 		}
 

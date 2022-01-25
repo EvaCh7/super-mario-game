@@ -19,8 +19,6 @@ public:
 	uint64_t	pauseTime = 0;
 	Map mMap;
 
-	
-
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;
 private:

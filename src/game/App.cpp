@@ -21,7 +21,7 @@ void SuperMario::Initialise(void) {
 	
 	Audio audio_sample;
 	//audio_sample.playSample("config/sound.mp3");
-
+	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP | ALLEGRO_MIPMAP);
 	display = al_create_display(640, 480);
 	this->game.timer = al_create_timer(1.0 / 60);
 	this->game.event_queue = al_create_event_queue();
@@ -35,61 +35,36 @@ void SuperMario::Initialise(void) {
 SpriteManager SpriteManager::singleton;
 
 void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitmap* pngBitmap) {
-
-
 	std::list <Sprite*> tmp_list;
-
 	
 	Bitmap * bm = al_create_sub_bitmap(pngBitmap,x,y,width,height );
-	tmp_list.push_back(new Sprite(0, 0, bm, width, height));
 	//Blit(display, 0, 0, bm, 0, 0, 16, 16);
-	SpriteManager::GetSingleton().Add(new Sprite(0, 0, bm, width,height));
+	Sprite *s = new Sprite(16 * 3, 100 * 16 - 4 * 16, bm, width, height);
+	tmp_list.push_back(s);
+	SpriteManager::GetSingleton().Add(s);
 	SpriteManager::GetSingleton().AddTypeList(id, tmp_list);
 	tmp_list.clear();
 }
 void SuperMario::Load(void) {
-
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
-
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
-
-
 
 	json js_mario = Config::GetConfig("config/sprites/mario.json");
 	json js_enemies = Config::GetConfig("config/sprites/enemies.json");
 
-
-
-	std::string str = "right1";
+	std::string str = "right_stand";
 
 	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm);
-	addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
+	//addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
 	
-	addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies);
-	addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
+	//addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies);
+	//addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
 	
 	str = "walk1";
-	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies);
+	//addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies);
 	str = "state1";
 
-	addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
-	
-
-
-
-
-
-
-
-
-
-	//for (auto obj : SpriteManager::GetSingleton().GetTypeList("big_mario")) {
-
-			//Blit(display, 0, 0, obj->getBitamp(), 0, 0, obj->GetBox().w, obj->GetBox().h);
-			//Blit(display, 0, 0, obj->getBitamp(), 0, 0, 16, 16);
-
-
-	//}
+	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
 
 
 

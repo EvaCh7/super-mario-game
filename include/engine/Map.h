@@ -75,6 +75,8 @@ private:
 
 public:
 
+	void Render(void);
+
 	/*
 	* Tile Map
 	*/
@@ -91,6 +93,7 @@ public:
 	* Buffer
 	*/
 	Bitmap* GetBuffer(void);
+	
 
 	/*
 	* Parse Tile Map

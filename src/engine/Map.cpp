@@ -41,6 +41,7 @@ Map::Map(json jConfig) {
 	this->tlLayer = tlLayer;
 }
 
+
 std::map<int, Bitmap *> Map::GetTiles() {
 	return this->mTiles;
 }
@@ -92,16 +93,20 @@ bool TileLayer::ParseCSV(std::string sPath)
 		}
 	}
 
+	Render();
+
+	this->glLayer.ComputeTileGridBlocks(this->iTileMap);
+	//this->glLayer.Print();
+	return false;
+}
+
+void TileLayer::Render(void) {
 	for (int i = 0; i < this->iRows; ++i) {
 		for (int j = 0; j < this->iCols; ++j) {
 			if (this->iTileMap[i][j] != -1)
 				Blit(this->bBuffer, j * 16, i * 16, this->mTileSet[this->iTileMap[i][j]], 0, 0, 16, 16);
 		}
 	}
-
-	this->glLayer.ComputeTileGridBlocks(this->iTileMap);
-	//this->glLayer.Print();
-	return false;
 }
 
 void TileLayer::Display(ALLEGRO_DISPLAY* bDest, const Rect& rDisplayArea)

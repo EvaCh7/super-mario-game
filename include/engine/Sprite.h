@@ -29,10 +29,7 @@ public:
 		return { x, y, frameBox.w, frameBox.h };
 	}
 	
-	void Move(int dx, int dy)
-	{
-		//quantizer.Move(GetBox(), &dx, &dy);
-	}
+	void Move(int dx, int dy);
 	
 	Bitmap * getBitamp() { return this->bitmap; }
 
@@ -71,7 +68,7 @@ public:
 	void SetVisibility(bool v) { isVisible = v; }
 	bool IsVisible(void) const { return isVisible; }
 	//bool CollisionCheck(const Sprite* s) const;
-	void Display(ALLEGRO_DISPLAY* dest, const Rect& dpyArea) const;
+	void Display(Bitmap* dest, const Rect& dpyArea) const;
 
 
 	//_x _y poy sponarei o mario

@@ -12,6 +12,13 @@ void SpriteManager::Add(Sprite* s) {
 	// insert by ascending zorder
 }
 
+void Sprite::Move(int dx, int dy)
+{
+	
+	this->x += dx;
+	this->y += dy;
+}
+
 void SpriteManager::Remove(Sprite* s) {
 	dpyList.remove(s);
 
@@ -88,17 +95,18 @@ bool Clipper::Clip(const Rect& r, const Rect& dpyArea, Point* dpyPos, Rect* clip
 }
 
 
-void Sprite::Display(ALLEGRO_DISPLAY* dest, const Rect& dpyArea) const {
+void Sprite::Display(Bitmap* dest, const Rect& dpyArea) const {
 
 
 	Rect clippedBox;
 	Point dpyPos;
 
+	printf("{%x, %x, %x, %x}\n", dpyArea.x, dpyArea.y, dpyArea.w, dpyArea.h);
 	Blit(
 		dest,
-		(Rect&)dpyArea, //
+		(Rect&)dpyArea,
 		this->bitmap,
-		(Rect&)GetBox()
+		(Rect&)Rect{0, 0, 16, 16}
 		);
 	//currFilm->GetBitmap(),//returns mitmap of mariooooooo
 		//clippedFrame
