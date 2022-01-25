@@ -86,8 +86,8 @@ public:
 	/*
 	* View Window
 	*/
-	const Rect& GetViewWindow(void) const;
-	void SetViewWindow(const Rect& rRect);
+	Rect GetViewWindow(void);
+	void SetViewWindow(Rect rRect);
 
 	/*
 	* Buffer
@@ -117,6 +117,7 @@ private:
 	TileLayer tlLayer;
 
 	std::map<int, Bitmap *> mTiles;
+
 	Bitmap *bMap;
 	int iTileWidth, iTileHeight;
 
@@ -128,7 +129,8 @@ public:
 	TileLayer GetTileLayer(void);
 
 	Map(json jConfig);
-	Map();
+
+	void Display(Rect rViewWindow);
 
 	std::map<int, Bitmap *> GetTiles();
 

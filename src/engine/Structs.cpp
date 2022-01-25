@@ -7,6 +7,7 @@ Rect::Rect(int xx, int yy, int ww, int hh) :
 	h(hh)
 {}
 
+
 Point::Point(int xx, int yy) :
 	x(xx),
 	y(yy)

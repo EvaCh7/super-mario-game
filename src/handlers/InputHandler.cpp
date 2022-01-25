@@ -28,12 +28,18 @@ void Game::InputHandler(void) {
 	if (events.type == ALLEGRO_EVENT_TIMER) {
 		al_get_keyboard_state(&ksKeyboardState);
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
-			sMario->Move(16, 0);
-			this->iViewWindowX++;
+			sMario->Move(8, 0);
+			//this->iViewWindowX++;
 		}
 		else if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
-			sMario->Move(-16, 0);
-			this->iViewWindowX--;
+			sMario->Move(-8, 0);
+			//this->iViewWindowX--;
+		}
+		else if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_UP)) {
+			sMario->Move(0, -8);
+		}
+		else if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
+			sMario->Move(0, 8);
 		}
 
 	}

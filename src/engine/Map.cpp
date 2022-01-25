@@ -4,9 +4,12 @@
 #include "tools/json.h"
 #include "tools/csv_parser.h"
 #include "display/DisplayTools.h"
+#include "engine/Sprite.h"
 
-Map::Map() {
 
+void Map::Display(Rect rViewWindow)
+{
+	Blit(this->bMap, rViewWindow, this->GetTileLayer().GetBuffer(), rViewWindow);
 }
 
 TileLayer Map::GetTileLayer(void)
@@ -16,6 +19,8 @@ TileLayer Map::GetTileLayer(void)
 
 Map::Map(json jConfig) {
 	Bitmap *bm = al_load_bitmap(std::string(jConfig["tiles"]["path"]).c_str());
+
+	this->bMap = al_create_bitmap(300 * 16, 100 * 16);
 
 	/*
 	* Create tile set
@@ -34,6 +39,7 @@ Map::Map(json jConfig) {
 	* Create Tile Layer and parse layers
 	*/
 	TileLayer tlLayer(100, 300, this->mTiles);
+	tlLayer.SetViewWindow(Rect{0, 100 * 16 - 480, 640, 480});
 	json jMaps = jConfig["map"];
 	for (auto& itMap : jMaps) {
 		tlLayer.ParseCSV(itMap["path"]);
@@ -60,13 +66,29 @@ int TileLayer::GetTile(int iCol, int iRow)
 	return this->iTileMap[iRow][iCol];
 }
 
-const Rect& TileLayer::GetViewWindow(void) const
+Rect TileLayer::GetViewWindow(void)
 {
+	Sprite* sMario = nullptr;
+	for (auto obj : SpriteManager::GetSingleton().GetTypeList("mario")) {
+		sMario = obj;
+	}
+
+	
+	
+	printf("Mario X: %d, VW: {%d %d %d %d}\n", sMario->x, this->rViewWindow.x, this->rViewWindow.y, this->rViewWindow.h, this->rViewWindow.w);
+	//this->rViewWindow.x = 5;
+	if (sMario->x > this->rViewWindow.x + this->rViewWindow.w) {
+		//this->rViewWindow.x = 5;
+		this->SetViewWindow(Rect{this->rViewWindow.x + 640, this->rViewWindow.y, this->rViewWindow.w, this->rViewWindow.h});
+	}
+	//printf("Mario X: %d, VW: {%d %d %d %d}\n", sMario->x, this->rViewWindow.x, this->rViewWindow.y, this->rViewWindow.h, this->rViewWindow.w);
+
 	return this->rViewWindow;
 }
 
-void TileLayer::SetViewWindow(const Rect& rRect)
+void TileLayer::SetViewWindow(Rect rRect)
 {
+	//printf("IMMA SET VW TO {%d %d %d %d}!\n", rRect.x, rRect.y, rRect.w, rRect.h);
 	this->rViewWindow = rRect;
 }
 
@@ -101,6 +123,7 @@ bool TileLayer::ParseCSV(std::string sPath)
 }
 
 void TileLayer::Render(void) {
+
 	for (int i = 0; i < this->iRows; ++i) {
 		for (int j = 0; j < this->iCols; ++j) {
 			if (this->iTileMap[i][j] != -1)
@@ -136,9 +159,10 @@ TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet) :
 }
 
 TileLayer::TileLayer(void):
-	rViewWindow({0, 0, 0, 0}),
+	rViewWindow(Rect{0, 0, 0, 0}),
 	glLayer(0, 0)
 {
+
 }
 
 void GridLayer::ComputeTileGridBlocks(int** tlTileMap)

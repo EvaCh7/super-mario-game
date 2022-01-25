@@ -17,7 +17,7 @@ public:
 	Action	pauseResume;
 	bool		isPaused = false;
 	uint64_t	pauseTime = 0;
-	Map mMap;
+	Map *mMap;
 
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;
@@ -76,6 +76,6 @@ public:
 	void SetCollisionChecking (const Action &f) { collisions = f; }
 	void SetCommitDestructions (const Action &f) { destruct = f; }
 	void SetUserCode (const Action &f) { user = f; }
-	void SetMap(Map map) { mMap = map; }
+	void SetMap(Map *map) { mMap = map; }
 };
 #endif

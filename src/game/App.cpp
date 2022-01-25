@@ -34,12 +34,12 @@ void SuperMario::Initialise(void) {
 
 SpriteManager SpriteManager::singleton;
 
-void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitmap* pngBitmap) {
+void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
 	std::list <Sprite*> tmp_list;
 	
 	Bitmap * bm = al_create_sub_bitmap(pngBitmap,x,y,width,height );
 	//Blit(display, 0, 0, bm, 0, 0, 16, 16);
-	Sprite *s = new Sprite(16 * 3, 100 * 16 - 4 * 16, bm, width, height);
+	Sprite *s = new Sprite(i, j, bm, width, height);
 	tmp_list.push_back(s);
 	SpriteManager::GetSingleton().Add(s);
 	SpriteManager::GetSingleton().AddTypeList(id, tmp_list);
@@ -54,14 +54,14 @@ void SuperMario::Load(void) {
 
 	std::string str = "right_stand";
 
-	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm);
+	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm, 16 * 3, 100 * 16 - 4 * 16);
 	//addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
 	
 	//addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies);
 	//addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
 	
 	str = "walk1";
-	//addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies);
+	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 7, 100 * 16 - 4 * 16);
 	str = "state1";
 
 	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
@@ -71,7 +71,7 @@ void SuperMario::Load(void) {
 	//this->game.mario = new Sprite(0, 0, bm, js["width"], js["height"]);
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
-	this->game.SetMap(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"]));
+	this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"])));
 
 }
 

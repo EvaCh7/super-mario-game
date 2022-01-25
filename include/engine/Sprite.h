@@ -87,11 +87,10 @@ public:
 	}
 	*/
 
-
+	int x = 0, y = 0;
 private:
 	int  frameNo = 0;
 	Rect frameBox; // inside the film
-	int x = 0, y = 0;
 	bool isVisible = false;
 	AnimationFilm* currFilm = nullptr;
 	//BoundingArea* boundingArea = nullptr;

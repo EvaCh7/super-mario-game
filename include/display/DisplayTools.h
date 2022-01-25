@@ -11,7 +11,7 @@ void Blit(ALLEGRO_DISPLAY *dest, unsigned int destX, unsigned int destY, Bitmap 
 
 
 void Blit(Bitmap* dDest, Rect& rDest, Bitmap* dSrc, Rect& rSrc);
-void Blit(Display* dest, Rect& rDest, Bitmap* src, Rect& rSrc);
+void Blit(Display* dest, const Rect& rDest, Bitmap* src, const Rect& rSrc);
 
 
 void DrawViewWindow(Display *dDisplay, unsigned int iDestX, unsigned int iDestY, Bitmap *bSource, unsigned int iSrcX, unsigned int iSrcY, unsigned int iWidth, unsigned int iHeight);

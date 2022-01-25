@@ -101,7 +101,7 @@ void Sprite::Display(Bitmap* dest, const Rect& dpyArea) const {
 	Rect clippedBox;
 	Point dpyPos;
 
-	printf("{%x, %x, %x, %x}\n", dpyArea.x, dpyArea.y, dpyArea.w, dpyArea.h);
+	//printf("{%x, %x, %x, %x}\n", dpyArea.x, dpyArea.y, dpyArea.w, dpyArea.h);
 	Blit(
 		dest,
 		(Rect&)dpyArea,
