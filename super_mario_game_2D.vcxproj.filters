@@ -114,6 +114,9 @@
     <ClCompile Include="src\engine\physics\MotionQuantizer.cpp">
       <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionsHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
