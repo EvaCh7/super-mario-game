@@ -1,5 +1,5 @@
 #ifndef __PHYSICS_H__
-#define __PHYSICS__
+#define __PHYSICS_H_
 #include <functional>
 #include "engine/Structs.h"
 
