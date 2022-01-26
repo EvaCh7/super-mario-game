@@ -64,6 +64,9 @@
     <Filter Include="Source Files\Tools">
       <UniqueIdentifier>{96bce52e-ae14-4d8f-8d97-c543e652b485}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Physics">
+      <UniqueIdentifier>{1b8688d8-105c-4e82-b725-83dea4883c99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\handlers\RenderHandler.cpp">
@@ -99,8 +102,17 @@
     <ClCompile Include="Audio.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="src\engine\Sprite.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\handlers\PhysicsHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\physics\Gravity.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\physics\MotionQuantizer.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +150,12 @@
     <None Include="config\sprites\mario.json">
       <Filter>Resource Files\config\sprite</Filter>
     </None>
+    <None Include="config\map\final_map.json">
+      <Filter>Resource Files\config\map</Filter>
+    </None>
+    <None Include="config\map\first_map.json">
+      <Filter>Resource Files\config\map</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\display\DisplayTools.h">
@@ -172,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="include\game\Audio.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Physics.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

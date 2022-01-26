@@ -7,10 +7,6 @@
 #include <game/App.h>
 #include <game/Audio.h>
 
-
-
-
-
 void SuperMario::Initialise(void) {
 	al_init();
 	al_init_image_addon();
