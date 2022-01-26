@@ -30,6 +30,7 @@ private:
 public:
 	void InputHandler(void);
 	void RenderHandler(void);
+	void PhysicsHandler(void);
 
 	/*
 	* Getters

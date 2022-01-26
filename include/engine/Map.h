@@ -43,7 +43,7 @@ public:
 
 
 
-	bool IsOnSolidGround(const Rect& rRect) const;
+	bool IsOnSolidGround(Rect rRect);
 	
 	int** GetBuffer(void);
 	const int** GetBuffer(void) const;

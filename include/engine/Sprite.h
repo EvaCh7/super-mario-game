@@ -8,6 +8,7 @@
 
 #include <engine/Structs.h>
 #include <engine/Map.h>
+#include "engine/Physics.h"
 
 //class Clipper;
 //class MotionQuantizer;
@@ -15,18 +16,45 @@
 
 class AnimationFilm;
 class Sprite {
+public:
+	using Mover = std::function<void(const Rect&, int* dx, int* dy)>;
+private:
+
+	int  frameNo = 0;
+	Rect frameBox; // inside the film
+	bool isVisible = false;
+	AnimationFilm* currFilm = nullptr;
+	//BoundingArea* boundingArea = nullptr;
+	unsigned zorder = 0;
+	std::string typeId, stateId;
+	Mover mover;
+
+
+	//MotionQuantizer quantizer;
+	
+	
+	Bitmap* bitmap;
+
+
+	/*
+	* Physics
+	*/
+	GravityHandler hGravityHandler;
+	MotionQuantizer qMotionQuantizer;
 
 
 public:
-	using Mover = std::function<void(const Rect&, int* dx, int* dy)>;
+
+	/*
+	* Physics
+	*/
+	GravityHandler& GetGravityHandler(void);
+	MotionQuantizer& GetMotionQuantizer(void);
 
 
-	Mover BUDGETMOVER;
-
-	template <typename Tfunc>
-	void SetMover(const Tfunc& f)
+	void SetMover(MotionQuantizer::Mover f)
 	{
-		BUDGETMOVER = f;
+		this->qMotionQuantizer.SetMover(f);
 		//quantizer.SetMover(mover = f);
 	}
 	const Rect GetBox(void) const
@@ -95,21 +123,10 @@ public:
 	Mover MakeSpriteGridLayerMover(GridLayer* glLayer);
 
 	int x = 0, y = 0;
-private:
-	int  frameNo = 0;
-	Rect frameBox; // inside the film
-	bool isVisible = false;
-	AnimationFilm* currFilm = nullptr;
-	//BoundingArea* boundingArea = nullptr;
-	unsigned zorder = 0;
-	std::string typeId, stateId;
-	Mover mover;
-	//MotionQuantizer quantizer;
-	Bitmap* bitmap;
-
-
 
 };
+
+
 class SpriteManager final {
 public:
 	using SpriteList = std::list<Sprite*>;
@@ -148,27 +165,7 @@ int number_sign(Tnum x) {
 	return x > 0 ? 1 : x < 0 ? -1 : 0;
 }
 
-class MotionQuantizer {
-public:
-	using Mover = std::function<void(const Rect& r, int* dx, int* dy)>;
-protected:
-	int horizMax = 0, vertMax = 0;
-	Mover mover; // filters requested motion too!
-	bool used = false;
-public:
-	MotionQuantizer& SetUsed(bool val);
-	MotionQuantizer& SetRange(int h, int v)
-	{
-		horizMax = h, vertMax = v; used = true; return *this;
-	}
-	MotionQuantizer& SetMover(const Mover& f)
-	{
-		mover = f; return *this;
-	}
-	void Move(const Rect& r, int* dx, int* dy);
-	MotionQuantizer(void) = default;
-	MotionQuantizer(const MotionQuantizer&) = default;
-};
+
 
 
 

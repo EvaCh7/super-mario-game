@@ -51,6 +51,7 @@ void SuperMario::Load(void) {
 
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
+	this->game.SetPhysics(std::bind(&Game::PhysicsHandler, &this->game));
 	//this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"])));
 	this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][2]["cfg"])));
 
@@ -66,18 +67,44 @@ void SuperMario::Load(void) {
 	//addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
 	
 	str = "walk1";
-	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 7, 100 * 16 - 4 * 16);
+	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 25, 100 * 16 - 4 * 40);
 	str = "state1";
 
 	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
 
+	/*
+	* Ready Sprites
+	*/
+	GridLayer* glLayer = this->game.mMap->GetTileLayer()->GetGridLayer();
 	for (Sprite *s : SpriteManager::GetSingleton().GetDisplayList()) {
-		s->SetMover(s->MakeSpriteGridLayerMover(this->game.mMap->GetTileLayer()->GetGridLayer()));
+		/*
+		* Default Mover
+		*/
+		s->SetMover(s->MakeSpriteGridLayerMover(glLayer));
+
+		/*
+		* Gravity Handlers
+		*/
+		s->GetGravityHandler().Enable();
+		s->GetGravityHandler().SetOnSolidGroud(
+			[glLayer](Rect r){
+				return glLayer->IsOnSolidGround(r);
+			}
+		);
+		s->GetGravityHandler().SetOnStartFalling(
+			[](void) {
+				std::cout << "Mario Starts Falling\n";
+				return;
+			}
+		);
+		s->GetGravityHandler().SetOnStopFalling(
+			[](void) {
+				std::cout << "Mario Stops Falling\n";
+				return;
+			}
+		);
+
 	}
-
-
-	//this->game.mario = new Sprite(0, 0, bm, js["width"], js["height"]);
-
 
 }
 
