@@ -49,12 +49,22 @@ void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
+	/*
+	* Set Event Handlers
+	*/
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
 	this->game.SetPhysics(std::bind(&Game::PhysicsHandler, &this->game));
-	//this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][1]["cfg"])));
+
+
+	/*
+	* Create Map
+	*/
 	this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][2]["cfg"])));
 
+	/*
+	* Create Sprites
+	*/
 	json js_mario = Config::GetConfig("config/sprites/mario.json");
 	json js_enemies = Config::GetConfig("config/sprites/enemies.json");
 
