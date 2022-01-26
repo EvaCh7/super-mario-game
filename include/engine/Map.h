@@ -3,13 +3,17 @@
 
 #include "config/Config.h"
 #include "engine/Structs.h"
-
+#include <algorithm>
+#include <map>
 
 class GridLayer {
 private:
 	int** vGrid = nullptr;
 	unsigned sTotal = 0;
 	int iRows, iCols;
+
+	std::map<std::string, std::list<int>> mGridMasks;
+	json jConfig;
 
 	static const byte GRID_THIN_AIR_MASK		= 0x00;
 	static const byte GRID_LEFT_SOLID_MASK		= 0x01;
@@ -59,7 +63,7 @@ public:
 	*/
 	void Print(void);
 
-	GridLayer(int iRows, int iCols);
+	GridLayer(int iRows, int iCols, json jGridConfig);
 };
 
 class TileLayer {
@@ -126,7 +130,7 @@ public:
 	void Display(ALLEGRO_DISPLAY* bDest, const Rect& rDisplayArea);
 	void Scroll(float fDx, float fDy);
 
-	TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet);
+	TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet, json jGridConfig);
 	//TileLayer(void);
 };
 

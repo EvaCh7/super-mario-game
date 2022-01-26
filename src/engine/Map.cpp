@@ -5,6 +5,9 @@
 #include "tools/csv_parser.h"
 #include "display/DisplayTools.h"
 #include "engine/Sprite.h"
+#include <list>
+#include <map>
+#include <algorithm>
 
 
 void Map::Display(Rect rViewWindow)
@@ -38,16 +41,13 @@ Map::Map(json jConfig) {
 	/*
 	* Create Tile Layer and parse layers
 	*/
-	TileLayer *tlLayer = new TileLayer(100, 300, this->mTiles);
+	TileLayer *tlLayer = new TileLayer(100, 300, this->mTiles, jConfig["grid"]);
 	tlLayer->SetViewWindow(Rect{0, 100 * 16 - 480, 640, 480});
 	json jMaps = jConfig["map"];
 	for (auto& itMap : jMaps) {
 		tlLayer->ParseCSV(itMap["path"]);
 	}
 	this->tlLayer = tlLayer;
-	//tlLayer->GetGridLayer()->ComputeTileGridBlocks(tlLayer->GetTileMap());
-	//std::cout
-	//printf("|||%d|||", tlLayer->GetGridLayer()->GetGridTile(360, 43));
 }
 
 
@@ -186,9 +186,9 @@ void TileLayer::Scroll(float fDx, float fDy)
 	// todo: move vwindow
 }
 
-TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet) :
+TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet, json jGridConfig) :
 	rViewWindow(Rect{ 0, 0, 0, 0 }),
-	glLayer(iRows * 4, iCols * 4),
+	glLayer(iRows * 4, iCols * 4, jGridConfig),
 	mTileSet(mTileSet),
 	iRows(iRows),
 	iCols(iCols)
@@ -206,27 +206,35 @@ TileLayer::TileLayer(int iRows, int iCols, std::map<int, Bitmap*> mTileSet) :
 
 void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 {
+	std::list<int> lEmptyList = mGridMasks.find(std::string("empty"))->second;
+	std::list<int> lSolidList = mGridMasks.find(std::string("solid"))->second;
+
 	for (int i = 0; i < 100; ++i) {
 		for (int j = 0; j < 300; ++j) {
 			
 			int tile = tlTileMap[i][j];
 
 			if (tile == -1) continue;
-
 			this->SetGridTileBlock(j, i, GridLayer::GRID_EMPTY_TILE);
-			if (tlTileMap[i][j] == 79) {
+
+
+			if (std::find(lSolidList.begin(), lSolidList.end(), tile) != lSolidList.end()) {
 				this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
 			}
-			if (tile == 0 || tile == 1 || tile == 2) {
-				//std::cout << "aa";
-				this->SetGridTileBlock(j, i, GridLayer::GRID_RIGHT_SOLID_MASK);
-			}
-			if (tile == 21) {
-				//this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
-			}
-			if (tile == 22) {
-				this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
-			}
+
+			//if (tlTileMap[i][j] == 79) {
+			//	this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
+			//}
+			//if (tile == 0 || tile == 1 || tile == 2) {
+			//	//std::cout << "aa";
+			//	this->SetGridTileBlock(j, i, GridLayer::GRID_RIGHT_SOLID_MASK);
+			//}
+			//if (tile == 21) {
+			//	//this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
+			//}
+			//if (tile == 22) {
+			//	this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
+			//}
 		}
 	}
 
@@ -266,9 +274,10 @@ void GridLayer::Print(void)
 	}
 }
 
-GridLayer::GridLayer(int iRows, int iCols) :
+GridLayer::GridLayer(int iRows, int iCols, json jGridConfig) :
 	iRows(iRows),
-	iCols(iCols)
+	iCols(iCols),
+	jConfig(jGridConfig)
 {
 	// Allocate
 	this->sTotal = iRows * iCols;
@@ -276,6 +285,19 @@ GridLayer::GridLayer(int iRows, int iCols) :
 	for (int i = 0; i < iRows; ++i) {
 		this->vGrid[i] = new int[iCols];
 		//memset(this->vGrid[i], GridLayer::GRID_EMPTY_TILE, iCols * sizeof(int)); // not sure if needed
+	}
+
+	/*
+	* Parse Config
+	*/
+	json j;
+	
+	for (json::iterator it = jConfig.begin(); it != jConfig.end(); ++it) {
+		std::list<int> lConf;
+		for (auto b : *it) {
+			lConf.push_back((int)b);
+		}
+		mGridMasks.insert({ it.key(), lConf });
 	}
 }
 

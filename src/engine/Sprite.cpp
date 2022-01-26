@@ -25,15 +25,6 @@ MotionQuantizer& Sprite::GetMotionQuantizer(void)
 void Sprite::Move(int dx, int dy)
 {
 	this->GetMotionQuantizer().Move(this->GetBox(), &dx, &dy);
-	/*if (this->GetGravityHandler().IsFalling()) {
-		int dyy = 4;
-		int dxx = 0;
-		this->GetMotionQuantizer().Move(this->GetBox(), &dxx, &dyy);
-	}*/
-	/*s->x += *dx;
-	s->y += *dy;*/
-	/*this->x += dx;
-	this->y += dy;*/
 }
 
 Sprite::Mover Sprite::MakeSpriteGridLayerMover(GridLayer* glLayer) {
@@ -53,30 +44,6 @@ void SpriteManager::Remove(Sprite* s) {
 
 
 }
-
-//void MotionQuantizer::Move(const Rect& r, int* dx, int* dy) {
-//	if (!used)
-//		mover(r, dx, dy);
-//	else
-//		do {
-//			auto sign_x = number_sign(*dx);
-//			auto sign_y = number_sign(*dy);
-//			auto dxFinal = sign_x * std::min(horizMax, sign_x * *dx);
-//			auto dyFinal = sign_y * std::min(vertMax, sign_y * *dy);
-//			mover(r, &dxFinal, &dyFinal);
-//			if (!dxFinal) // X motion denied
-//				*dx = 0;
-//			else
-//				*dx -= dxFinal;
-//			if (!dyFinal) // Y motion denied
-//				*dy = 0;
-//			else
-//				*dy -= dyFinal;
-//		} while (*dx || *dy);
-//}
-
-
-
 
 template <class T> bool clip_rect(
 	T x, T y, T w, T h,
@@ -124,43 +91,17 @@ bool Clipper::Clip(const Rect& r, const Rect& dpyArea, Point* dpyPos, Rect* clip
 }
 
 
-void Sprite::Display(Bitmap* dest, const Rect& dpyArea) const {
-
-
+void Sprite::Display(Bitmap* dest, const Rect& dpyArea) const 
+{
 	Rect clippedBox;
 	Point dpyPos;
 
-	//printf("{%x, %x, %x, %x}\n", dpyArea.x, dpyArea.y, dpyArea.w, dpyArea.h);
 	Blit(
 		dest,
 		(Rect&)dpyArea,
 		this->bitmap,
 		(Rect&)Rect{0, 0, 16, 16}
 		);
-	//currFilm->GetBitmap(),//returns mitmap of mariooooooo
-		//clippedFrame
-
-
-	/*
-
-	if (clipper.Clip(GetBox(), dpyArea, &dpyPos, &clippedBox)) {
-		Rect clippedFrame{
-		frameBox.x + clippedBox.x,
-		frameBox.y + clippedBox.y,
-		clippedBox.w,
-		clippedBox.h
-		};
-		Blit(
-			dest,
-			dpyPos,
-			this->mario
-			//currFilm->GetBitmap(),//returns mitmap of mariooooooo
-			clippedFrame,
-
-		);
-	}
-	*/
-	
 }
 const Clipper MakeTileLayerClipper(TileLayer* layer) {
 	return Clipper().SetView(
