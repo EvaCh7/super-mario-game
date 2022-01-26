@@ -160,15 +160,10 @@ public:
 		return singleton;
 	}
 };
-template <typename Tnum>
-int number_sign(Tnum x) {
-	return x > 0 ? 1 : x < 0 ? -1 : 0;
-}
-
-
-
-
-
+//template <typename Tnum>
+//int number_sign(Tnum x) {
+//	return x > 0 ? 1 : x < 0 ? -1 : 0;
+//}
 
 class Clipper {
 public:

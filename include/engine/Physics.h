@@ -3,6 +3,7 @@
 #include <functional>
 #include "engine/Structs.h"
 
+class Sprite;
 class GravityHandler {
 private:
 	bool bGravityAddicted = false;
@@ -10,7 +11,9 @@ private:
 	bool bIsJumping = false;
 	
 	int lGravity = 1;
-	int lJumpSpeed = -20;
+	int lJumpSpeed = -10;
+	int lBaseJumpSpeed = 10;
+	int lYVelocity = 0;
 
 
 	
@@ -23,9 +26,22 @@ public:
 	void SetOnStartFalling(std::function<void(void)> f);
 	void SetOnStopFalling(std::function<void(void)> f);
 
-	//static void ProgressPhysics(Sprite *s);
+	void Jump(void);
 
-	bool IsFalling();
+	//static void ProgressPhysics(Sprite *s);
+	bool IsJumping(void);
+	bool IsFalling(void);
+	int GetGravity(void);
+	int GetJumpSpeed(void);
+	int GetYVelocity(void);
+	int GetBaseSpeed(void);
+
+	void SetJumpSpeed(int);
+	void SetYVelocity(int);
+	void SetFalling(bool);
+	void SetJumping(bool);
+
+
 	void Enable(void);
 	void Reset(void);
 	void Check(Rect r);

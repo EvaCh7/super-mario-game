@@ -67,7 +67,7 @@ void SuperMario::Load(void) {
 	//addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
 	
 	str = "walk1";
-	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 25, 100 * 16 - 4 * 40);
+	//addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 25, 100 * 16 - 4 * 40);
 	str = "state1";
 
 	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
@@ -88,6 +88,7 @@ void SuperMario::Load(void) {
 		s->GetGravityHandler().Enable();
 		s->GetGravityHandler().SetOnSolidGroud(
 			[glLayer](Rect r){
+				printf("Fell On: {%d %d %d %d}\n", r.x, r.y, r.w, r.h);
 				return glLayer->IsOnSolidGround(r);
 			}
 		);

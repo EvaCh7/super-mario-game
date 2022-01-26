@@ -397,9 +397,10 @@ void GridLayer::FilterGridMotionDown(Rect rRect, int* dy)
 	int currGridY = currPixelY >> 2;
 	int nextGridY = nextPixelY >> 2;
 
-	if (currGridY == nextGridY)
+	if (currGridY == nextGridY) {
+		printf("Here\n");
 		return;
-
+	}
 	int currPixelX = rRect.x;
 	int trgtPixelX = currPixelX + rRect.w;
 	int currGridX = currPixelX >> 2;
@@ -414,6 +415,10 @@ void GridLayer::FilterGridMotionDown(Rect rRect, int* dy)
 	
 	if (!bCanPass)
 		*dy = 0;
+	else {
+		*dy = (nextGridY << 2) - currPixelY;
+	}
+
 
 	//currPixelY += rRect.h;
 
