@@ -37,6 +37,7 @@ void Game::PhysicsHandler(void) {
 			gh.SetYVelocity(0);*/
 		//s->Move(0, gh.GetYVelocity());
 
+
 		if (gh.IsJumping()) {
 			gh.SetFalling(false);
 			gh.SetJumpSpeed(gh.GetJumpSpeed() + gh.GetGravity());

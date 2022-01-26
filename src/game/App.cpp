@@ -14,7 +14,7 @@ void SuperMario::Initialise(void) {
 	al_install_keyboard();
 	al_install_audio();
 	al_init_acodec_addon();
-	
+
 	Audio audio_sample;
 	//audio_sample.playSample("config/sound.mp3");
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP | ALLEGRO_MIPMAP);
@@ -27,19 +27,141 @@ void SuperMario::Initialise(void) {
 	//audio_sample.stopSample();
 
 }
-
+CollisionChecker CollisionChecker::singleton;
 SpriteManager SpriteManager::singleton;
 
 void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
 	std::list <Sprite*> tmp_list;
-	
-	Bitmap * bm = al_create_sub_bitmap(pngBitmap,x,y,width,height );
+
+	Bitmap* bm = al_create_sub_bitmap(pngBitmap, x, y, width, height);
 	//Blit(display, 0, 0, bm, 0, 0, 16, 16);
-	Sprite *s = new Sprite(i, j, bm, width, height);
+	Sprite* s = new Sprite(i, j, bm, width, height);
 	tmp_list.push_back(s);
 	SpriteManager::GetSingleton().Add(s);
 	SpriteManager::GetSingleton().AddTypeList(id, tmp_list);
 	tmp_list.clear();
+}
+
+/*
+	initialize which characters collides with whom
+	and register action after collision
+*/
+
+
+void registerCollisionsActions() {
+	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+
+	for (Sprite* ubaluba : SpriteManager::GetSingleton().GetTypeList("enemy_mushroom"))
+	{
+
+		CollisionChecker::GetSingleton().Register(mario, ubaluba,
+			[](Sprite* s1, Sprite* s2) {
+				//action if mario collides with uba luba
+				//printf("mario collided with uba luba\n");
+				// rect1.y < rect2.y + rect2.h
+				printf("===================================\n");
+				if (s1->GetBox().y <= s2->GetBox().y - s2->GetBox().h+4) {
+
+					printf("mario smashed uba luban\n");
+
+					SpriteManager::GetSingleton().RemoveTypeList("enemy_mushroom", s2);
+
+				}
+				else {
+					printf("mario died from uba luba\n");
+				}
+				printf("===================================\n");
+
+					//return false;
+
+
+
+
+
+			}
+		);
+
+
+
+
+	}
+
+	for (Sprite* enemy_bird : SpriteManager::GetSingleton().GetTypeList("enemy_bird"))
+	{
+
+		CollisionChecker::GetSingleton().Register(mario, enemy_bird,
+			[](Sprite* s1, Sprite* s2) {
+				//action if mario collides with uba luba
+				//printf("mario collided with birddddddd\n");
+
+
+				printf("===================================\n");
+				if (s1->GetBox().y <= s2->GetBox().y - s2->GetBox().h + 8) {
+
+					printf("mario smashed bird\n");
+
+					SpriteManager::GetSingleton().RemoveTypeList("enemy_bird", s2);
+
+				}
+				else {
+					printf("mario died from bird \n");
+				}
+				printf("===================================\n");
+
+
+			}
+		);
+
+
+
+
+	}
+
+	for (Sprite* enemy_turtle : SpriteManager::GetSingleton().GetTypeList("enemy_turtle"))
+	{
+
+		CollisionChecker::GetSingleton().Register(mario, enemy_turtle,
+			[](Sprite* s1, Sprite* s2) {
+				printf("===================================\n");
+				if (s1->GetBox().y <= s2->GetBox().y - s2->GetBox().h + 8) {
+
+					printf("mario smashed bird\n");
+
+					SpriteManager::GetSingleton().RemoveTypeList("enemy_turtle", s2);
+
+				}
+				else {
+					printf("mario died from bird \n");
+				}
+				printf("===================================\n");
+
+			}
+		);
+
+
+
+
+	}
+
+	for (Sprite* enemy_piranha_plant : SpriteManager::GetSingleton().GetTypeList("enemy_piranha_plant"))
+	{
+
+		CollisionChecker::GetSingleton().Register(mario, enemy_piranha_plant,
+			[](Sprite* s1, Sprite* s2) {
+
+
+				printf("mario died from piranha\n");
+
+				//action if mario collides with uba luba
+				//printf("mario  collided with piranha plant\n");
+
+			}
+		);
+
+
+
+
+	}
 }
 void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
@@ -51,6 +173,8 @@ void SuperMario::Load(void) {
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
 	this->game.SetPhysics(std::bind(&Game::PhysicsHandler, &this->game));
+	this->game.SetCollisionChecking(std::bind(&Game::CollisionHandler, &this->game));
+
 
 
 	/*
@@ -68,13 +192,21 @@ void SuperMario::Load(void) {
 
 	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm, 16 * 3, 100 * 16 - 10 * 16);
 	//addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
-	
-	//addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies);
-	//addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies);
-	
+	str = "right1";
+	addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies, 16 * 26, 100 * 16 - 4 * 40);
+
+	addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies, 16 * 30, 100 * 16 - 4 * 40);
+
 	str = "walk1";
-	//addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 25, 100 * 16 - 4 * 40);
+	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 34, 100 * 16 - 4 * 40);
 	str = "state1";
+	addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies, 16 * 38, 100 * 16 - 4 * 40);
+
+
+	registerCollisionsActions();
+
+
+
 
 	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
 
@@ -82,7 +214,10 @@ void SuperMario::Load(void) {
 	* Ready Sprites
 	*/
 	GridLayer* glLayer = this->game.mMap->GetTileLayer()->GetGridLayer();
-	for (Sprite *s : SpriteManager::GetSingleton().GetDisplayList()) {
+	for (Sprite* s : SpriteManager::GetSingleton().GetDisplayList()) {
+
+
+
 		/*
 		* Default Mover
 		*/
@@ -93,20 +228,20 @@ void SuperMario::Load(void) {
 		*/
 		s->GetGravityHandler().Enable();
 		s->GetGravityHandler().SetOnSolidGroud(
-			[glLayer](Rect r){
-				printf("Fell On: {%d %d %d %d}\n", r.x, r.y, r.w, r.h);
+			[glLayer](Rect r) {
+				//printf("Fell On: {%d %d %d %d}\n", r.x, r.y, r.w, r.h);
 				return glLayer->IsOnSolidGround(r);
 			}
 		);
 		s->GetGravityHandler().SetOnStartFalling(
 			[](void) {
-				std::cout << "Mario Starts Falling\n";
+				//std::cout << "Mario Starts Falling\n";
 				return;
 			}
 		);
 		s->GetGravityHandler().SetOnStopFalling(
 			[](void) {
-				std::cout << "Mario Stops Falling\n";
+				//std::cout << "Mario Stops Falling\n";
 				return;
 			}
 		);

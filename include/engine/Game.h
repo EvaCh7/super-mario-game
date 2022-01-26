@@ -31,6 +31,7 @@ public:
 	void InputHandler(void);
 	void RenderHandler(void);
 	void PhysicsHandler(void);
+	void CollisionHandler(void);
 
 	/*
 	* Getters

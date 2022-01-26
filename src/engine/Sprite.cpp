@@ -17,6 +17,13 @@ GravityHandler& Sprite::GetGravityHandler(void)
 	return this->hGravityHandler;
 }
 
+void  SpriteManager::RemoveTypeList(std::string id, Sprite* sprite) {
+	this->types[id].remove(sprite);
+
+
+	
+}
+
 MotionQuantizer& Sprite::GetMotionQuantizer(void)
 {
 	return this->qMotionQuantizer;
@@ -110,3 +117,62 @@ const Clipper MakeTileLayerClipper(TileLayer* layer) {
 	);
 }
 
+
+
+/*
+		returns iterator to tuples list
+		finds if there is a tupple between s1 and s2
+*/
+
+
+auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::list<Entry>::iterator {
+	return std::find_if(
+		entries.begin(),
+		entries.end(),
+		[s1, s2](const Entry& e) {
+			return std::get<0>(e) == s1 && std::get<1>(e) == s2 ||
+				std::get<0>(e) == s2 && std::get<1>(e) == s1;
+		}
+	);
+}
+
+
+
+void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
+	entries.erase(Find(s1, s2));
+}
+
+
+
+/*
+	traverse the list of tuples
+	if two sprites did collision
+	call the action function of them
+*/
+void CollisionChecker::Check(void) const {
+	for (auto& e : entries)
+		if (std::get<0>(e)->CollisionCheck(std::get<1>(e)))
+			std::get<2>(e)(std::get<0>(e), std::get<1>(e));
+}
+
+
+
+
+bool Sprite::CollisionCheck(Sprite* s) {
+	
+	if (this->GetBox().x < s->GetBox().x + s->GetBox().w &&
+		this->GetBox().x + this->GetBox().w > s->GetBox().x &&
+		this->GetBox().y < s->GetBox().y + s->GetBox().h &&
+		this->GetBox().h + this->GetBox().y > s->GetBox().y) {
+		// collision detected!
+		//printf("red dragon called green light\n");
+		return true;
+		//this.color("green");
+	}
+	else {
+		// no collision
+		return false;
+		// 
+		//this.color("blue");
+	}
+}

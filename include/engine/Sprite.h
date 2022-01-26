@@ -8,7 +8,7 @@
 
 #include <engine/Structs.h>
 #include <engine/Map.h>
-#include "engine/Physics.h"
+#include <engine/Physics.h>
 
 //class Clipper;
 //class MotionQuantizer;
@@ -100,7 +100,7 @@ public:
 	auto GetTypeId(void) -> const std::string& { return typeId; }
 	void SetVisibility(bool v) { isVisible = v; }
 	bool IsVisible(void) const { return isVisible; }
-	//bool CollisionCheck(const Sprite* s) const;
+	bool CollisionCheck( Sprite* s);
 	void Display(Bitmap* dest, const Rect& dpyArea) const;
 
 
@@ -184,5 +184,36 @@ public:
 	Clipper(void) = default;
 	Clipper(const Clipper&) = default;
 };
+
+
+class CollisionChecker final {
+public:
+	using Action = std::function<void(Sprite* s1, Sprite* s2)>;
+	static CollisionChecker singleton;
+protected:
+	using Entry = std::tuple<Sprite*, Sprite*, Action>;
+	std::list< std::tuple<Sprite*, Sprite*, Action> > entries;
+	/*	
+		returns iterator to tuples list
+		finds if there is a tupple between s1 and s2 
+	*/
+	auto Find(Sprite* s1, Sprite* s2)->std::list< std::tuple<Sprite*, Sprite*, Action>>::iterator;
+public:
+	void Register(Sprite* s1, Sprite* s2, const Action& f)
+	{
+		assert(!In(s1, s2)); entries.push_back(std::make_tuple(s1, s2, f));
+	}
+	void Cancel(Sprite* s1, Sprite* s2);
+	void Check(void) const;
+	static auto GetSingleton(void) -> CollisionChecker&
+	{
+		return singleton;
+	}
+	static auto GetSingletonConst(void) -> const CollisionChecker&
+	{
+		return singleton;
+	}
+};
+
 
 #endif
