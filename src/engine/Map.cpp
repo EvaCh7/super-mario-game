@@ -347,6 +347,18 @@ bool GridLayer::IsOnSolidGround(Rect rRect) {
 	return !dy;
 }
 
+bool GridLayer::CanMoveLeft(Rect rRect) {
+	int dx = 8;
+	FilterGridMotionLeft(rRect, &dx);
+	return !dx;
+}
+
+bool GridLayer::CanMoveRight(Rect rRect) {
+	int dx = 8;
+	FilterGridMotionRight(rRect, &dx);
+	return !dx;
+}
+
 void GridLayer::FilterGridMotionLeft(Rect rRect, int* dx)
 {
 	auto x1_next = rRect.x + *dx;

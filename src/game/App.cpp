@@ -53,37 +53,18 @@ void registerCollisionsActions() {
 
 	for (Sprite* ubaluba : SpriteManager::GetSingleton().GetTypeList("enemy_mushroom"))
 	{
-
 		CollisionChecker::GetSingleton().Register(mario, ubaluba,
 			[](Sprite* s1, Sprite* s2) {
-				//action if mario collides with uba luba
-				//printf("mario collided with uba luba\n");
-				// rect1.y < rect2.y + rect2.h
-				printf("===================================\n");
-				if (s1->GetBox().y <= s2->GetBox().y - s2->GetBox().h+4) {
-
-					printf("mario smashed uba luban\n");
-
-					SpriteManager::GetSingleton().RemoveTypeList("enemy_mushroom", s2);
-
+				if (s1->GetBox().y <= s2->GetBox().y) {
+					/*SpriteManager::GetSingleton().Remove(s2);
+					s1->GetGravityHandler().Jump();*/
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
 				}
 				else {
 					printf("mario died from uba luba\n");
 				}
-				printf("===================================\n");
-
-					//return false;
-
-
-
-
-
 			}
 		);
-
-
-
-
 	}
 
 	for (Sprite* enemy_bird : SpriteManager::GetSingleton().GetTypeList("enemy_bird"))
@@ -96,11 +77,14 @@ void registerCollisionsActions() {
 
 
 				printf("===================================\n");
-				if (s1->GetBox().y <= s2->GetBox().y - s2->GetBox().h + 8) {
+				if (s1->GetBox().y <= s2->GetBox().y) {
 
 					printf("mario smashed bird\n");
 
 					SpriteManager::GetSingleton().RemoveTypeList("enemy_bird", s2);
+					SpriteManager::GetSingleton().Remove(s2);
+					//CollisionChecker::GetSingleton().Cancel(s1, s2);
+					s1->GetGravityHandler().Jump();
 
 				}
 				else {
@@ -123,11 +107,14 @@ void registerCollisionsActions() {
 		CollisionChecker::GetSingleton().Register(mario, enemy_turtle,
 			[](Sprite* s1, Sprite* s2) {
 				printf("===================================\n");
-				if (s1->GetBox().y <= s2->GetBox().y - s2->GetBox().h + 8) {
+				if (s1->GetBox().y <= s2->GetBox().y) {
 
 					printf("mario smashed bird\n");
 
 					SpriteManager::GetSingleton().RemoveTypeList("enemy_turtle", s2);
+					SpriteManager::GetSingleton().Remove(s2);
+					//CollisionChecker::GetSingleton().Cancel(s1, s2);
+					s1->GetGravityHandler().Jump();
 
 				}
 				else {
@@ -152,6 +139,19 @@ void registerCollisionsActions() {
 
 				printf("mario died from piranha\n");
 
+				if (s1->GetBox().y <= s2->GetBox().y) {
+
+					printf("mario smashed bird\n");
+
+					SpriteManager::GetSingleton().RemoveTypeList("enemy_turtle", s2);
+					SpriteManager::GetSingleton().Remove(s2);
+					//CollisionChecker::GetSingleton().Cancel(s1, s2);
+					s1->GetGravityHandler().Jump();
+
+				}
+				else {
+					printf("mario died from bird \n");
+				}
 				//action if mario collides with uba luba
 				//printf("mario  collided with piranha plant\n");
 
@@ -163,6 +163,7 @@ void registerCollisionsActions() {
 
 	}
 }
+
 void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
@@ -174,6 +175,7 @@ void SuperMario::Load(void) {
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
 	this->game.SetPhysics(std::bind(&Game::PhysicsHandler, &this->game));
 	this->game.SetCollisionChecking(std::bind(&Game::CollisionHandler, &this->game));
+	this->game.SetAI(std::bind(&Game::AIHandler, &this->game));
 
 
 
@@ -198,7 +200,7 @@ void SuperMario::Load(void) {
 	addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies, 16 * 30, 100 * 16 - 4 * 40);
 
 	str = "walk1";
-	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 34, 100 * 16 - 4 * 40);
+	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 34, 100 * 16 - 4 * 20);
 	str = "state1";
 	addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies, 16 * 38, 100 * 16 - 4 * 40);
 

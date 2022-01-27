@@ -107,7 +107,7 @@ void Sprite::Display(Bitmap* dest, const Rect& dpyArea) const
 		dest,
 		(Rect&)dpyArea,
 		this->bitmap,
-		(Rect&)Rect{0, 0, 16, 16}
+		(Rect&)Rect{0, 0, this->GetBox().w, this->GetBox().h }
 		);
 }
 const Clipper MakeTileLayerClipper(TileLayer* layer) {
@@ -150,9 +150,12 @@ void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
 	call the action function of them
 */
 void CollisionChecker::Check(void) const {
-	for (auto& e : entries)
+	for (auto &e : entries) {
+		Sprite* s1 = std::get<0>(e);
+	
 		if (std::get<0>(e)->CollisionCheck(std::get<1>(e)))
 			std::get<2>(e)(std::get<0>(e), std::get<1>(e));
+	}
 }
 
 

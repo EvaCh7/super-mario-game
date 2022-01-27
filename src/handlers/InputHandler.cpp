@@ -38,17 +38,24 @@ void Game::InputHandler(void) {
 				sMario->GetGravityHandler().Jump();
 		}*/
 
+		int mult = 1;
+		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_Z)) {
+			mult = 2;
+		}
+		
+
+
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
 			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling())
 				sMario->GetGravityHandler().Jump();
 		}
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
-			sMario->Move(4, 0);
+			sMario->Move(4 * mult, 0);
 			//this->iViewWindowX++;
 		}
 		if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
-			sMario->Move(-4, 0);
+			sMario->Move(-4 * mult, 0);
 			//this->iViewWindowX--;
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {

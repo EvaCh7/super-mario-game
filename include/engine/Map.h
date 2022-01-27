@@ -48,6 +48,8 @@ public:
 
 
 	bool IsOnSolidGround(Rect rRect);
+	bool CanMoveLeft(Rect rRect);
+	bool CanMoveRight(Rect rRect);
 	
 	int** GetBuffer(void);
 	const int** GetBuffer(void) const;

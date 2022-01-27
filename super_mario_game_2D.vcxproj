@@ -180,6 +180,7 @@
     <ClCompile Include="src\engine\Sprite.cpp" />
     <ClCompile Include="src\engine\Structs.cpp" />
     <ClCompile Include="src\game\App.cpp" />
+    <ClCompile Include="src\handlers\AIHandler.cpp" />
     <ClCompile Include="src\handlers\InputHandler.cpp" />
     <ClCompile Include="src\handlers\PhysicsHandler.cpp" />
     <ClCompile Include="src\handlers\RenderHandler.cpp" />
