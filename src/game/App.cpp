@@ -27,8 +27,10 @@ void SuperMario::Initialise(void) {
 	//audio_sample.stopSample();
 
 }
+
 CollisionChecker CollisionChecker::singleton;
 SpriteManager SpriteManager::singleton;
+FilmHolder FilmHolder::holder;
 
 void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
 	std::list <Sprite*> tmp_list;
@@ -55,7 +57,7 @@ void registerCollisionsActions() {
 	{
 		CollisionChecker::GetSingleton().Register(mario, ubaluba,
 			[](Sprite* s1, Sprite* s2) {
-				if (s1->GetBox().y <= s2->GetBox().y) {
+				if (s1->GetBox().y < s2->GetBox().y) {
 					SpriteManager::GetSingleton().Remove(s2);
 					s1->GetGravityHandler().Jump();
 					CollisionChecker::GetSingleton().Cancel(s1, s2);
@@ -77,7 +79,7 @@ void registerCollisionsActions() {
 
 
 				printf("===================================\n");
-				if (s1->GetBox().y <= s2->GetBox().y) {
+				if (s1->GetBox().y < s2->GetBox().y) {
 
 					printf("mario smashed bird\n");
 
@@ -107,7 +109,7 @@ void registerCollisionsActions() {
 		CollisionChecker::GetSingleton().Register(mario, enemy_turtle,
 			[](Sprite* s1, Sprite* s2) {
 				printf("===================================\n");
-				if (s1->GetBox().y <= s2->GetBox().y) {
+				if (s1->GetBox().y < s2->GetBox().y) {
 
 					printf("mario smashed bird\n");
 
@@ -139,7 +141,7 @@ void registerCollisionsActions() {
 
 				printf("mario died from piranha\n");
 
-				if (s1->GetBox().y <= s2->GetBox().y) {
+				if (s1->GetBox().y < s2->GetBox().y) {
 
 					printf("mario smashed bird\n");
 
@@ -193,16 +195,41 @@ void SuperMario::Load(void) {
 	std::string str = "right_stand";
 
 	addItemToTypeList("mario", js_mario["small_mario"][str]["x_pos"], js_mario["small_mario"][str]["y_pos"], js_mario["small_mario"][str]["width"], js_mario["small_mario"][str]["height"], bm, 16 * 3, 100 * 16 - 10 * 16);
+	
+	
+	/*
+	* MARIO TURBO ANIMATIONS
+	*/
+	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+	
+	FilmHolder::Get().Load("mario.running.right", js_mario["small_mario"]["running_right"], bm);
+	FilmHolder::Get().Load("mario.running.left", js_mario["small_mario"]["running_left"], bm);
+	FilmHolder::Get().Load("mario.jumping.right", js_mario["small_mario"]["jumping_right"], bm);
+	FilmHolder::Get().Load("mario.jumping.left", js_mario["small_mario"]["jumping_left"], bm);
+
+	mario->currFilm = FilmHolder::Get().GetFilm("mario.running.right");
+
+
+
+
+
+
+
+
+
+
+
+
 	//addItemToTypeList("big_mario", js_mario["big_mario"][str]["x_pos"], js_mario["big_mario"][str]["y_pos"], js_mario["big_mario"][str]["width"], js_mario["big_mario"][str]["height"], bm);
 	str = "right1";
-	addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies, 16 * 26, 100 * 16 - 4 * 40);
+	//addItemToTypeList("enemy_bird", js_enemies["enemy_bird"][str]["x_pos"], js_enemies["enemy_bird"][str]["y_pos"], js_enemies["enemy_bird"][str]["width"], js_enemies["enemy_bird"][str]["height"], bm_enemies, 16 * 26, 100 * 16 - 4 * 40);
 
-	addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies, 16 * 30, 100 * 16 - 4 * 40);
+	//addItemToTypeList("enemy_turtle", js_enemies["enemy_turtle"][str]["x_pos"], js_enemies["enemy_turtle"][str]["y_pos"], js_enemies["enemy_turtle"][str]["width"], js_enemies["enemy_turtle"][str]["height"], bm_enemies, 16 * 30, 100 * 16 - 4 * 40);
 
 	str = "walk1";
-	addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 34, 100 * 16 - 4 * 20);
+	//addItemToTypeList("enemy_mushroom", js_enemies["enemy_mushroom"][str]["x_pos"], js_enemies["enemy_mushroom"][str]["y_pos"], js_enemies["enemy_mushroom"][str]["width"], js_enemies["enemy_mushroom"][str]["height"], bm_enemies, 16 * 34, 100 * 16 - 4 * 20);
 	str = "state1";
-	addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies, 16 * 38, 100 * 16 - 4 * 40);
+	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies, 16 * 38, 100 * 16 - 4 * 40);
 
 
 	registerCollisionsActions();

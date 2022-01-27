@@ -46,20 +46,42 @@ void Game::InputHandler(void) {
 
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling())
+			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
 				sMario->GetGravityHandler().Jump();
+				if (sMario->bLooking) {
+					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.right");
+				}
+				else {
+					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.left");
+				}
+			}
 		}
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
 			sMario->Move(4 * mult, 0);
+			
+			if (!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
+				sMario->currFilm = FilmHolder::Get().GetFilm("mario.running.right");
+			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
+			sMario->bLooking = true;
 			//this->iViewWindowX++;
 		}
 		if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
 			sMario->Move(-4 * mult, 0);
+
+			if(!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
+				sMario->currFilm = FilmHolder::Get().GetFilm("mario.running.left");
+
+
+			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
+			sMario->bLooking = false;
 			//this->iViewWindowX--;
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
 			sMario->Move(0, 4);
+		}
+		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_UP)) {
+			sMario->SetFrame((sMario->GetFrame() + 1 ) % sMario->currFilm->GetTotalFrames());
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT) && al_key_down(&ksKeyboardState, ALLEGRO_KEY_UP)) {
 			//sMario->Move(8, 4);

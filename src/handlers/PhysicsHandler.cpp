@@ -8,7 +8,7 @@ void Game::PhysicsHandler(void) {
 	*/
 	for (Sprite *s : SpriteManager::GetSingleton().GetDisplayList()) {
 		GravityHandler &gh = s->GetGravityHandler();
-
+		Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
 		/*GravityHandler::ProgressPhysics(s);*/
 		//if (gh.IsJumping()) {
 		//	gh.SetFalling(false);
@@ -52,6 +52,8 @@ void Game::PhysicsHandler(void) {
 			}
 		}
 
+	
+
 		if(gh.GetYVelocity() != 0)
 			s->Move(0, gh.GetYVelocity());
 		else {
@@ -60,6 +62,7 @@ void Game::PhysicsHandler(void) {
 				s->Move(0, 4);
 			}
 		}
+
 
 		//gh.Check(s->GetBox());
 		/*if (gh.IsFalling())

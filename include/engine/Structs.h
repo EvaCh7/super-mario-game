@@ -4,6 +4,12 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <string>
+#include <map>
+#include "tools/json.h"
 
 #define MAX_WIDTH	1024
 #define MAX_HEIGHT	256

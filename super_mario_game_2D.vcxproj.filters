@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Engine\Physics">
       <UniqueIdentifier>{1b8688d8-105c-4e82-b725-83dea4883c99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Animations">
+      <UniqueIdentifier>{2674f014-5a24-4391-bdd0-7b3d12d4e961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Animations">
+      <UniqueIdentifier>{0937efa8-abe9-43b3-9447-7fdec0061b33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\handlers\RenderHandler.cpp">
@@ -120,6 +126,18 @@
     <ClCompile Include="src\handlers\AIHandler.cpp">
       <Filter>Source Files\Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="include\engine\Animations\Film.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\animations\Film.cpp">
+      <Filter>Source Files\Engine\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\animations\Animator.cpp">
+      <Filter>Source Files\Engine\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\animations\Animation.cpp">
+      <Filter>Source Files\Engine\Animations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -162,6 +180,18 @@
     <None Include="config\map\first_map.json">
       <Filter>Resource Files\config\map</Filter>
     </None>
+    <None Include="resources\map\final_map\final_map_Front.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\final_map\final_map_Ground.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\final_map\final_map_Objects.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
+    <None Include="resources\map\final_map\final_map_Sky.csv">
+      <Filter>Resource Files\resources\map</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\display\DisplayTools.h">
@@ -200,6 +230,15 @@
     <ClInclude Include="include\engine\Physics.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="include\engine\Animations\Film.h">
+      <Filter>Header Files\Engine\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Animations\Animation.h">
+      <Filter>Header Files\Engine\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\Animations\Animator.h">
+      <Filter>Header Files\Engine\Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\map\super_mario_sprite_sheet.png">
@@ -213,6 +252,9 @@
     </Image>
     <Image Include="resources\sprites\marioi.png">
       <Filter>Resource Files\resources\sprite</Filter>
+    </Image>
+    <Image Include="resources\map\final_map\DirtBrick_Assets_V5.png">
+      <Filter>Resource Files\resources\map</Filter>
     </Image>
   </ItemGroup>
 </Project>

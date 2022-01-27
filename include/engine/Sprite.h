@@ -9,12 +9,12 @@
 #include <engine/Structs.h>
 #include <engine/Map.h>
 #include <engine/Physics.h>
+#include "engine/animations/Film.h"
 
 //class Clipper;
 //class MotionQuantizer;
 //class BoundingArea;
 
-class AnimationFilm;
 class Sprite {
 public:
 	using Mover = std::function<void(const Rect&, int* dx, int* dy)>;
@@ -23,16 +23,12 @@ private:
 	int  frameNo = 0;
 	Rect frameBox; // inside the film
 	bool isVisible = false;
-	AnimationFilm* currFilm = nullptr;
+
 	//BoundingArea* boundingArea = nullptr;
 	unsigned zorder = 0;
 	std::string typeId, stateId;
 	Mover mover;
 
-
-	//MotionQuantizer quantizer;
-	
-	
 	Bitmap* bitmap;
 
 
@@ -44,7 +40,8 @@ private:
 
 
 public:
-
+	bool bLooking = true;
+	Film* currFilm = nullptr;
 	/*
 	* Physics
 	*/
@@ -69,17 +66,11 @@ public:
 	void SetPos(int _x, int _y) { x = _x; y = _y; }
 	void SetZorder(unsigned z) { zorder = z; }
 	unsigned GetZorder(void) { return zorder; }
-	/*
-	void SetFrame(byte i) {
-		if (i != frameNo) {
-			assert(i < currFilm->GetTotalFrames());
-			frameBox = currFilm->GetFrameBox(frameNo = i);
-		}
-	}
-	*/
 	
-
-
+	void SetFrame(byte i) {
+		this->frameNo = i;
+	}
+	
 	byte GetFrame(void) const { return frameNo; }
 	/*
 	void SetBoundingArea(const BoundingArea& area)

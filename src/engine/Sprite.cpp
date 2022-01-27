@@ -98,17 +98,17 @@ bool Clipper::Clip(const Rect& r, const Rect& dpyArea, Point* dpyPos, Rect* clip
 }
 
 
-void Sprite::Display(Bitmap* dest, const Rect& dpyArea) const 
+void Sprite::Display(Bitmap* dest, const Rect& displayArea) const 
 {
 	Rect clippedBox;
 	Point dpyPos;
 
 	Blit(
 		dest,
-		(Rect&)dpyArea,
-		this->bitmap,
-		(Rect&)Rect{0, 0, this->GetBox().w, this->GetBox().h }
-		);
+		(Rect&)displayArea,
+		this->currFilm->GetBitmap(),
+		(Rect&)this->currFilm->GetFrameBox(this->frameNo)
+	);
 }
 const Clipper MakeTileLayerClipper(TileLayer* layer) {
 	return Clipper().SetView(
@@ -147,29 +147,12 @@ void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
 	}
 }
 
-
-
-/*
-	traverse the list of tuples
-	if two sprites did collision
-	call the action function of them
-*/
 void CollisionChecker::Check(void) const {
 	for (int i = 0; i < entries.size(); ++i) {
 		if (std::get<0>(entries.at(i))->CollisionCheck(std::get<1>(entries.at(i))))
 			std::get<2>(entries.at(i))(std::get<0>(entries.at(i)), std::get<1>(entries.at(i)));
 	}
-
-	/*for (auto it = entries.begin(); it != entries.end(); ++it) {
-		Sprite* s1 = std::get<0>(*it);
-	
-		if (std::get<0>(*it)->CollisionCheck(std::get<1>(*it)))
-			std::get<2>(*it)(std::get<0>(*it), std::get<1>(*it));
-	}*/
 }
-
-
-
 
 bool Sprite::CollisionCheck(Sprite* s) {
 	
