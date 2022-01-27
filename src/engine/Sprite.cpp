@@ -125,7 +125,7 @@ const Clipper MakeTileLayerClipper(TileLayer* layer) {
 */
 
 
-auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::list<Entry>::iterator {
+auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::vector<Entry>::iterator {
 	return std::find_if(
 		entries.begin(),
 		entries.end(),
@@ -139,10 +139,7 @@ auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::list<Entry>::iterato
 
 
 void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
-
-	
-	
-	std::list<Entry>::iterator iter = Find(s1, s2);
+	std::vector<Entry>::iterator iter = Find(s1, s2);
 	if (iter != entries.end()) {
 		printf("erasing from list\n");
 		entries.erase(iter);
@@ -158,12 +155,17 @@ void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
 	call the action function of them
 */
 void CollisionChecker::Check(void) const {
-	for (auto &e : entries) {
-		Sprite* s1 = std::get<0>(e);
-	
-		if (std::get<0>(e)->CollisionCheck(std::get<1>(e)))
-			std::get<2>(e)(std::get<0>(e), std::get<1>(e));
+	for (int i = 0; i < entries.size(); ++i) {
+		if (std::get<0>(entries.at(i))->CollisionCheck(std::get<1>(entries.at(i))))
+			std::get<2>(entries.at(i))(std::get<0>(entries.at(i)), std::get<1>(entries.at(i)));
 	}
+
+	/*for (auto it = entries.begin(); it != entries.end(); ++it) {
+		Sprite* s1 = std::get<0>(*it);
+	
+		if (std::get<0>(*it)->CollisionCheck(std::get<1>(*it)))
+			std::get<2>(*it)(std::get<0>(*it), std::get<1>(*it));
+	}*/
 }
 
 

@@ -192,12 +192,12 @@ public:
 	static CollisionChecker singleton;
 protected:
 	using Entry = std::tuple<Sprite*, Sprite*, Action>;
-	std::list< std::tuple<Sprite*, Sprite*, Action> > entries;
+	std::vector< std::tuple<Sprite*, Sprite*, Action> > entries;
 	/*	
 		returns iterator to tuples list
 		finds if there is a tupple between s1 and s2 
 	*/
-	auto Find(Sprite* s1, Sprite* s2)->std::list< std::tuple<Sprite*, Sprite*, Action>>::iterator;
+	auto Find(Sprite* s1, Sprite* s2)->std::vector< std::tuple<Sprite*, Sprite*, Action>>::iterator;
 public:
 	void Register(Sprite* s1, Sprite* s2, const Action& f)
 	{
