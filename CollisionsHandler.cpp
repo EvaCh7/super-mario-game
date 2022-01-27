@@ -7,4 +7,10 @@ void Game::CollisionHandler() {
 		CollisionChecker::GetSingleton().Check();
 	}*/
 	CollisionChecker::GetSingleton().Check();
+
+
+
+
+
+
 }

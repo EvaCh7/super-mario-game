@@ -139,7 +139,15 @@ auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::list<Entry>::iterato
 
 
 void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
-	entries.erase(Find(s1, s2));
+
+	
+	
+	std::list<Entry>::iterator iter = Find(s1, s2);
+	if (iter != entries.end()) {
+		printf("erasing from list\n");
+		entries.erase(iter);
+
+	}
 }
 
 

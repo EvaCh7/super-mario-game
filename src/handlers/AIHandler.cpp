@@ -7,8 +7,6 @@ void Game::AIHandler(void) {
 
 		if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveLeft(s->GetBox()))
 			s->Move(-1, 0);
-		else
-			std::cout << "Cant go left\n";
 	}
 
 

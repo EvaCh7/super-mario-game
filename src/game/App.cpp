@@ -56,8 +56,8 @@ void registerCollisionsActions() {
 		CollisionChecker::GetSingleton().Register(mario, ubaluba,
 			[](Sprite* s1, Sprite* s2) {
 				if (s1->GetBox().y <= s2->GetBox().y) {
-					/*SpriteManager::GetSingleton().Remove(s2);
-					s1->GetGravityHandler().Jump();*/
+					SpriteManager::GetSingleton().Remove(s2);
+					s1->GetGravityHandler().Jump();
 					CollisionChecker::GetSingleton().Cancel(s1, s2);
 				}
 				else {
@@ -83,7 +83,7 @@ void registerCollisionsActions() {
 
 					SpriteManager::GetSingleton().RemoveTypeList("enemy_bird", s2);
 					SpriteManager::GetSingleton().Remove(s2);
-					//CollisionChecker::GetSingleton().Cancel(s1, s2);
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
 					s1->GetGravityHandler().Jump();
 
 				}
@@ -113,7 +113,7 @@ void registerCollisionsActions() {
 
 					SpriteManager::GetSingleton().RemoveTypeList("enemy_turtle", s2);
 					SpriteManager::GetSingleton().Remove(s2);
-					//CollisionChecker::GetSingleton().Cancel(s1, s2);
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
 					s1->GetGravityHandler().Jump();
 
 				}
@@ -145,7 +145,7 @@ void registerCollisionsActions() {
 
 					SpriteManager::GetSingleton().RemoveTypeList("enemy_turtle", s2);
 					SpriteManager::GetSingleton().Remove(s2);
-					//CollisionChecker::GetSingleton().Cancel(s1, s2);
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
 					s1->GetGravityHandler().Jump();
 
 				}
