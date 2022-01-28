@@ -187,8 +187,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Audio.cpp" />
-    <ClCompile Include="CollisionsHandler.cpp" />
+    <ClCompile Include="include\engine\Animations\AnimatorManager.cpp" />
     <ClCompile Include="src\config\Config.cpp" />
     <ClCompile Include="src\display\DisplayTools.cpp" />
     <ClCompile Include="src\engine\animations\Animation.cpp" />
@@ -201,7 +200,9 @@
     <ClCompile Include="src\engine\Sprite.cpp" />
     <ClCompile Include="src\engine\Structs.cpp" />
     <ClCompile Include="src\game\App.cpp" />
+    <ClCompile Include="src\game\Audio.cpp" />
     <ClCompile Include="src\handlers\AIHandler.cpp" />
+    <ClCompile Include="src\handlers\CollisionsHandler.cpp" />
     <ClCompile Include="src\handlers\InputHandler.cpp" />
     <ClCompile Include="src\handlers\PhysicsHandler.cpp" />
     <ClCompile Include="src\handlers\RenderHandler.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="include\display\DisplayTools.h" />
     <ClInclude Include="include\engine\Animations\Animation.h" />
     <ClInclude Include="include\engine\Animations\Animator.h" />
+    <ClInclude Include="include\engine\Animations\AnimatorManager.h" />
     <ClInclude Include="include\engine\Animations\Film.h" />
     <ClInclude Include="include\engine\Game.h" />
     <ClInclude Include="include\engine\Grid.h" />

@@ -1,6 +1,8 @@
 #ifndef __ANIMATOR_H__
 #define __ANIMATOR_H__
 #include "Animation.h"
+#include "engine/Sprite.h"
+
 typedef uint64_t timestamp_t;
 
 enum animatorstate_t {
@@ -11,12 +13,17 @@ enum animatorstate_t {
 
 class Animator {
 public:
+	//function called on animation finish
 	using OnFinish = std::function<void(Animator*)>;
+	//function called on animation start
 	using OnStart = std::function<void(Animator*)>;
+	//function call on animation action
 	using OnAction = std::function<void(Animator*, const Animation&)>;
 
 protected:
+
 	timestamp_t		lastTime = 0;
+
 	animatorstate_t state = ANIMATOR_FINISHED;
 	OnFinish		onFinish;
 	OnStart			onStart;
@@ -29,41 +36,21 @@ protected:
 public:
 	void			Stop(void);
 	bool			HasFinished(void) { return state != ANIMATOR_RUNNING; }
+
 	virtual void	TimeShift(timestamp_t offset);
 	virtual void	Progress(timestamp_t currTime) = 0;
+	void NotifyAction(const Animation& anim);
+
+	//call set functions to set finish,start,action functions
 	template <typename Tfunc> void SetOnFinish(const Tfunc& f) { onFinish = f; }
 	template <typename Tfunc> void SetOnStart(const Tfunc& f) { onStart = f; }
 	template <typename Tfunc> void SetOnAction(const Tfunc& f) { onAction = f; }
+	Animator(void);
+	Animator(const Animator&) = delete;
+	Animator(Animator&&) = delete;
 };
 
-Animator(void);
-Animator(const Animator&) = delete;
-Animator(Animator&&) = delete;
 
-void Animator::Finish(bool isForced) {
-	if (!HasFinished()) {
-		state = isForced ? ANIMATOR_STOPPED : ANIMATOR_FINISHED;
-		NotifyStopped();
-	}
-}
-
-void Animator::Stop(void) {
-	Finish(true);
-}
-
-void Animator::NotifyStopped(void) {
-	if (onFinish)
-		(onFinish)(this);
-}
-
-void Animator::NotifyAction(const Animation& anim) {
-	if (onAction)
-		(onAction)(this, anim);
-}
-
-void Animator::TimeShift(timestamp_t offset) {
-	lastTime += offset;
-}
 
 class MovingAnimator : public Animator {
 protected:
@@ -83,37 +70,18 @@ public:
 	}
 
 	MovingAnimator(void) = default;
-}
+};
 
-void MovingAnimator::Progress(timestamp_t currTime) {
-	while (currTime > lastTime && (currTime - lastTime) >= anim->GetDelay) {
-		lastTime += anim->GetDelay();
-		NotifyAction(*anim);
-		if (!anim->IsForever() && ++currRep == anim->GetReps()) {
-			state = ANIMATOR_FINISHED;
-			NotifyStopped();
-			return;
-		}
-	}
-}
 
-void Sprite_MoveAction(Sprite* sprite, const MovingAnimation& anim) {
-	sprite->Move(anim.GetDx(), anim.GetDy());
-}
 
-animator->SetOnAction(
-	[sprite](Animator* animator, const Animation& anim) {
-		assert(dynamic_cast<const MovingAnimation*>(&anim));
-		Sprite_MoveAction(
-			sprite,
-			(const MovingAnimation&)anim
-		);
-	}
-);
+
+
+
+
 
 class FrameRangeAnimator : public Animator {
 protected:
-	FrameRangeAnimation*	anim = nullptr;
+	FrameRangeAnimation* anim = nullptr;
 	unsigned				currFrame = 0; // animation state
 	unsigned				currRep = 0; // animation state
 public:
@@ -130,7 +98,22 @@ public:
 		NotifyAction(*anim);
 	}
 	FrameRangeAnimator(void) = default;
+
+
+	
+
+
+
 };
+/*
+void FrameRange_Action(Sprite* sprite, Animator* animator, const FrameRangeAnimation& anim) {
+		auto* frameRangeAnimator = (FrameRangeAnimator*)animator;
+		if (frameRangeAnimator->GetCurrFrame() != anim.GetStartFrame() ||
+			frameRangeAnimator->GetCurrRep())
+			sprite->Move(anim.GetDx(), anim.GetDy());
+		sprite->SetFrame(frameRangeAnimator->GetCurrFrame());
+	}
+*/
 
 void FrameRangeAnimator::Progress(timestamp_t currTime) {
 	while (currTime > lastTime && (currTime - lastTime) >= anim->GetDelay()) {
@@ -151,18 +134,16 @@ void FrameRangeAnimator::Progress(timestamp_t currTime) {
 	}
 }
 
-void FrameRange_Action(Sprite* sprite, Animator* animator, const FrameRangeAnimation& anim) {
-	auto* frameRangeAnimator = (FrameRangeAnimator*)animator;
-	if (frameRangeAnimator->GetCurrFrame() != anim.GetStartFrame() ||
-		frameRangeAnimator->GetCurrRep())
-		sprite->Move(anim.GetDx(), anim.GetDy());
-	sprite->SetFrame(frameRangeAnimator->GetCurrFrame());
-}
+
+
+
+/*
 animator->SetOnAction(
 	[sprite](Animator* animator, const Animation& anim) {
 		FrameRange_Action(sprite, animator, (const FrameRangeAnimation&)anim);
 	}
 );
+*/
 
 
 #endif

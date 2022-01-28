@@ -39,9 +39,25 @@ public:
 	MovingAnimation(
 		const std::string& _id, unsigned _reps, int _dx, int _dy, unsigned _delay
 	);
+	//this method moves the sprite
 
+	void Sprite_MoveAction(Sprite* sprite, MovingAnimation& anim) {
+		sprite->Move(anim.GetDx(), anim.GetDy());
+	}
 
 };
+
+/*
+animator->SetOnAction(
+	[sprite](Animator* animator, const Animation& anim) {
+		assert(dynamic_cast<const MovingAnimation*>(&anim));
+		Sprite_MoveAction(
+			sprite,
+			(const MovingAnimation&)anim
+		);
+	}
+);
+*/
 
 class FrameRangeAnimation : public MovingAnimation {
 protected:
@@ -63,6 +79,9 @@ public:
 		unsigned s, unsigned e,
 		unsigned r, int dx, int dy, int d
 	) : start(s), end(e), MovingAnimation(id, r, dx, dy, d) {}
+
+
+
 };
 
 
