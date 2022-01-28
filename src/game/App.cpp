@@ -20,7 +20,7 @@ void SuperMario::Initialise(void) {
 	//audio_sample.playSample("config/sound.mp3");
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP | ALLEGRO_MIPMAP);
 	display = al_create_display(640, 480);
-	this->game.timer = al_create_timer(1.0 / 60);
+	this->game.timer = al_create_timer(1.0 / 144);
 	this->game.event_queue = al_create_event_queue();
 	al_register_event_source(this->game.event_queue, al_get_keyboard_event_source());
 	al_register_event_source(this->game.event_queue, al_get_timer_event_source(this->game.timer));

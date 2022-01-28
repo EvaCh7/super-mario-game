@@ -20,7 +20,6 @@ public:
 	using Mover = std::function<void(const Rect&, int* dx, int* dy)>;
 private:
 
-	int  frameNo = 0;
 	Rect frameBox; // inside the film
 	bool isVisible = false;
 
@@ -40,6 +39,7 @@ private:
 
 
 public:
+	int  frameNo = 0;
 	bool bLooking = true;
 	Film* currFilm = nullptr;
 	/*

@@ -110,6 +110,7 @@ void Sprite::Display(Bitmap* dest, const Rect& displayArea) const
 		(Rect&)this->currFilm->GetFrameBox(this->frameNo)
 	);
 }
+
 const Clipper MakeTileLayerClipper(TileLayer* layer) {
 	return Clipper().SetView(
 		[layer](void)

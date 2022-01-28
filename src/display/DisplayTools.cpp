@@ -25,6 +25,10 @@ void Blit(Display* dest, const Rect& rDest, Bitmap* src, const Rect& rSrc) {
 	return;
 }
 
+void BlitNoRefresh(Display* dDest, Rect& rDest, Bitmap* src, Rect& rSrc) {
+	al_draw_bitmap_region(src, rSrc.x, rSrc.y, rSrc.w, rSrc.h, rDest.x, rDest.y, 0);
+}
+
 void Blit(Bitmap *dDest, Rect& rDest,
 		Bitmap *dSrc, Rect& rSrc)
 {
@@ -37,3 +41,4 @@ void Blit(Bitmap *dDest, Rect& rDest,
 void DrawViewWindow(Display *dDisplay, unsigned int iDestX, unsigned int iDestY, Bitmap *bSource, unsigned int iSrcX, unsigned int iSrcY, unsigned int iWidth, unsigned int iHeight) {
 	Blit(dDisplay, 0, 0, bSource, iSrcX, iSrcY, 640, 480);
 }
+
