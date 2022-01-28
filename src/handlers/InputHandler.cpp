@@ -46,15 +46,15 @@ void Game::InputHandler(void) {
 
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
+			//if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
 				sMario->GetGravityHandler().Jump();
-				if (sMario->bLooking) {
+				/*if (sMario->bLooking) {
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.right");
 				}
 				else {
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.left");
-				}
-			}
+				}*/
+			//}
 		}
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
@@ -78,7 +78,7 @@ void Game::InputHandler(void) {
 			//this->iViewWindowX--;
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
-			sMario->Move(0, 4);
+			sMario->Move(0, 2);
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_UP)) {
 			sMario->SetFrame((sMario->GetFrame() + 1 ) % sMario->currFilm->GetTotalFrames());

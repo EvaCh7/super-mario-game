@@ -2,6 +2,7 @@
 #define __ANIMATION_H__
 
 #include "engine/Structs.h"
+#include "engine/Sprite.h"
 
 class Animation {
 protected:

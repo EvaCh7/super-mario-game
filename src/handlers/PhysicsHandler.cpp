@@ -59,7 +59,7 @@ void Game::PhysicsHandler(void) {
 		else {
 			gh.Check(s->GetBox());
 			if (gh.IsFalling()) {
-				s->Move(0, 4);
+				s->Move(0, 3);
 			}
 		}
 
