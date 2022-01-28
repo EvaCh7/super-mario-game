@@ -384,7 +384,7 @@ void GridLayer::FilterGridMotionRight(Rect rRect, int* dx)
 {
 	auto x2 = rRect.x + rRect.w - 1;
 	auto x2_next = x2 + *dx;
-	if (x2_next >= 300 * 4) {
+	if (x2_next >= 300 * 4 * 16) {
 		//*dx = ((300 * 4 – 1) - x2);
 		//*dx = ((300 * 4 - 1) - x2);
 	}
