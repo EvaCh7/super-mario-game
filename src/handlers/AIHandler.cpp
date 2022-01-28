@@ -8,6 +8,6 @@ void Game::AIHandler(void) {
 		if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveLeft(s->GetBox()))
 			s->Move(-1, 0);
 	}
-
+	 
 
 }

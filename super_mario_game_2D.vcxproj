@@ -189,7 +189,6 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="CollisionsHandler.cpp" />
-    <ClCompile Include="include\engine\Animations\Film.cpp" />
     <ClCompile Include="src\config\Config.cpp" />
     <ClCompile Include="src\display\DisplayTools.cpp" />
     <ClCompile Include="src\engine\animations\Animation.cpp" />

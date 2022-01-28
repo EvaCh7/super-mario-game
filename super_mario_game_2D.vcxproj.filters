@@ -126,9 +126,6 @@
     <ClCompile Include="src\handlers\AIHandler.cpp">
       <Filter>Source Files\Handlers</Filter>
     </ClCompile>
-    <ClCompile Include="include\engine\Animations\Film.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\animations\Film.cpp">
       <Filter>Source Files\Engine\Animations</Filter>
     </ClCompile>
