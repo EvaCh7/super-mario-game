@@ -10,7 +10,7 @@ private:
 	bool bIsFalling = false;
 	bool bIsJumping = false;
 	
-	float lGravity = 0.5;
+	float lGravity = 1;
 	float lJumpSpeed = -12;
 	int lBaseJumpSpeed = 12;
 	int lYVelocity = 0;

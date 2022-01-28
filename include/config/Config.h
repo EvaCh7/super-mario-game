@@ -6,7 +6,7 @@
 
 class Config {
 private:
-
+	
 
 
 public:

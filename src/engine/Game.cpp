@@ -7,7 +7,7 @@ Display *display;
 ALLEGRO_KEYBOARD_STATE ksKeyboardState;
 
 void Game::MainLoop(void) {
-	while(true)
+	while(IsRunning())
 		MainLoopIteration();
 }
 

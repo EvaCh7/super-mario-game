@@ -14,6 +14,8 @@ class Game {
 public:
 	using Action = std::function<void(void)>;
 	using Pred = std::function<bool(void)>;
+
+
 	Action	pauseResume;
 	bool		isPaused = false;
 	uint64_t	pauseTime = 0;
@@ -25,6 +27,8 @@ private:
 	Action render, anim, input, ai, physics, destruct, collisions, user;
 	Pred done;
 	void Invoke (const Action& f) { if (f) f(); }
+	bool bRunning = true;
+
 	int iViewWindowX;
 	int iJumpVel;
 public:
@@ -68,6 +72,14 @@ public:
 	{
 		return pauseTime;
 	}
+
+	bool IsRunning(void) {
+		return bRunning;
+	}
+	void SetRunning(bool b) {
+		bRunning = b;
+	}
+
 	/*
 	* Setters
 	*/

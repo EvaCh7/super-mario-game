@@ -14,6 +14,7 @@ void SuperMario::Initialise(void) {
 	al_install_keyboard();
 	al_install_audio();
 	al_init_acodec_addon();
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_OPENGL);
 
 	Audio audio_sample;
 	//audio_sample.playSample("config/sound.mp3");

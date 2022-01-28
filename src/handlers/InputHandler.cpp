@@ -15,22 +15,6 @@ void Game::InputHandler(void) {
 
 	}
 
-	/*if (events.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-		std::cout << "SPACE\n";
-	}
-
-	if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
-		switch (events.keyboard.keycode) {
-		case ALLEGRO_KEY_ESCAPE:
-
-			break;
-		case ALLEGRO_KEY_SPACE:
-			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling())
-				sMario->GetGravityHandler().Jump();
-			break;
-		}
-	}*/
-
 	if (events.type == ALLEGRO_EVENT_TIMER) {
 	/*	al_k
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
@@ -56,6 +40,8 @@ void Game::InputHandler(void) {
 				}*/
 			//}
 		}
+
+		
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
 			sMario->Move(4 * mult, 0);
@@ -87,6 +73,8 @@ void Game::InputHandler(void) {
 			//sMario->Move(8, 4);
 			//this->iViewWindowX--;
 		}
+		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_ESCAPE))
+			this->SetRunning(false);
 
 	}
 

@@ -221,35 +221,8 @@ void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 			if (std::find(lSolidList.begin(), lSolidList.end(), tile) != lSolidList.end()) {
 				this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
 			}
-
-			//if (tlTileMap[i][j] == 79) {
-			//	this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
-			//}
-			//if (tile == 0 || tile == 1 || tile == 2) {
-			//	//std::cout << "aa";
-			//	this->SetGridTileBlock(j, i, GridLayer::GRID_RIGHT_SOLID_MASK);
-			//}
-			//if (tile == 21) {
-			//	//this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
-			//}
-			//if (tile == 22) {
-			//	this->SetGridTileBlock(j, i, GridLayer::GRID_LEFT_SOLID_MASK);
-			//}
 		}
 	}
-
-	/*std::ofstream outfile;
-	outfile.open("grid.txt");
-	for (int i = 0; i < 100 * 4; ++i) {
-		outfile << "[";
-		for (int j = 0; j < 300 * 4; ++j) {
-			outfile << vGrid[i][j] << ", ";
-		}
-		outfile << "]\n";
-	}
-	outfile.close();*/
-
-
 }
 
 void GridLayer::SetGridTileBlock(int iCol, int iRow, int iFlag)
