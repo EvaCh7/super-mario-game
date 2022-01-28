@@ -342,9 +342,27 @@ void GridLayer::FilterGridMotion(Rect rRect, int* dx, int* dy)
 }
 
 bool GridLayer::IsOnSolidGround(Rect rRect) {
-	int dy = 8;
-	FilterGridMotionDown(rRect, &dy);
-	return !dy;
+	int dy = 1;
+
+	int currPixelY = rRect.y + rRect.h - 1; // Check feet
+	int nextPixelY = currPixelY + dy;
+	int currGridY = currPixelY >> 2;
+	int nextGridY = nextPixelY >> 2;
+
+	if (currGridY == nextGridY) {
+		return false;
+	}
+	int currPixelX = rRect.x;
+	int trgtPixelX = currPixelX + rRect.w - 1;
+	int currGridX = currPixelX >> 2;
+	int trgtGridX = trgtPixelX >> 2;
+
+	for (int x = currGridX; x <= trgtGridX; ++x) {
+		if (CanPassGridTile(x, nextGridY, GRID_SOLID_TILE)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 bool GridLayer::CanMoveLeft(Rect rRect) {
@@ -446,42 +464,6 @@ void GridLayer::FilterGridMotionDown(Rect rRect, int* dy)
 			break;
 		}
 	}
-	
-	/*if (!bCanPass)
-		*dy = 0;
-	else {
-		*dy = (nextGridY << 2) - currPixelY;
-	}*/
-
-
-	//currPixelY += rRect.h;
-
-
-	//auto y1_next = rRect.y + rRect.h + *dy;
-	//if (y1_next < 0)
-	//	*dy = -rRect.y;
-	//else {
-	//	auto newRow = y1_next >> 2; // 4
-	//	auto currRow = (rRect.y + rRect.h) >> 2; // 4
-	//	if (newRow != currRow) {
-	//		auto startCol = rRect.x + rRect.h >> 2;
-	//		auto endCol = (rRect.x + +rRect.h + rRect.w - 1) >> 2;
-
-	//		bool bCanPass = true;
-	//		for (auto col = startCol; col <= endCol; ++col) {
-	//			//printf("Comparing {%d, %d = %d}\n", GetGridTile(col, newRow), GRID_RIGHT_SOLID_MASK, CanPassGridTile(col, newRow, GRID_RIGHT_SOLID_MASK));
-	//			if (!CanPassGridTile(col, newRow, GRID_SOLID_TILE)) {
-	//				*dy = (newRow << 2) - rRect.y;
-	//			}
-	//			else {
-	//				bCanPass = false;
-	//			}
-	//		}
-
-	//		if (!bCanPass)
-	//			*dy = 0;
-	//	}
-	//}
 }
 
 

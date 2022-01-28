@@ -10,9 +10,9 @@ private:
 	bool bIsFalling = false;
 	bool bIsJumping = false;
 	
-	int lGravity = 1;
-	int lJumpSpeed = -10;
-	int lBaseJumpSpeed = 10;
+	float lGravity = 0.5;
+	float lJumpSpeed = -12;
+	int lBaseJumpSpeed = 12;
 	int lYVelocity = 0;
 
 
@@ -31,12 +31,12 @@ public:
 	//static void ProgressPhysics(Sprite *s);
 	bool IsJumping(void);
 	bool IsFalling(void);
-	int GetGravity(void);
-	int GetJumpSpeed(void);
+	float GetGravity(void);
+	float GetJumpSpeed(void);
 	int GetYVelocity(void);
 	int GetBaseSpeed(void);
 
-	void SetJumpSpeed(int);
+	void SetJumpSpeed(float);
 	void SetYVelocity(int);
 	void SetFalling(bool);
 	void SetJumping(bool);
@@ -52,7 +52,7 @@ public:
 	using Mover = std::function<void(Rect r, int *dx, int *dy)>;
 
 private:
-	int lMaxHorizontal = 0, lMaxVertical = 0;
+	int lMaxHorizontal = 4, lMaxVertical = 4;
 	Mover mover;
 	bool bUsed = false;
 

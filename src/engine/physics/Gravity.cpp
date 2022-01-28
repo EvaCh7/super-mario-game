@@ -38,12 +38,12 @@ bool GravityHandler::IsFalling()
 	return this->bIsFalling;
 }
 
-int GravityHandler::GetGravity(void)
+float GravityHandler::GetGravity(void)
 {
 	return lGravity;
 }
 
-int GravityHandler::GetJumpSpeed(void)
+float GravityHandler::GetJumpSpeed(void)
 {
 	return lJumpSpeed;
 }
@@ -58,13 +58,16 @@ int GravityHandler::GetYVelocity(void)
 	return lYVelocity;
 }
 
-void GravityHandler::SetJumpSpeed(int lJs)
+void GravityHandler::SetJumpSpeed(float lJs)
 {
 	lJumpSpeed = lJs;
 }
 
 void GravityHandler::SetYVelocity(int lYVel)
 {
+	//if (lYVel > 4)
+	//	lYVel = 4;
+	//	lYVel = 4;
 	this->lYVelocity = lYVel;
 }
 
@@ -92,17 +95,19 @@ void GravityHandler::Check(Rect r)
 	if (this->bGravityAddicted) {
 		//std::cout << "X\n";
 		if (this->fOnSolidGroundCallback(r)) {
+			printf("ON SOLID GROUND\n");
 			if (this->bIsFalling) {
 				this->bIsFalling = false;
 				this->fOnStopFallingCallback();
 			}
 		}
-		else {
-			if (!this->bIsFalling) {
-				this->bIsFalling = true;
-				this->fOnStartFallingCallback();
-			}
-		}
+		//else {
+		//	std::cout << "------------- NOT ON SOLID GROUND\n";
+		//	if (!this->bIsFalling) {
+		//		this->bIsFalling = true;
+		//		this->fOnStartFallingCallback();
+		//	}
+		//}
 	}
 }
 

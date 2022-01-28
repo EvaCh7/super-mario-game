@@ -2,6 +2,11 @@
 
 template <typename Tnum>
 int number_sign(Tnum x) {
+	if (x > 0)
+		return 1;
+	if (x < 0)
+		return -1;
+	return 0;
 	return x > 0 ? 1 : x < 0 ? -1 : 0;
 }
 
@@ -25,7 +30,7 @@ MotionQuantizer& MotionQuantizer::SetMover(Mover& f)
 }
 
 void MotionQuantizer::Move(Rect r, int* dx, int* dy) {
-	if (!bUsed) {
+	if (false) {
 		mover(r, dx, dy);
 	}
 	else {
@@ -37,6 +42,8 @@ void MotionQuantizer::Move(Rect r, int* dx, int* dy) {
 			auto dyFinal = sign_y * std::min(this->lMaxVertical, sign_y * (*dy));
 			
 			mover(r, &dxFinal, &dyFinal);
+			r.x += dxFinal;
+			r.y += dyFinal;
 
 			if (!dxFinal)
 				*dx = 0;
