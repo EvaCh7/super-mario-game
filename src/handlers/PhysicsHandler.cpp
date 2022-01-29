@@ -3,11 +3,14 @@
 void Game::PhysicsHandler(void) {
 
 
+	
 	/*
 	* Progress Gravity
 	*/
 	for (Sprite *s : SpriteManager::GetSingleton().GetDisplayList()) {
 		GravityHandler &gh = s->GetGravityHandler();
+		if (!gh.IsGravityAddicted())
+			continue;
 		Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
 		bool bSolidGround = this->mMap->GetTileLayer()->GetGridLayer()->IsOnSolidGround(s->GetBox());
 
@@ -21,7 +24,7 @@ void Game::PhysicsHandler(void) {
 			gh.SetJumpSpeed(1);
 		}
 
-		if (gh.IsJumping() && bSolidGround) {
+		if ((gh.IsJumping() && bSolidGround) || (gh.IsJumping() && gh.IsFalling())) {
 			gh.SetJumpSpeed(-gh.GetBaseSpeed());
 		}
 

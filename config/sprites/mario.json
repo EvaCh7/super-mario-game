@@ -1,198 +1,219 @@
 {
-  "small_mario": {
-    "left1": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 6,
-      "y_pos": 25
-    },
-    "left2": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 37,
-      "y_pos": 25
-    },
-    "left3": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 67,
-      "y_pos": 25
-    },
-  
-
-    "running_right": [
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 215,
-        "y_pos": 0
-      },
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 244,
-        "y_pos": 0
-      },
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 275,
-        "y_pos": 0
-      }
-    ],
-    "running_left": [
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 6,
-        "y_pos": 25
-      },
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 37,
-        "y_pos": 25
-      },
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 67,
-        "y_pos": 25
-      }
-    ],
-    "jumping_left": [
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 37,
-        "y_pos": 0
-      },
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 6,
-        "y_pos": 0
-      }
-    ],
-    "jumping_right": [
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 67,
-        "y_pos": 0
-      },
-      {
-        "width": 16,
-        "height": 16,
-        "x_pos": 98,
-        "y_pos": 0
-      }
-    ],
-
- 
-    "left_stand": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 97,
-      "y_pos": 25
-    },
-    "right_stand": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 127,
-      "y_pos": 25
-    },
-    "right1": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 215,
-      "y_pos": 0
-    },
-    "right2": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 244,
-      "y_pos": 0
-    },
-    "right3": {
-      "width": 16,
-      "height": 16,
-      "x_pos": 275,
-      "y_pos": 0
-    }
-  },
-    "big_mario": {
-        "left1": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 6,
-            "y_pos": 88
+  "spritesheet": "resources/sprites/marioi.png",
+  "sprites": {
+    "small_mario": {
+      "default_animation": "mario.small.standing.right",
+      "animations": [
+        {
+          "id": "mario.small.walking.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 25
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 37,
+              "y_pos": 25
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 67,
+              "y_pos": 25
+            }
+          ]
         },
-        "left2": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 36,
-            "y_pos": 88
+        {
+          "id": "mario.small.walking.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 215,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 244,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 275,
+              "y_pos": 0
+            }
+          ]
         },
-        "left3": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 66,
-            "y_pos": 88
+        {
+          "id": "mario.small.jumping.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 37,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 0
+            }
+          ]
         },
-        "left_jump1": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 147,
-            "y_pos": 88
+        {
+          "id": "mario.small.jumping.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 67,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 98,
+              "y_pos": 0
+            }
+          ]
         },
-        "left_jump2": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 197,
-            "y_pos": 88
+        {
+          "id": "mario.small.standing.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 97,
+              "y_pos": 25
+            }
+          ]
         },
-        "left_stand": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 96,
-            "y_pos": 88
-        },
-        "right_stand": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 185,
-            "y_pos": 51
-        },
-        "right1": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 215,
-            "y_pos": 51
-        },
-        "right2": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 244,
-            "y_pos": 51
-        },
-        "right3": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 275,
-            "y_pos": 51
-        },
-        "right_jump1": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 135,
-            "y_pos": 51
-        },
-        "right_jump2": {
-            "width": 16,
-            "height": 32,
-            "x_pos": 83,
-            "y_pos": 51
+        {
+          "id": "mario.small.standing.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 127,
+              "y_pos": 25
+            }
+          ]
         }
+      ]
+    },
+    "big_mario": {
+      "default_animation": "mario.big.standing.right",
+      "animations": [
+        {
+          "id": "mario.big.walking.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 215,
+              "y_pos": 51
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 244,
+              "y_pos": 51
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 275,
+              "y_pos": 51
+            }
+          ]
+        },
+        {
+          "id": "mario.big.walking.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 6,
+              "y_pos": 88
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 36,
+              "y_pos": 88
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 66,
+              "y_pos": 88
+            }
+          ]
+        },
+        {
+          "id": "mario.big.jumping.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 135,
+              "y_pos": 51
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 83,
+              "y_pos": 51
+            }
+          ]
+        },
+        {
+          "id": "mario.big.jumping.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 147,
+              "y_pos": 88
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 197,
+              "y_pos": 88
+            }
+          ]
+        },
+        {
+          "id": "mario.big.standing.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 185,
+              "y_pos": 51
+            }
+          ]
+        },
+        {
+          "id": "mario.big.standing.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 96,
+              "y_pos": 88
+            }
+          ]
+        }
+      ]
     }
+  }
 }

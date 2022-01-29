@@ -114,5 +114,14 @@ void GravityHandler::Check(Rect r)
 GravityHandler::GravityHandler() {
 	this->lGravity = gGameSettings.fGravity;
 	this->lBaseJumpSpeed = gGameSettings.lJumpSpeed;
-	this->lJumpSpeed = -this->lBaseJumpSpeed;
+	this->lJumpSpeed = 1;
+}
+
+bool GravityHandler::IsGravityAddicted(void) {
+	return this->bGravityAddicted;
+}
+
+
+void GravityHandler::Disable(void) {
+	this->bGravityAddicted = false;
 }

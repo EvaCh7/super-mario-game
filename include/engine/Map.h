@@ -15,17 +15,19 @@ private:
 	std::map<std::string, std::list<int>> mGridMasks;
 	json jConfig;
 
-	static const byte GRID_THIN_AIR_MASK		= 0x00;
-	static const byte GRID_LEFT_SOLID_MASK		= 0x01;
-	static const byte GRID_RIGHT_SOLID_MASK		= 0x02;
-	static const byte GRID_TOP_SOLID_MASK		= 0x04;
-	static const byte GRID_BOTTOM_SOLID_MASK	= 0x08;
-	static const byte GRID_GROUD_MASK			= 0x10;
-	static const byte GRID_FLOATING_MASK		= 0x20;
-	static const byte GRID_EMPTY_TILE			= GRID_FLOATING_MASK;
-	static const byte GRID_SOLID_TILE			= (GRID_LEFT_SOLID_MASK | GRID_RIGHT_SOLID_MASK | GRID_TOP_SOLID_MASK | GRID_BOTTOM_SOLID_MASK);
+	
 
 public:
+
+	static const byte GRID_THIN_AIR_MASK = 0x00;
+	static const byte GRID_LEFT_SOLID_MASK = 0x01;
+	static const byte GRID_RIGHT_SOLID_MASK = 0x02;
+	static const byte GRID_TOP_SOLID_MASK = 0x04;
+	static const byte GRID_BOTTOM_SOLID_MASK = 0x08;
+	static const byte GRID_GROUD_MASK = 0x10;
+	static const byte GRID_FLOATING_MASK = 0x20;
+	static const byte GRID_EMPTY_TILE = GRID_FLOATING_MASK;
+	static const byte GRID_SOLID_TILE = (GRID_LEFT_SOLID_MASK | GRID_RIGHT_SOLID_MASK | GRID_TOP_SOLID_MASK | GRID_BOTTOM_SOLID_MASK);
 
 	/*
 	* Grid Tile Setting
@@ -136,13 +138,29 @@ public:
 	//TileLayer(void);
 };
 
+
+
+
+
+
+
 class Map {
 private:
+
+	/*
+	* Metadata
+	*/
+	int lMapPixelWidth, lMapPixelHeight;
 
 	/*
 	* Tile Layer
 	*/
 	TileLayer *tlLayer;
+
+	/*
+	* Object Tile Layer
+	*/
+	int** tlObjectLayer;
 
 	std::map<int, Bitmap *> mTiles;
 
@@ -155,6 +173,14 @@ public:
 	* Tile Layer
 	*/
 	TileLayer *GetTileLayer(void);
+	int GetHeightTileSize(void);
+	int GetWidthTileSize(void);
+
+	/*
+	* Object Layer
+	*/
+	int** ParseObjects(json jObjectConfig);
+	int** GetObjectLayer(void);
 
 	Map(json jConfig);
 

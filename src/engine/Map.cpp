@@ -24,6 +24,8 @@ Map::Map(json jConfig) {
 	Bitmap *bm = al_load_bitmap(std::string(jConfig["tiles"]["path"]).c_str());
 
 	this->bMap = al_create_bitmap(300 * 16, 100 * 16);
+	this->lMapPixelWidth = 300 * 16;
+	this->lMapPixelHeight = 100 * 16;
 
 	/*
 	* Create tile set
@@ -339,15 +341,58 @@ bool GridLayer::IsOnSolidGround(Rect rRect) {
 }
 
 bool GridLayer::CanMoveLeft(Rect rRect) {
-	int dx = 8;
-	FilterGridMotionLeft(rRect, &dx);
-	return !dx;
+	int dx = -1;
+	auto x1_next = rRect.x + dx;
+	if (x1_next < 0) {
+		//*dx = -rRect.x;
+	}
+	else {
+		auto newCol = x1_next >> 2; // 4
+		auto currCol = rRect.x >> 2; // 4
+		if (newCol != currCol) {
+			auto startRow = rRect.y >> 2;
+			auto endRow = (rRect.y + rRect.h - 1) >> 2;
+
+			bool bCanPass = true;
+			for (auto row = startRow; row <= endRow; ++row) {
+				//printf("Comparing {%d, %d = %d}\n", GetGridTile(newCol, row), GRID_RIGHT_SOLID_MASK, CanPassGridTile(newCol, row, GRID_RIGHT_SOLID_MASK));
+				if (CanPassGridTile(newCol, row, GRID_SOLID_TILE)) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
 
 bool GridLayer::CanMoveRight(Rect rRect) {
-	int dx = 8;
-	FilterGridMotionRight(rRect, &dx);
-	return !dx;
+	int dx = 1;
+	auto x2 = rRect.x + rRect.w - 1;
+	auto x2_next = x2 + dx;
+	if (x2_next >= 300 * 4 * 16) {
+		//*dx = ((300 * 4 – 1) - x2);
+		//*dx = ((300 * 4 - 1) - x2);
+	}
+	else {
+		auto newCol = x2_next >> 2;
+		auto currCol = x2 >> 2;
+		if (newCol != currCol) {
+			//assert(newCol - 1 == currCol); // we really move right
+			auto startRow = rRect.y >> 2;
+			auto endRow = (rRect.y + rRect.h - 1) >> 2;
+
+			bool bCanPass = true;
+			for (auto row = startRow; row <= endRow; ++row) {
+				if (CanPassGridTile(newCol, row, GRID_SOLID_TILE)) {
+					return false;
+				}
+				
+			}
+
+
+		}
+	}
+	return true;
 }
 
 void GridLayer::FilterGridMotionLeft(Rect rRect, int* dx)
@@ -466,4 +511,63 @@ void GridLayer::FilterGridMotionUp(Rect rRect, int* dy) {
 				*dy = 0;
 		}
 	}
+}
+
+
+
+int **Map::ParseObjects(json jObjectConfig) {
+	std::string sSpritesheetPath = jObjectConfig["path"];
+	std::ifstream iFile(sSpritesheetPath);
+	std::string sIndex = "";
+
+	/*tlObjectLayer = new int* [GetHeightTileSize()];
+	for (int i = 0; i < GetHeightTileSize(); i++) {
+		tlObjectLayer[i] = new int[GetWidthTileSize()];
+		memset(tlObjectLayer[i], -1, GetHeightTileSize());
+	}*/
+	tlObjectLayer = (int**)malloc(GetHeightTileSize() * sizeof(int*));
+	for (int i = 0; i < GetHeightTileSize(); ++i) {
+		tlObjectLayer[i] = (int*)malloc(GetWidthTileSize() * sizeof(int));
+		for (int j = 0; j < GetWidthTileSize(); ++j) {
+			tlObjectLayer[i][j] = -1;
+		}
+	}
+
+	int i = 0, j = 0;
+	while (std::getline(iFile, sIndex, ',')) {
+		int index = stoi(sIndex);
+
+		//tlObjectLayer[i][j] = index;
+		
+	/*	if (index == 43) {
+			std::cout << "FOUND GOUMBA AT {" << i << ", " << j << "}\n";
+		}*/
+		for (auto& js : jObjectConfig["bindings"]) {
+			if (index == js["tile"]) {
+				tlObjectLayer[i][j] = index;
+			}
+		}
+
+		if (sIndex.find("\n") != std::string::npos) {
+			i++;
+			j = 0;
+		}
+		else {
+			j++;
+		}
+	}
+
+
+	return tlObjectLayer;
+}
+
+int Map::GetHeightTileSize(void) {
+	return (int)floor(lMapPixelHeight / iTileHeight);
+}
+int Map::GetWidthTileSize(void) {
+	return (int)floor(lMapPixelWidth / iTileWidth);
+}
+
+int** Map::GetObjectLayer(void) {
+	return tlObjectLayer;
 }

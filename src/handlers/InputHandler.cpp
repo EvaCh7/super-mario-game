@@ -30,7 +30,7 @@ void Game::InputHandler(void) {
 
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-			//if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
+			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
 				sMario->GetGravityHandler().Jump();
 				/*if (sMario->bLooking) {
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.right");
@@ -38,25 +38,35 @@ void Game::InputHandler(void) {
 				else {
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.left");
 				}*/
-			//}
+			}
 		}
 
 		
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
-			sMario->Move(4 * mult, 0);
+			sMario->Move(2 * mult, 0);
 			
 			if (!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
-				sMario->currFilm = FilmHolder::Get().GetFilm("mario.running.right");
+				if(FilmHolder::Get().GetFilm("mario.small.walking.right") != nullptr)
+					sMario->currFilm = FilmHolder::Get().GetFilm("mario.small.walking.right");
+				else if(FilmHolder::Get().GetFilm("mario.big.walking.left") != nullptr)
+					sMario->currFilm = FilmHolder::Get().GetFilm("mario.big.walking.right");
+				else
+					sMario->currFilm = FilmHolder::Get().GetFilm("turtle.walking.right");
 			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
 			sMario->bLooking = true;
 			//this->iViewWindowX++;
 		}
 		if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
-			sMario->Move(-4 * mult, 0);
+			sMario->Move(-2 * mult, 0);
 
-			if(!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
-				sMario->currFilm = FilmHolder::Get().GetFilm("mario.running.left");
+			if (!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
+				if (FilmHolder::Get().GetFilm("mario.small.walking.left") != nullptr)
+					sMario->currFilm = FilmHolder::Get().GetFilm("mario.small.walking.left");
+				else if (FilmHolder::Get().GetFilm("mario.big.walking.left") != nullptr)
+					sMario->currFilm = FilmHolder::Get().GetFilm("mario.big.walking.left");
+				else
+					sMario->currFilm = FilmHolder::Get().GetFilm("turtle.walking.left");
 
 
 			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());

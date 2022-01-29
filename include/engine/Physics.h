@@ -41,8 +41,10 @@ public:
 	void SetFalling(bool);
 	void SetJumping(bool);
 
+	bool IsGravityAddicted(void);
 
 	void Enable(void);
+	void Disable(void);
 	void Reset(void);
 	void Check(Rect r);
 

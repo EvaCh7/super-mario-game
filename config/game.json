@@ -6,7 +6,7 @@
 	},
 	"fps_limit": 60,
 	"physics": {
-		"gravity": 1,
+		"gravity": 0.8,
 		"jump_speed": 12,
 		"walk_speed": 1,
 		"run_speed":  2
@@ -20,6 +20,9 @@
 		},
 		{
 			"cfg": "config/map/final_map.json"
+		},
+		{
+			"cfg": "config/map/test_map.json"
 		}
 	]
 }

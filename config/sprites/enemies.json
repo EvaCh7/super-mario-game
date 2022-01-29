@@ -1,94 +1,159 @@
 {
+  "spritesheet": "resources/sprites/enemies.png",
+  "sprites": {
     "enemy_turtle": {
-        "left1": {
-            "width": 16,
-            "height": 23,
-            "x_pos": 212,
-            "y_pos": 58
+      "default_animation": "turtle.walking.left",
+      "animations": [
+        {
+          "id": "turtle.walking.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 212,
+              "y_pos": 58
+            },
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 242,
+              "y_pos": 58
+            }
+          ]
         },
-        "left2": {
-            "width": 16,
-            "height": 23,
-            "x_pos": 242,
-            "y_pos": 58
+        {
+          "id": "turtle.walking.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 179,
+              "y_pos": 28
+            },
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 209,
+              "y_pos": 28
+            }
+          ]
         },
-        "left_wings": {
-            "width": 16,
-            "height": 23,
-            "x_pos": 182,
-            "y_pos": 58
+        {
+          "id": "turtle.wings.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 182,
+              "y_pos": 58
+            }
+          ]
         },
-        "right1": {
-            "width": 16,
-            "height": 23,
-            "x_pos": 179,
-            "y_pos": 28
-        },
-        "right2": {
-            "width": 16,
-            "height": 23,
-            "x_pos": 209,
-            "y_pos": 28
-        },
-        "right_wings": {
-            "width": 16,
-            "height": 23,
-            "x_pos": 239,
-            "y_pos": 28
+        {
+          "id": "turtle.wings.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 239,
+              "y_pos": 28
+            }
+          ]
         }
+      ]
     },
     "enemy_mushroom": {
-        "walk1": {
-            "width": 16,
-            "height": 16,
-            "x_pos": 6,
-            "y_pos": 0
+      "default_animation": "goomba.walking",
+      "animations": [
+        {
+          "id": "goomba.walking",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 38,
+              "y_pos": 0
+            }
+          ]
         },
-        "walk2": {
-            "width": 16,
-            "height": 16,
-            "x_pos": 38,
-            "y_pos": 0
-        },
-        "smashed": {
-            "width": 16,
-            "height": 16,
-            "x_pos": 182,
-            "y_pos": 0
+        {
+          "id": "goomba.smashed",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 182,
+              "y_pos": 0
+            }
+          ]
         }
+      ]
     },
-    "enemy_piranha_plant":{
-        "state1": {
-            "width": 16,
-            "height": 24,
-            "x_pos": 126,
-            "y_pos": 141
+    "piranha_plant": {
+      "default_animation": "piranha.closed",
+      "animations": [
+        {
+          "id": "piranha.closed",
+          "animation": [
+            {
+              "width": 16,
+              "height": 24,
+              "x_pos": 126,
+              "y_pos": 141
+            }
+          ]
         },
-        "state2": {
-            "width": 16,
-            "height": 24,
-            "x_pos": 126,
-            "y_pos": 169
+        {
+          "id": "piranha.open",
+          "animation": [
+            {
+              "width": 16,
+              "height": 24,
+              "x_pos": 126,
+              "y_pos": 169
+            }
+          ]
         }
+      ]
     },
-    "enemy_bird":{
-        "left1": {
-            "width": 16,
-            "height": 16,
-            "x_pos": 98,
-            "y_pos": 114
+    "bird": {
+      "default_animation": "bird.left",
+      "animations": [
+        {
+          "id": "bird.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 98,
+              "y_pos": 114
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 127,
+              "y_pos": 114
+            }
+          ]
         },
-        "left2": {
-            "width": 16,
-            "height": 16,
-            "x_pos": 127,
-            "y_pos": 114
-        },
-        "right1": {
-            "width": 16,
-            "height": 16,
-            "x_pos": 158,
-            "y_pos": 114
+        {
+          "id": "bird.right",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 158,
+              "y_pos": 114
+            }
+          ]
         }
+      ]
     }
+  }
 }

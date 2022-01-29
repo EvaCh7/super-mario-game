@@ -49,6 +49,18 @@ public:
 	MotionQuantizer& GetMotionQuantizer(void);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 	void SetMover(MotionQuantizer::Mover f)
 	{
 		this->qMotionQuantizer.SetMover(f);
@@ -72,22 +84,7 @@ public:
 	}
 	
 	byte GetFrame(void) const { return frameNo; }
-	/*
-	void SetBoundingArea(const BoundingArea& area)
-	{
-		assert(!boundingArea); boundingArea = area.Clone();
-	}
-	*/
-	/*
-	void SetBoundingArea(BoundingArea* area)
-	{
-		assert(!boundingArea); boundingArea = area;
-	}
-	auto GetBoundingArea(void) const -> const BoundingArea*
-	{
-		return boundingArea;
-	}
-	*/
+
 	auto GetTypeId(void) -> const std::string& { return typeId; }
 	void SetVisibility(bool v) { isVisible = v; }
 	bool IsVisible(void) const { return isVisible; }
@@ -128,17 +125,17 @@ private:
 	static  SpriteManager singleton;
 
 public:
-
+	Sprite* SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer);
 
 	void Add(Sprite* s); // insert by ascending zorder
 	void Remove(Sprite* s);
-	void AddTypeList(std::string id, std::list< Sprite * >  ); // insert by ascending zorder
+	void AddToTypeList(std::string id, Sprite *); // insert by ascending zorder
 	void RemoveTypeList(std::string id, Sprite* sprite);
-	auto GetDisplayList(void) -> const SpriteList&
+	SpriteList& GetDisplayList(void)
 	{
 		return dpyList;
 	}
-	auto GetTypeList(const std::string& typeId) -> const SpriteList&
+	SpriteList& GetTypeList(const std::string& typeId)
 	{
 		return types[typeId];
 	}

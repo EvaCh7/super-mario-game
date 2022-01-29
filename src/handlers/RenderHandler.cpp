@@ -19,7 +19,12 @@ for (auto obj : SpriteManager::GetSingleton().GetDisplayList()) {
 		this->currFilm->GetBitmap(),
 		(Rect&)this->currFilm->GetFrameBox(this->frameNo)
 	);*/
-	BlitNoRefresh(display, (Rect&)Rect {sb.x - vw.x, sb.y - vw.y, sb.w, sb.h}, obj->currFilm->GetBitmap(), (Rect&)obj->currFilm->GetFrameBox(obj->frameNo));
+	if (obj->currFilm != nullptr && obj->currFilm->GetTotalFrames() > 0) {
+		BlitNoRefresh(display, (Rect&)Rect { sb.x - vw.x, sb.y - vw.y, sb.w, sb.h }, obj->currFilm->GetBitmap(), (Rect&)obj->currFilm->GetFrameBox(obj->frameNo));
+	}
+	else {
+		BlitNoRefresh(display, (Rect&)Rect { sb.x - vw.x, sb.y - vw.y, sb.w, sb.h }, obj->getBitamp(), (Rect&)Rect {0, 0, 16, 16});
+	}
 }
 al_flip_display();
 

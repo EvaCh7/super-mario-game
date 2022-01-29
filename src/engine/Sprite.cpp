@@ -2,9 +2,8 @@
 #include <engine/Map.h>
 #include<display/DisplayTools.h>
 
-void SpriteManager::AddTypeList(std::string id, std::list< Sprite*> sprite) {
-
-	this->types.insert({ id,sprite });
+void SpriteManager::AddToTypeList(std::string id, Sprite* sprite) {
+	GetTypeList(id).push_back(sprite);
 	
 }
 void SpriteManager::Add(Sprite* s) {
@@ -17,7 +16,7 @@ GravityHandler& Sprite::GetGravityHandler(void)
 	return this->hGravityHandler;
 }
 
-void  SpriteManager::RemoveTypeList(std::string id, Sprite* sprite) {
+void SpriteManager::RemoveTypeList(std::string id, Sprite* sprite) {
 	this->types[id].remove(sprite);
 
 
@@ -142,7 +141,6 @@ auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::vector<Entry>::itera
 void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
 	std::vector<Entry>::iterator iter = Find(s1, s2);
 	if (iter != entries.end()) {
-		printf("erasing from list\n");
 		entries.erase(iter);
 
 	}
@@ -172,4 +170,73 @@ bool Sprite::CollisionCheck(Sprite* s) {
 		// 
 		//this.color("blue");
 	}
+}
+
+Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer) {
+	Bitmap* bObjBitmap = al_load_bitmap(std::string(jObject["spritesheet"]).c_str());
+
+	for (auto& jAnim : jObject["sprites"][sName]["animations"]) {
+		FilmHolder::Get().Load(jAnim["id"], jAnim["animation"], bObjBitmap);
+	}
+
+	Film* fDefaultFilm = FilmHolder::Get().GetFilm(jObject["sprites"][sName]["default_animation"]);
+	Rect rDefaultBox = fDefaultFilm->GetFrameBox(0);
+
+
+
+	Bitmap* bSpriteBitmap = al_create_sub_bitmap(bObjBitmap, rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h);
+	Sprite* s = new Sprite(x, y, bSpriteBitmap, rDefaultBox.w, rDefaultBox.h);
+
+	SpriteManager::GetSingleton().Add(s);
+	SpriteManager::GetSingleton().AddToTypeList(id, s);
+
+	s->currFilm = fDefaultFilm;
+	s->GetGravityHandler().Enable();
+	/*
+		* Default Mover
+		*/
+	s->SetMover(s->MakeSpriteGridLayerMover(glLayer));
+
+	/*
+	* Gravity Handlers
+	*/
+	//s->GetGravityHandler().Enable();
+	s->GetGravityHandler().SetOnSolidGroud(
+		[glLayer](Rect r) {
+			//printf("Fell On: {%d %d %d %d}\n", r.x, r.y, r.w, r.h);
+			return glLayer->IsOnSolidGround(r);
+		}
+	);
+	s->GetGravityHandler().SetOnStartFalling(
+		[](void) {
+			//std::cout << "Mario Starts Falling\n";
+			return;
+		}
+	);
+	s->GetGravityHandler().SetOnStopFalling(
+		[](void) {
+			//std::cout << "Mario Stops Falling\n";
+			return;
+		}
+	);
+
+	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+	CollisionChecker::GetSingleton().Register(mario, s,
+		[](Sprite* s1, Sprite* s2) {
+			printf("===================================\n");
+			if (s1->GetBox().y < s2->GetBox().y) {
+				SpriteManager::GetSingleton().RemoveTypeList("turtles", s2);
+				SpriteManager::GetSingleton().Remove(s2);
+				CollisionChecker::GetSingleton().Cancel(s1, s2);
+				s1->GetGravityHandler().Jump();
+			}
+			else {
+				printf("mario died from bird \n");
+			}
+			printf("===================================\n");
+
+		}
+	);
+
+	return s;
 }

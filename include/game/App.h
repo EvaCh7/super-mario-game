@@ -30,6 +30,7 @@ class SuperMario : public App {
 	void Initialise(void);
 	void Load(void);
 	void Clear(void);
+	bool SpawnObjects(json jObjectConfig);
 public:
 	SuperMario();
 };

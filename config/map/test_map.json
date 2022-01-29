@@ -1,0 +1,71 @@
+{
+  "map": [
+    {
+      "path": "resources/map/test_map/test_map_Sky.csv"
+    },
+    {
+      "path": "resources/map/test_map/test_map_Background.csv"
+    },
+    {
+      "path": "resources/map/test_map/test_map_Ground.csv"
+    }
+  ],
+  "tiles": {
+    "path": "resources/map/super_mario_sprite_sheet.png",
+    "width": 16,
+    "height": 16
+  },
+  "sprites": {
+    "path": "config/sprites/sprites.json"
+  },
+  "objects": {
+    "path": "resources/map/test_map/test_map_Objects.csv",
+    "bindings": [
+      {
+        "is_external": false,
+        "name": "coins",
+        "tile": 286
+      },
+      {
+        "is_external": false,
+        "name": "question_brick",
+        "tile": 0
+      },
+      {
+        "external_name": "enemy_mushroom",
+        "external_path": "config/sprites/enemies.json",
+        "is_external": true,
+        "name": "goombas",
+        "tile": 43
+      },
+      {
+        "external_name": "enemy_turtle",
+        "external_path": "config/sprites/enemies.json",
+        "is_external": true,
+        "name": "turtles",
+        "tile": 20
+      },
+      {
+        "external_name": "small_mario",
+        "external_path": "config/sprites/mario.json",
+        "is_external": true,
+        "name": "mario",
+        "tile": 552
+      }
+    ]
+  },
+  "grid": {
+    "solid": [
+      156,
+      157,
+      183,
+      208
+    ],
+    "empty": [
+      137,
+      164,
+      38,
+      58
+    ]
+  }
+}
