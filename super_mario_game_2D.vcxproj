@@ -218,6 +218,7 @@
     <None Include="config\map\final_map.json" />
     <None Include="config\map\first_map.json" />
     <None Include="config\map\first_stage.json" />
+    <None Include="config\map\test_map.json" />
     <None Include="config\sprites\enemies.json" />
     <None Include="config\sprites\mario.json" />
     <None Include="packages.config" />
@@ -232,6 +233,10 @@
     <None Include="resources\map\first_stage_Coins.csv" />
     <None Include="resources\map\first_stage_Foreground.csv" />
     <None Include="resources\map\first_stage_Sea.csv" />
+    <None Include="resources\map\test_map\test_map_Background.csv" />
+    <None Include="resources\map\test_map\test_map_Ground.csv" />
+    <None Include="resources\map\test_map\test_map_Objects.csv" />
+    <None Include="resources\map\test_map\test_map_Sky.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\config\Config.h" />
