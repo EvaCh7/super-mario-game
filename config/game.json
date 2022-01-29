@@ -6,7 +6,7 @@
 	},
 	"fps_limit": 144,
 	"physics": {
-		"gravity": 0.2,
+		"gravity": 1,
 		"jump_speed": 12,
 		"walk_speed": 1,
 		"run_speed":  2
