@@ -4,7 +4,7 @@
 		"width": 1024,
 		"height": 768
 	},
-	"fps_limit": 144,
+	"fps_limit": 60,
 	"physics": {
 		"gravity": 1,
 		"jump_speed": 12,

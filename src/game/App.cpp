@@ -16,7 +16,7 @@ void SuperMario::Initialise(void) {
 	al_install_keyboard();
 	al_install_audio();
 	al_init_acodec_addon();
-	al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_OPENGL);
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_DIRECT3D_INTERNAL);
 
 	/*
 	* Load Game Settings
@@ -36,7 +36,7 @@ void SuperMario::Initialise(void) {
 		exit(0);
 	}
 
-	this->game.timer = al_create_timer(1.0 / 144);
+	this->game.timer = al_create_timer(1.0 / gGameSettings.lFpsLimit);
 	this->game.event_queue = al_create_event_queue();
 	al_register_event_source(this->game.event_queue, al_get_keyboard_event_source());
 	al_register_event_source(this->game.event_queue, al_get_timer_event_source(this->game.timer));
