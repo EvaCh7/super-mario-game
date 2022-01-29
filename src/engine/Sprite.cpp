@@ -57,8 +57,8 @@ template <class T> bool clip_rect(
 	T wx, T wy, T ww, T wh,
 	T* cx, T* cy, T* cw, T* ch
 ) {
-	*cw = T(std::min(wx + ww, x + w)) - (*cx = T(std::max(wx, x)));
-	*ch = T(std::min(wy + wh, y + h)) - (*cy = T(std::max(wy, y)));
+	*cw = T(min(wx + ww, x + w)) - (*cx = T(max(wx, x)));
+	*ch = T(min(wy + wh, y + h)) - (*cy = T(max(wy, y)));
 	return *cw > 0 && *ch > 0;
 }
 bool clip_rect(const Rect& r, const Rect& area, Rect* result) {

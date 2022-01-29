@@ -111,3 +111,8 @@ void GravityHandler::Check(Rect r)
 	}
 }
 
+GravityHandler::GravityHandler() {
+	this->lGravity = gGameSettings.fGravity;
+	this->lBaseJumpSpeed = gGameSettings.lJumpSpeed;
+	this->lJumpSpeed = -this->lBaseJumpSpeed;
+}

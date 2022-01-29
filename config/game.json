@@ -1,5 +1,16 @@
 {
-	"windowName": "hello",
+	"window_name": "Super Mario",
+	"resolution": {
+		"width": 1024,
+		"height": 768
+	},
+	"fps_limit": 144,
+	"physics": {
+		"gravity": 0.2,
+		"jump_speed": 12,
+		"walk_speed": 1,
+		"run_speed":  2
+	},
 	"maps": [
 		{
 			"cfg": "config/map/first_stage.json"

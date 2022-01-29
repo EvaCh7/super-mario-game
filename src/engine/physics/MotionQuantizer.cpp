@@ -1,4 +1,7 @@
 #include "engine/Physics.h"
+#include <iostream>
+#include <math.h>
+#include <algorithm>
 
 template <typename Tnum>
 int number_sign(Tnum x) {
@@ -38,8 +41,8 @@ void MotionQuantizer::Move(Rect r, int* dx, int* dy) {
 			auto sign_x = number_sign(*dx);
 			auto sign_y = number_sign(*dy);
 
-			auto dxFinal = sign_x * std::min(this->lMaxHorizontal, sign_x * (*dx));
-			auto dyFinal = sign_y * std::min(this->lMaxVertical, sign_y * (*dy));
+			auto dxFinal = sign_x * min(this->lMaxHorizontal, sign_x * (*dx));
+			auto dyFinal = sign_y * min(this->lMaxVertical, sign_y * (*dy));
 			
 			mover(r, &dxFinal, &dyFinal);
 			r.x += dxFinal;

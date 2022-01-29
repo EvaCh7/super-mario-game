@@ -45,6 +45,8 @@ public:
 	void Enable(void);
 	void Reset(void);
 	void Check(Rect r);
+
+	GravityHandler();
 };
 
 class MotionQuantizer {

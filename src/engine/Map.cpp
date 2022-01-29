@@ -42,7 +42,7 @@ Map::Map(json jConfig) {
 	* Create Tile Layer and parse layers
 	*/
 	TileLayer *tlLayer = new TileLayer(100, 300, this->mTiles, jConfig["grid"]);
-	tlLayer->SetViewWindow(Rect{0, 100 * 16 - 480, 640, 480});
+	tlLayer->SetViewWindow(Rect{0, 100 * 16 - 480, gGameSettings.lWindowWidth, gGameSettings.lWindowHeight });
 	json jMaps = jConfig["map"];
 	for (auto& itMap : jMaps) {
 		tlLayer->ParseCSV(itMap["path"]);

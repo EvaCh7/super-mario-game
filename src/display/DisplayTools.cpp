@@ -39,6 +39,6 @@ void Blit(Bitmap *dDest, Rect& rDest,
 }
 
 void DrawViewWindow(Display *dDisplay, unsigned int iDestX, unsigned int iDestY, Bitmap *bSource, unsigned int iSrcX, unsigned int iSrcY, unsigned int iWidth, unsigned int iHeight) {
-	Blit(dDisplay, 0, 0, bSource, iSrcX, iSrcY, 640, 480);
+	Blit(dDisplay, 0, 0, bSource, iSrcX, iSrcY, gGameSettings.lWindowWidth, gGameSettings.lWindowHeight);
 }
 

@@ -8,6 +8,8 @@
 #include <game/Audio.h>
 
 void SuperMario::Initialise(void) {
+	json jGameConfig = Config::GetConfig("config/game.json");
+
 	al_init();
 	al_init_image_addon();
 	al_init_font_addon();
@@ -16,10 +18,19 @@ void SuperMario::Initialise(void) {
 	al_init_acodec_addon();
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_OPENGL);
 
+	/*
+	* Load Game Settings
+	*/
+	gGameSettings.lWindowWidth = jGameConfig["resolution"]["width"];
+	gGameSettings.lWindowHeight = jGameConfig["resolution"]["height"];
+	gGameSettings.lFpsLimit = jGameConfig["fps_limit"];
+	gGameSettings.fGravity = jGameConfig["physics"]["gravity"];
+	gGameSettings.lJumpSpeed = jGameConfig["physics"]["jump_speed"];
+
 	Audio audio_sample;
 	//audio_sample.playSample("config/sound.mp3");
-	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP | ALLEGRO_MIPMAP);
-	display = al_create_display(640, 480);
+	//al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP | ALLEGRO_MIPMAP);
+	display = al_create_display(gGameSettings.lWindowWidth, gGameSettings.lWindowHeight);
 	this->game.timer = al_create_timer(1.0 / 144);
 	this->game.event_queue = al_create_event_queue();
 	al_register_event_source(this->game.event_queue, al_get_keyboard_event_source());
@@ -37,7 +48,6 @@ void addItemToTypeList(std::string id, int x, int y, int width, int height, Bitm
 	std::list <Sprite*> tmp_list;
 
 	Bitmap* bm = al_create_sub_bitmap(pngBitmap, x, y, width, height);
-	//Blit(display, 0, 0, bm, 0, 0, 16, 16);
 	Sprite* s = new Sprite(i, j, bm, width, height);
 	tmp_list.push_back(s);
 	SpriteManager::GetSingleton().Add(s);
@@ -168,6 +178,7 @@ void registerCollisionsActions() {
 }
 
 void SuperMario::Load(void) {
+	json jGameConfig = Config::GetConfig("config/game.json");
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
