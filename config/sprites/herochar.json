@@ -2,11 +2,11 @@
   "spritesheet": "resources/sprites/herochar.png",
   "sprites": {
     "herochar": {
-      "default_animation": "herochar.standing.right",
+      "default_animation": "herochar.idle.right",
       "animations": [
         {
           "id": "herochar.run.right",
-          "animation_frames": [0, 1, 2, 3, 4, 5],
+          "animation_frames": [ 0, 1, 2, 3, 4, 5 ],
           "animation": [
             {
               "width": 16,
@@ -89,7 +89,9 @@
           ]
         },
         {
-          "id": "herochar.standing.right",
+          "id": "herochar.idle.right",
+          "animation_frames": [ 0, 1, 2, 3 ],
+          "delay": 200,
           "animation": [
             {
               "width": 16,
@@ -118,7 +120,39 @@
           ]
         },
         {
+          "id": "herochar.idle.left",
+          "animation_frames": [ 0, 1, 2, 3 ],
+          "delay": 200,
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 240,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 224,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 208,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 80
+            }
+          ]
+        },
+        {
           "id": "herochar.attack.sword.right",
+          "animation_frames": [ 0, 1, 2, 3 ],
           "animation": [
             {
               "width": 32,
@@ -142,6 +176,36 @@
               "width": 32,
               "height": 16,
               "x_pos": 96,
+              "y_pos": 64
+            }
+          ]
+        },
+        {
+          "id": "herochar.attack.sword.left",
+          "animation_frames": [ 0, 1, 2, 3 ],
+          "animation": [
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 224,
+              "y_pos": 64
+            },
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 64
+            },
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 160,
+              "y_pos": 64
+            },
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 128,
               "y_pos": 64
             }
           ]

@@ -9,19 +9,17 @@ private:
 	bool bGravityAddicted = false;
 	bool bIsFalling = false;
 	bool bIsJumping = false;
-	
-	float lGravity = 1;
-	float lJumpSpeed = -12;
-	int lBaseJumpSpeed = 12;
-	int lYVelocity = 0;
 
-
-	
 	std::function<bool(Rect)> fOnSolidGroundCallback;
 	std::function<void(void)> fOnStartFallingCallback;
 	std::function<void(void)> fOnStopFallingCallback;
 
 public:
+	float lGravity = 1;
+	float lJumpSpeed = -12;
+	int lBaseJumpSpeed = 12;
+	int lYVelocity = 0;
+
 	void SetOnSolidGroud(std::function<bool(Rect)> f);
 	void SetOnStartFalling(std::function<void(void)> f);
 	void SetOnStopFalling(std::function<void(void)> f);

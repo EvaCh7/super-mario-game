@@ -235,6 +235,7 @@ void registerCollisionsActions(GridLayer *glLayer) {
 		CollisionChecker::GetSingleton().Register(mario, coin,
 			[](Sprite* s1, Sprite* s2) {
 				printf("MARIO ATE A COIN\n");
+				s1->GetGravityHandler().lGravity = 0.2;
 				SpriteManager::GetSingleton().RemoveTypeList("coin", s2);
 				SpriteManager::GetSingleton().Remove(s2);
 				CollisionChecker::GetSingleton().Cancel(s1, s2);
@@ -442,6 +443,8 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 							int reps = 1, dx = 2, dy = 0;
 							unsigned int delay = 75;
+							if (jAnim["id"] == "herochar.idle.right" || jAnim["id"] == "herochar.idle.left")
+								delay = jAnim["delay"];
 							FrameListAnimation* hero_run = new FrameListAnimation(jAnim["id"], frames, reps, dx, dy, delay);
 							FrameListAnimator* hero_run_animator = new FrameListAnimator();
 							hero_run_animator->setAnimation(hero_run);
@@ -464,6 +467,48 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 						if (js["is_playable"]) {
 							newSprite->dx = 2;
+
+							newSprite->RegisterAction("idle", [](Sprite* s) {
+								Animator* pAnim;
+								if (s->bLooking)
+									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right");
+								else
+									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left");
+
+
+								if (pAnim->HasFinished()) {
+									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+									if (s->bLooking)
+										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.right");
+									else
+										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.left");
+									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+								}
+							});
+
+							newSprite->RegisterAction("attack.sword", [](Sprite* s) {
+								s->bAttacking = true;
+
+								Animator* pAnim;
+								if(s->bLooking)
+									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.right");
+								else
+									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.left");
+
+
+								if (pAnim->HasFinished()) {
+									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+									if(s->bLooking)
+										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".attack.sword.right");
+									else
+										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".attack.sword.left");
+									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+								}
+							});
+
+
 							newSprite->RegisterAction("damage", [](Sprite* s) {
 
 								Animator* pAnim;
@@ -488,10 +533,6 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 								}
-
-
-
-								//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
 							});
 
 						}

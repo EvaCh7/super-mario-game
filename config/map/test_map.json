@@ -32,11 +32,11 @@
         "tile": 0
       },
       {
-        "external_name": "goomba",
-        "external_path": "config/sprites/enemies.json",
+        "external_name": "slime",
+        "external_path": "config/sprites/slime.json",
         "is_playable": false,
         "is_external": true,
-        "name": "goomba",
+        "name": "slime",
         "tile": 43
       },
       {
