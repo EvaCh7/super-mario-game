@@ -47,7 +47,7 @@ public:
 		for (Animator* anim : suspended) {
 			if (dynamic_cast<FrameListAnimator*>(anim) != nullptr) {
 				Animation* mv = ((FrameListAnimator*)anim)->getAnimation();
-				std::cout << mv->id << std::endl;
+				//std::cout << mv->id << std::endl;
 				if (mv->id == id) {
 					return anim;
 				}

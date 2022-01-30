@@ -258,8 +258,8 @@ void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimatio
 
 	//sprite->Move(((MovingAnimation)anim).GetDx(), ((MovingAnimation)anim).GetDy());
 	//frames[getcurrframe()]
-	printf("FramList_Action2\n");
-	printf("index in frameslist %d\n", frameListAnimator->GetCurrFrame());
+	//printf("FramList_Action2\n");
+	//printf("index in frameslist %d\n", frameListAnimator->GetCurrFrame());
 
 	sprite->currFilm = FilmHolder::Get().GetFilm(anim.id);
 	sprite->SetFrame(anim.GetFrames().at(frameListAnimator->GetCurrFrame()));
@@ -399,7 +399,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 		for (int j = 0; j < map->GetWidthTileSize(); ++j) {
 			for (auto& js : jObjectConfig["bindings"]) {
 				if (lObjLayer[i][j] == js["tile"]) {
-					std::cout << "(" << i << ", " << j << ") " << js["name"] << std::endl;
+					//std::cout << "(" << i << ", " << j << ") " << js["name"] << std::endl;
 					
 					if (js["is_external"]) {
 						json jExternalConfig = Config::GetConfig(js["external_path"]);
