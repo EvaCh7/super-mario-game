@@ -32,22 +32,22 @@
         "tile": 0
       },
       {
-        "external_name": "enemy_mushroom",
-        "external_path": "config/sprites/enemies.json",
+        "external_name": "slime",
+        "external_path": "config/sprites/slime.json",
         "is_external": true,
         "name": "goombas",
         "tile": 43
       },
       {
-        "external_name": "enemy_turtle",
-        "external_path": "config/sprites/enemies.json",
+        "external_name": "slime",
+        "external_path": "config/sprites/slime.json",
         "is_external": true,
         "name": "turtles",
         "tile": 20
       },
       {
-        "external_name": "small_mario",
-        "external_path": "config/sprites/mario.json",
+        "external_name": "herochar",
+        "external_path": "config/sprites/herochar.json",
         "is_external": true,
         "name": "mario",
         "tile": 552

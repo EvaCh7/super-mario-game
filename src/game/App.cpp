@@ -18,6 +18,7 @@ void SuperMario::Initialise(void) {
 	al_install_audio();
 	al_init_acodec_addon();
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_DIRECT3D_INTERNAL);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_DIRECT3D_INTERNAL);
 
 	/*
 	* Load Game Settings
@@ -79,7 +80,15 @@ void registerCollisionsActions(GridLayer *glLayer) {
 					CollisionChecker::GetSingleton().Cancel(s1, s2);
 				}
 				else {
-					printf("mario died from uba luba\n");
+					if (s1->bAttacking) {
+						SpriteManager::GetSingleton().Remove(s2);
+						CollisionChecker::GetSingleton().Cancel(s1, s2);
+						printf("character sliced goomba");
+					}
+					else {
+						printf("mario died from uba luba\n");
+					}
+						
 				}
 			}
 		);
@@ -136,7 +145,14 @@ void registerCollisionsActions(GridLayer *glLayer) {
 
 				}
 				else {
-					printf("mario died from bird \n");
+					if (s1->bAttacking) {
+						SpriteManager::GetSingleton().Remove(s2);
+						CollisionChecker::GetSingleton().Cancel(s1, s2);
+						printf("character sliced goomba");
+					}
+					else {
+						printf("mario died from uba luba\n");
+					}
 				}
 				printf("===================================\n");
 

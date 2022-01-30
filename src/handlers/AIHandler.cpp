@@ -23,6 +23,7 @@ void Game::AIHandler(void) {
 				s->Move(1, 0);
 			}
 		}
+		s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
 
 	}
 	 
@@ -45,6 +46,7 @@ void Game::AIHandler(void) {
 				s->Move(1, 0);
 			}
 		}
+		s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
 	}
 
 }

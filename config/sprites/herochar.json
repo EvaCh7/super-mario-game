@@ -1,0 +1,80 @@
+{
+  "spritesheet": "resources/sprites/herochar.png",
+  "sprites": {
+    "herochar": {
+      "default_animation": "herochar.run",
+      "animations": [
+        {
+          "id": "herochar.run",
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 0,
+              "y_pos": 16
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 16,
+              "y_pos": 16
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 32,
+              "y_pos": 16
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 48,
+              "y_pos": 16
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 64,
+              "y_pos": 16
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 80,
+              "y_pos": 16
+            }
+          ]
+        },
+        {
+          "id": "herochar.attack.sword",
+          "animation": [
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 0,
+              "y_pos": 64
+            },
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 32,
+              "y_pos": 64
+            },
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 64,
+              "y_pos": 64
+            },
+            {
+              "width": 32,
+              "height": 16,
+              "x_pos": 96,
+              "y_pos": 64
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

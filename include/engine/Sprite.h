@@ -40,7 +40,10 @@ private:
 
 public:
 	int  frameNo = 0;
+
 	bool bLooking = true;
+	bool bAttacking = false;
+
 	Film* currFilm = nullptr;
 	/*
 	* Physics
@@ -66,8 +69,14 @@ public:
 		this->qMotionQuantizer.SetMover(f);
 		//quantizer.SetMover(mover = f);
 	}
-	const Rect GetBox(void) const
+
+	Rect GetBox(void)
 	{
+		if (currFilm) {
+			frameBox.w = currFilm->GetFrameBox(frameNo).w;
+			frameBox.h = currFilm->GetFrameBox(frameNo).h;
+		}
+
 		return { x, y, frameBox.w, frameBox.h };
 	}
 	

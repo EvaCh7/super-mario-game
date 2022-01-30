@@ -219,8 +219,11 @@
     <None Include="config\map\first_map.json" />
     <None Include="config\map\first_stage.json" />
     <None Include="config\map\test_map.json" />
+    <None Include="config\sprites\elemental_knight.json" />
     <None Include="config\sprites\enemies.json" />
+    <None Include="config\sprites\herochar.json" />
     <None Include="config\sprites\mario.json" />
+    <None Include="config\sprites\slime.json" />
     <None Include="packages.config" />
     <None Include="resources\map\final_map\final_map_Front.csv" />
     <None Include="resources\map\final_map\final_map_Ground.csv" />

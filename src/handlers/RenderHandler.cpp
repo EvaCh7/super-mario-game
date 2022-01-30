@@ -9,6 +9,12 @@ void Game::RenderHandler(void) {
 	//	obj->Display(this->mMap->GetMap(), obj->GetBox());
 	//Blit(display, Rect{0, 0, 0, 0}, this->mMap->GetMap(), vw);
 
+
+	//Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+	//Rect r = mario->currFilm->GetFrameBox(mario->frameNo);
+	//printf("CHAR {%d %d %d %d} {%d %d %d %d}\n", mario->GetBox().x, mario->GetBox().y, mario->GetBox().w, mario->GetBox().h, r.x, r.y, r.w, r.h);
+
+
 	al_set_target_backbuffer(display);
 BlitNoRefresh(display, (Rect&)Rect{0, 0, 640, 480}, this->mMap->GetTileLayer()->GetBuffer(), vw);
 for (auto obj : SpriteManager::GetSingleton().GetDisplayList()) {

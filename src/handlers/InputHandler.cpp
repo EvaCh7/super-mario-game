@@ -52,9 +52,11 @@ void Game::InputHandler(void) {
 				else if(FilmHolder::Get().GetFilm("mario.big.walking.left") != nullptr)
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.big.walking.right");
 				else
-					sMario->currFilm = FilmHolder::Get().GetFilm("turtle.walking.right");
+					sMario->currFilm = FilmHolder::Get().GetFilm("herochar.run");
+
 			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
 			sMario->bLooking = true;
+			sMario->bAttacking = false;
 			//this->iViewWindowX++;
 		}
 		if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
@@ -66,11 +68,12 @@ void Game::InputHandler(void) {
 				else if (FilmHolder::Get().GetFilm("mario.big.walking.left") != nullptr)
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.big.walking.left");
 				else
-					sMario->currFilm = FilmHolder::Get().GetFilm("turtle.walking.left");
+					sMario->currFilm = FilmHolder::Get().GetFilm("herochar.run");
 
 
 			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
 			sMario->bLooking = false;
+			sMario->bAttacking = false;
 			//this->iViewWindowX--;
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
@@ -85,7 +88,11 @@ void Game::InputHandler(void) {
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_ESCAPE))
 			this->SetRunning(false);
-
+		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_X)) {
+			sMario->bAttacking = true;
+			sMario->currFilm = FilmHolder::Get().GetFilm("herochar.attack.sword");
+			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
+		}
 	}
 
 	return;
