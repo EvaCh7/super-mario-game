@@ -49,16 +49,16 @@ void Game::InputHandler(void) {
 			sMario->Move(2 * mult, 0);
 
 			
-			if (AnimatorManager::GetSingleton().mario_walking_animator->HasFinished()) {
-				//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-				AnimatorManager::GetSingleton().mario_walking_animator->Start(AnimatorManager::GetSingleton().mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
+			//if (AnimatorManager::GetSingleton().mario_walking_animator->HasFinished()) {
+			//	//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+			//	AnimatorManager::GetSingleton().mario_walking_animator->Start(AnimatorManager::GetSingleton().mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
 
-				AnimatorManager::GetSingleton().MarkAsRunning(AnimatorManager::GetSingleton().mario_walking_animator);
+			//	AnimatorManager::GetSingleton().MarkAsRunning(AnimatorManager::GetSingleton().mario_walking_animator);
 
-			}
+			//}
 
 
-			AnimatorManager::GetSingleton().Progress(SystemClock::Get().getgametime());
+			//AnimatorManager::GetSingleton().Progress(SystemClock::Get().getgametime());
 
 			/*
 			if (!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())

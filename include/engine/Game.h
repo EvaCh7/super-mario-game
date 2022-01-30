@@ -37,6 +37,7 @@ public:
 	void PhysicsHandler(void);
 	void CollisionHandler(void);
 	void AIHandler(void);
+	void AnimationHandler(void);
 
 	/*
 	* Getters

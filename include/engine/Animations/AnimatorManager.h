@@ -8,6 +8,7 @@
 class AnimatorManager {
 private:
 	std::set<Animator*> running, suspended;
+
 	static AnimatorManager singleton;
 	AnimatorManager(void) = default;
 	AnimatorManager(const AnimatorManager&) = delete;
@@ -33,6 +34,14 @@ public:
 		assert(a->HasFinished()); running.erase(a); suspended.insert(a);
 	}
 
+	Animator* GetAnimatorByAnimationID(std::string id) {
+		for (Animator *anim : running) {
+			if (dynamic_cast<MovingAnimator*>(anim) != nullptr) {
+
+			}
+		}
+	}
+
 	void Progress(timestamp_t currTime) {
 
 		auto copied(running);
@@ -43,7 +52,6 @@ public:
 		}
 	}
 
-	FrameListAnimator* mario_walking_animator;
 	static auto GetSingleton(void) -> AnimatorManager& { return singleton; }
 	static auto GetSingletonConst(void) -> const AnimatorManager& { return singleton; }
 };

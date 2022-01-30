@@ -277,6 +277,7 @@ void SuperMario::Load(void) {
 	this->game.SetPhysics(std::bind(&Game::PhysicsHandler, &this->game));
 	this->game.SetCollisionChecking(std::bind(&Game::CollisionHandler, &this->game));
 	this->game.SetAI(std::bind(&Game::AIHandler, &this->game));
+	this->game.SetProgressAnimations(std::bind(&Game::AnimationHandler, &this->game));
 
 	/*
 	* Create Map
@@ -297,16 +298,10 @@ void SuperMario::Load(void) {
 
 	std::vector<unsigned> frames = { 0,1,2 };
 	int reps = 1, dx = 2, dy = 0;
-	unsigned int delay = 150;
-
-	FrameListAnimation* mario_walking = new FrameListAnimation("mario_walking_right", frames, reps, dx, dy, delay);
-
-
-
-	AnimatorManager::GetSingleton().mario_walking_animator = new FrameListAnimator();
-
-
-	AnimatorManager::GetSingleton().mario_walking_animator->setAnimation(mario_walking);
+	unsigned int delay = 75;
+	FrameListAnimation* mario_walking = new FrameListAnimation("mario.walking.left", frames, reps, dx, dy, delay);
+	FrameListAnimator *mario_walking_animator = new FrameListAnimator();
+	mario_walking_animator->setAnimation(mario_walking);
 
 
 
@@ -315,26 +310,27 @@ void SuperMario::Load(void) {
 	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
 	
 
-	AnimatorManager::GetSingleton().mario_walking_animator->SetOnAction(
+	mario_walking_animator->SetOnAction(
 		[mario](Animator* animator, const Animation& anim) {
 			FramList_Action(mario, animator, (const FrameListAnimation&)anim);
 		}
 	);
 
-	AnimatorManager::GetSingleton().mario_walking_animator->SetOnFinish(
+	mario_walking_animator->SetOnFinish(
 		[](Animator* anim) {
 			anim->setState(ANIMATOR_STOPPED);
 		});
 
-	AnimatorManager::GetSingleton().mario_walking_animator->SetOnStart(
+	mario_walking_animator->SetOnStart(
 		[](Animator* anim) {
 			anim->setState(ANIMATOR_RUNNING);
 		});
-	AnimatorManager::GetSingleton().Register(AnimatorManager::GetSingleton().mario_walking_animator);
+	mario_walking_animator->Start(mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
+	AnimatorManager::GetSingleton().Register(mario_walking_animator);
 
 
 
-
+	
 
 
 	registerCollisionsActions(this->game.mMap->GetTileLayer()->GetGridLayer());

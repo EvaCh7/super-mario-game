@@ -1,16 +1,18 @@
 #pragma once 
 
 #include "engine/animations/Animator.h"
-
+#include "engine/animations/AnimatorManager.h"
 
 
 
 
 void Animator::NotifyStarted(void) {
 
-	//AnimatorManager::GetSingleton().MarkAsRunning(this);
-
+	AnimatorManager::GetSingleton().MarkAsRunning(this);
+	//if (onStart)
+	//	onStart(this);
 }
+
 void Animator::NotifyAction(void) {
 
 }
@@ -28,7 +30,7 @@ void Animator::Stop(void) {
 }
 
 void Animator::NotifyStopped(void) {
-	//AnimatorManager::GetSingleton().MarkAsSuspended(this);
+	AnimatorManager::GetSingleton().MarkAsSuspended(this);
 	if (onFinish)
 		(onFinish)(this);
 }

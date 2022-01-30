@@ -17,7 +17,7 @@ void Game::MainLoopIteration(void) {
 	SystemClock::Get().setgametime();
 	Render();
 	Input();
-	//ProgressAnimations();
+	ProgressAnimations();
 	AI();
 	Physics();
 	CollisionChecking();

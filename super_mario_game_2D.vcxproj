@@ -207,6 +207,7 @@
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\game\Audio.cpp" />
     <ClCompile Include="src\handlers\AIHandler.cpp" />
+    <ClCompile Include="src\handlers\AnimationHandler.cpp" />
     <ClCompile Include="src\handlers\CollisionsHandler.cpp" />
     <ClCompile Include="src\handlers\InputHandler.cpp" />
     <ClCompile Include="src\handlers\PhysicsHandler.cpp" />
