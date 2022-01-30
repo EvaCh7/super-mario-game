@@ -468,25 +468,6 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						if (js["is_playable"]) {
 							newSprite->dx = 2;
 
-							newSprite->RegisterAction("idle", [](Sprite* s) {
-								Animator* pAnim;
-								if (s->bLooking)
-									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right");
-								else
-									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left");
-
-
-								if (pAnim->HasFinished()) {
-									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-									if (s->bLooking)
-										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.right");
-									else
-										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.left");
-									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
-									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
-								}
-							});
-
 							newSprite->RegisterAction("attack.sword", [](Sprite* s) {
 								s->bAttacking = true;
 

@@ -195,6 +195,78 @@
               "y_pos": 80
             }
           ]
+        },
+        {
+          "id": "slime.idle.left",
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 224,
+              "y_pos": 48
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 208,
+              "y_pos": 48
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 48
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 176,
+              "y_pos": 48
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 160,
+              "y_pos": 48
+            }
+          ]
+        },
+        {
+          "id": "slime.idle.right",
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 0,
+              "y_pos": 128
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 16,
+              "y_pos": 128
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 32,
+              "y_pos": 128
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 48,
+              "y_pos": 128
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 64,
+              "y_pos": 128
+            }
+          ]
         }
       ]
     }

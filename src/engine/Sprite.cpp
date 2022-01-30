@@ -29,10 +29,36 @@ void Sprite::RegisterDefaultAction(std::string id, std::function<void(Sprite*)> 
 
 void Sprite::RegisterDefaultActions(void)
 {
+
+	RegisterAction("idle", [](Sprite* s) {
+		Animator* pAnim;
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
+		if (s->bLooking)
+			pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right");
+		else
+			pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left");
+
+
+		if (pAnim->HasFinished()) {
+			//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+			if (s->bLooking)
+				s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.right");
+			else
+				s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.left");
+			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+		}
+	});
+
 	RegisterDefaultAction("run.left", [](Sprite* s) {
 		s->Move(-s->dx, 0);
 
 		Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left");
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
 		if (pAnim->HasFinished()) {
 			//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
 			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
@@ -51,6 +77,9 @@ void Sprite::RegisterDefaultActions(void)
 		s->Move(s->dx, 0);
 
 		Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right");
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
+		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
 
 		//s->currFilm = FilmHolder::Get().GetFilm(s->id + ".run.right");
 		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
