@@ -1,7 +1,7 @@
 {
   "spritesheet": "resources/sprites/marioi.png",
   "sprites": {
-    "small_mario": {
+    "mario.small": {
       "default_animation": "mario.small.walking.right",
       "animations": [
         {
@@ -108,7 +108,7 @@
         }
       ]
     },
-    "big_mario": {
+    "mario.big": {
       "default_animation": "mario.big.standing.right",
       "animations": [
         {

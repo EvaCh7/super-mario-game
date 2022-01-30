@@ -65,7 +65,7 @@ protected:
 
 public:
 	void			 Progress(timestamp_t currTime);
-	auto			 GetAnim(void) const ->const MovingAnimation& { return *anim; }
+	MovingAnimation& GetAnim(void)  { return *anim; }
 	void			 Start(MovingAnimation* a, timestamp_t t)
 	{
 		anim = a;
@@ -124,9 +124,9 @@ protected:
 
 public:
 	void					Progress(timestamp_t currTime);
-	FrameListAnimation* getAnimation() { return anim; }
+	FrameListAnimation*		getAnimation() { return anim; }
 
-	void setAnimation(FrameListAnimation* anim) { this->anim = anim; }
+	void					setAnimation(FrameListAnimation* anim) { this->anim = anim; }
 	unsigned				GetCurrFrame(void) const { return IndexInFramesVector; }
 	unsigned				GetCurrRep(void) const { return curr_rep; }
 

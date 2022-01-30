@@ -62,7 +62,7 @@
         }
       ]
     },
-    "enemy_mushroom": {
+    "goomba": {
       "default_animation": "goomba.walking",
       "animations": [
         {
@@ -95,7 +95,7 @@
         }
       ]
     },
-    "piranha_plant": {
+    "piranha": {
       "default_animation": "piranha.closed",
       "animations": [
         {

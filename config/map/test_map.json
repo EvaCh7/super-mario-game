@@ -23,7 +23,7 @@
     "bindings": [
       {
         "is_external": false,
-        "name": "coins",
+        "name": "coin",
         "tile": 286
       },
       {
@@ -32,24 +32,27 @@
         "tile": 0
       },
       {
-        "external_name": "slime",
-        "external_path": "config/sprites/slime.json",
+        "external_name": "goomba",
+        "external_path": "config/sprites/enemies.json",
+        "is_playable": false,
         "is_external": true,
-        "name": "goombas",
+        "name": "goomba",
         "tile": 43
       },
       {
         "external_name": "slime",
         "external_path": "config/sprites/slime.json",
+        "is_playable": false,
         "is_external": true,
-        "name": "turtles",
+        "name": "slime",
         "tile": 20
       },
       {
-        "external_name": "small_mario",
-        "external_path": "config/sprites/mario.json",
+        "external_name": "herochar",
+        "external_path": "config/sprites/herochar.json",
         "is_external": true,
-        "name": "mario",
+        "is_playable": true,
+        "name": "herochar",
         "tile": 552
       }
     ]

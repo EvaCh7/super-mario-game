@@ -203,6 +203,7 @@
     <ClCompile Include="src\engine\physics\Gravity.cpp" />
     <ClCompile Include="src\engine\physics\MotionQuantizer.cpp" />
     <ClCompile Include="src\engine\Sprite.cpp" />
+    <ClCompile Include="src\engine\sprites\PlayableCharacter.cpp" />
     <ClCompile Include="src\engine\Structs.cpp" />
     <ClCompile Include="src\game\App.cpp" />
     <ClCompile Include="src\game\Audio.cpp" />

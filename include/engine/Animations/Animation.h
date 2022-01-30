@@ -5,9 +5,8 @@
 #include "engine/Sprite.h"
 
 class Animation {
-protected:
-	std::string id;
 public:
+	std::string id;
 	const std::string& GetId(void) { return id; }
 	void SetId(std::string& _id);
 	virtual Animation* Clone(void) const = 0;
@@ -111,7 +110,7 @@ public:
 		const std::string& _id,
 		const Frames& _frames,
 		unsigned _reps, int dx, int dy, unsigned _delay
-	) : frames(_frames), MovingAnimation(id, _reps, dx, dy, _delay) {}
+	) : frames(_frames), MovingAnimation(_id, _reps, dx, dy, _delay) {}
 
 
 

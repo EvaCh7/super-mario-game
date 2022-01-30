@@ -12,7 +12,7 @@ void Game::InputHandler(void) {
 	al_get_keyboard_state(&ksKeyboardState);
 
 	Sprite* sMario = nullptr;
-	for (auto obj : SpriteManager::GetSingleton().GetTypeList("mario")) {
+	for (auto obj : SpriteManager::GetSingleton().GetTypeList("main")) {
 		sMario = obj;
 
 	}
@@ -32,29 +32,28 @@ void Game::InputHandler(void) {
 
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
-			if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
-				sMario->GetGravityHandler().Jump();
-				/*if (sMario->bLooking) {
-					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.right");
-				}
-				else {
-					sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.left");
-				}*/
-			}
+			//if (!sMario->GetGravityHandler().IsJumping() && !sMario->GetGravityHandler().IsFalling()) {
+			//	sMario->GetGravityHandler().Jump();
+			//	/*if (sMario->bLooking) {
+			//		sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.right");
+			//	}
+			//	else {
+			//		sMario->currFilm = FilmHolder::Get().GetFilm("mario.jumping.left");
+			//	}*/
+			//}
+			sMario->CallAction("jump");
 		}
 
 		
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
-			sMario->Move(2 * mult, 0);
-
+			//sMario->Move(2 * mult, 0);
+			sMario->CallAction("run.right");
 			
-			//if (AnimatorManager::GetSingleton().mario_walking_animator->HasFinished()) {
+			//if (mario_walking_animator->HasFinished()) {
 			//	//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-			//	AnimatorManager::GetSingleton().mario_walking_animator->Start(AnimatorManager::GetSingleton().mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
-
-			//	AnimatorManager::GetSingleton().MarkAsRunning(AnimatorManager::GetSingleton().mario_walking_animator);
-
+			//	mario_walking_animator->Start(mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
+			//	AnimatorManager::GetSingleton().MarkAsRunning(mario_walking_animator);
 			//}
 
 
@@ -70,12 +69,13 @@ void Game::InputHandler(void) {
 					sMario->currFilm = FilmHolder::Get().GetFilm("herochar.run");*/
 
 			//sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
-			sMario->bLooking = true;
-			sMario->bAttacking = false;
+			/*sMario->bLooking = true;
+			sMario->bAttacking = false;*/
 			//this->iViewWindowX++;
 		}
 		if(al_key_down(&ksKeyboardState, ALLEGRO_KEY_LEFT)) {
-			sMario->Move(-2 * mult, 0);
+			sMario->CallAction("run.left");
+			/*sMario->Move(-2 * mult, 0);
 
 			if (!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
 				if (FilmHolder::Get().GetFilm("mario.small.walking.left") != nullptr)
@@ -88,7 +88,7 @@ void Game::InputHandler(void) {
 
 			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
 			sMario->bLooking = false;
-			sMario->bAttacking = false;
+			sMario->bAttacking = false;*/
 			//this->iViewWindowX--;
 		}
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
@@ -105,7 +105,7 @@ void Game::InputHandler(void) {
 			this->SetRunning(false);
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_X)) {
 			sMario->bAttacking = true;
-			sMario->currFilm = FilmHolder::Get().GetFilm("herochar.attack.sword");
+			sMario->currFilm = FilmHolder::Get().GetFilm("herochar.attack.sword.right");
 			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
 		}
 	}

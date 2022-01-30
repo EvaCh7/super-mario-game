@@ -19,24 +19,38 @@ public:
 	}
 	void Register(Animator* a)
 	{
-		assert(a->HasFinished()); suspended.insert(a);
+		suspended.insert(a);
 	}
 	void Cancel(Animator* a)
 	{
-		assert(a->HasFinished()); suspended.erase(a);
+		suspended.erase(a);
 	}
 	void MarkAsRunning(Animator* a)
 	{
-		assert(!a->HasFinished()); suspended.erase(a); running.insert(a);
+		suspended.erase(a); running.insert(a);
 	}
 	void MarkAsSuspended(Animator* a)
 	{
-		assert(a->HasFinished()); running.erase(a); suspended.insert(a);
+		running.erase(a); suspended.insert(a);
 	}
 
 	Animator* GetAnimatorByAnimationID(std::string id) {
 		for (Animator *anim : running) {
-			if (dynamic_cast<MovingAnimator*>(anim) != nullptr) {
+			if (dynamic_cast<FrameListAnimator*>(anim) != nullptr) {
+				FrameListAnimation* mv = ((FrameListAnimator*)anim)->getAnimation();
+				if (mv->GetId() == id) {
+					return anim;
+				}
+				
+			}
+		}
+		for (Animator* anim : suspended) {
+			if (dynamic_cast<FrameListAnimator*>(anim) != nullptr) {
+				Animation* mv = ((FrameListAnimator*)anim)->getAnimation();
+				std::cout << mv->id << std::endl;
+				if (mv->id == id) {
+					return anim;
+				}
 
 			}
 		}

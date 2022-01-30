@@ -2,10 +2,10 @@
   "spritesheet": "resources/sprites/slime.png",
   "sprites": {
     "slime": {
-      "default_animation": "slime.run",
+      "default_animation": "slime.run.right",
       "animations": [
         {
-          "id": "slime.run",
+          "id": "slime.run.right",
           "animation": [
             {
               "width": 16,
@@ -96,6 +96,101 @@
               "height": 32,
               "x_pos": 222,
               "y_pos": 0
+            }
+          ]
+        },
+        {
+          "id": "slime.run.left",
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 0,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 16,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 32,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 48,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 64,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 80,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 96,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 112,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 128,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 144,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 160,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 176,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 192,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 208,
+              "y_pos": 80
+            },
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 222,
+              "y_pos": 80
             }
           ]
         }

@@ -1,6 +1,12 @@
 #include <engine/Sprite.h>
 #include <engine/Map.h>
 #include<display/DisplayTools.h>
+#include <functional>
+#include <iostream>
+#include <functional>
+#include "engine/Structs.h"
+#include "engine/animations/AnimatorManager.h"
+#include "engine/animations/SystemClock.h"
 
 void SpriteManager::AddToTypeList(std::string id, Sprite* sprite) {
 	GetTypeList(id).push_back(sprite);
@@ -9,6 +15,84 @@ void SpriteManager::AddToTypeList(std::string id, Sprite* sprite) {
 void SpriteManager::Add(Sprite* s) {
 	dpyList.push_back(s);
 	// insert by ascending zorder
+}
+
+void Sprite::RegisterAction(std::string id, std::function<void(Sprite *)> fAction)
+{
+	vActions[id] = fAction;
+}
+
+void Sprite::RegisterDefaultAction(std::string id, std::function<void(Sprite*)> fAction)
+{
+	vDefaultActions[id] = fAction;
+}
+
+void Sprite::RegisterDefaultActions(void)
+{
+	RegisterDefaultAction("run.left", [](Sprite* s) {
+		s->Move(-s->dx, 0);
+
+		Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left");
+		if (pAnim->HasFinished()) {
+			//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+			//s->currFilm = FilmHolder::Get().GetFilm(s->id + ".run.left");
+			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+		}
+
+
+		//s->currFilm = FilmHolder::Get().GetFilm(s->id + ".run.left");
+		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
+		s->bLooking = false;
+		s->bAttacking = false;
+	});
+
+	RegisterDefaultAction("run.right", [](Sprite* s) {
+		s->Move(s->dx, 0);
+
+		Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right");
+
+		//s->currFilm = FilmHolder::Get().GetFilm(s->id + ".run.right");
+		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
+		if (pAnim->HasFinished()) {
+			//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+
+			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+			//s->currFilm = FilmHolder::Get().GetFilm(s->id + ".run.right");
+			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+		}
+
+
+
+		s->bLooking = true;
+		s->bAttacking = false;
+	});
+
+	RegisterDefaultAction("jump", [](Sprite* s) {
+		if (!s->GetGravityHandler().IsJumping() && !s->GetGravityHandler().IsFalling()) {
+			s->GetGravityHandler().Jump();
+		}
+	});
+}
+
+void Sprite::CallAction(std::string id)
+{
+	std::function<void(Sprite*)> f = vActions[id];
+	if (!f) {
+		CallDefaultAction(id);
+		return;
+	}
+	f(this);
+	return;
+}
+
+void Sprite::CallDefaultAction(std::string id)
+{
+	std::function<void(Sprite*)> f = vDefaultActions[id];
+	if (!f)
+		return;
+	f(this);
+	return;
 }
 
 GravityHandler& Sprite::GetGravityHandler(void)
@@ -185,7 +269,7 @@ Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string 
 
 
 	Bitmap* bSpriteBitmap = al_create_sub_bitmap(bObjBitmap, rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h);
-	Sprite* s = new Sprite(x, y, bSpriteBitmap, rDefaultBox.w, rDefaultBox.h);
+	Sprite* s = new Sprite(id, x, y, bSpriteBitmap, rDefaultBox.w, rDefaultBox.h);
 
 	SpriteManager::GetSingleton().Add(s);
 	SpriteManager::GetSingleton().AddToTypeList(id, s);
@@ -220,7 +304,7 @@ Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string 
 		}
 	);
 
-	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("main").front();
 	CollisionChecker::GetSingleton().Register(mario, s,
 		[](Sprite* s1, Sprite* s2) {
 			printf("===================================\n");

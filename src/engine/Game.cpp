@@ -18,7 +18,7 @@ void Game::MainLoopIteration(void) {
 	Render();
 	Input();
 	ProgressAnimations();
-	AI();
+	//AI();
 	Physics();
 	CollisionChecking();
 	//UserCode(); // hook for custom code at end

@@ -11,7 +11,7 @@ void Game::PhysicsHandler(void) {
 		GravityHandler &gh = s->GetGravityHandler();
 		if (!gh.IsGravityAddicted())
 			continue;
-		Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+		Sprite* mario = SpriteManager::GetSingleton().GetTypeList("main").front();
 		bool bSolidGround = this->mMap->GetTileLayer()->GetGridLayer()->IsOnSolidGround(s->GetBox());
 
 		if (bSolidGround) {

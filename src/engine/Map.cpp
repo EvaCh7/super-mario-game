@@ -74,7 +74,7 @@ int TileLayer::GetTile(int iCol, int iRow)
 Rect TileLayer::GetViewWindow(void)
 {
 	Sprite* sMario = nullptr;
-	for (auto obj : SpriteManager::GetSingleton().GetTypeList("mario")) {
+	for (auto obj : SpriteManager::GetSingleton().GetTypeList("main")) {
 		sMario = obj;
 	}
 

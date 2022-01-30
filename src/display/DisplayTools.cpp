@@ -29,6 +29,10 @@ void BlitNoRefresh(Display* dDest, Rect& rDest, Bitmap* src, Rect& rSrc) {
 	al_draw_bitmap_region(src, rSrc.x, rSrc.y, rSrc.w, rSrc.h, rDest.x, rDest.y, 0);
 }
 
+void BlitNoRefreshRotated(Display* dDest, Rect& rDest, Bitmap* src, Rect& rSrc) {
+	al_draw_bitmap_region(src, rSrc.x, rSrc.y, rSrc.w, rSrc.h, rDest.x, rDest.y, 0);
+}
+
 void Blit(Bitmap *dDest, Rect& rDest,
 		Bitmap *dSrc, Rect& rSrc)
 {

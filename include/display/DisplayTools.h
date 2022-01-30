@@ -15,6 +15,7 @@ void Blit(Display* dest, const Rect& rDest, Bitmap* src, const Rect& rSrc);
 
 
 void BlitNoRefresh(Display* dDest, Rect& rDest, Bitmap* src, Rect& rSrc);
+void BlitNoRefreshRotated(Display* dDest, Rect& rDest, Bitmap* src, Rect& rSrc);
 void RefreshDisplay(Display *dDest);
 
 

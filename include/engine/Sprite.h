@@ -20,6 +20,8 @@ public:
 	using Mover = std::function<void(const Rect&, int* dx, int* dy)>;
 private:
 
+	
+
 	Rect frameBox; // inside the film
 	bool isVisible = false;
 
@@ -37,32 +39,43 @@ private:
 	GravityHandler hGravityHandler;
 	MotionQuantizer qMotionQuantizer;
 
+	/*
+	* Movement
+	*/
+	std::map<std::string, std::function<void(Sprite*)>> vActions;
+	std::map<std::string, std::function<void(Sprite*)>> vDefaultActions;
+
 
 public:
-	int  frameNo = 0;
 
+	/*
+	* Meta Data
+	*/
+	std::string id;
+
+
+	int frameNo = 0;
+	int dx = 2;
 	bool bLooking = true;
 	bool bAttacking = false;
 
 	Film* currFilm = nullptr;
+
+	/*
+	* Movement
+	*/
+	void RegisterAction(std::string id, std::function<void(Sprite*)> fAction);
+	void RegisterDefaultAction(std::string id, std::function<void(Sprite*)> fAction);
+	void RegisterDefaultActions(void);
+	void CallAction(std::string id);
+	void CallDefaultAction(std::string id);
+
+
 	/*
 	* Physics
 	*/
 	GravityHandler& GetGravityHandler(void);
 	MotionQuantizer& GetMotionQuantizer(void);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	void SetMover(MotionQuantizer::Mover f)
 	{
@@ -101,21 +114,12 @@ public:
 	void Display(Bitmap* dest, const Rect& dpyArea) const;
 
 
-	//_x _y poy sponarei o mario
-	//100*16 -480 
-	Sprite(int _x, int _y, Bitmap * bitmap,int width,int height) :
-		x(_x), y(_y), bitmap(bitmap)
+	Sprite(std::string id, int _x, int _y, Bitmap * bitmap,int width,int height) :
+		id(id), x(_x), y(_y), bitmap(bitmap)
 	{
 		this->frameBox = Rect(_x, _y, width, height);
 		//frameNo = currFilm->GetTotalFrames(); SetFrame(0);
 	}
-	/*
-	Sprite(int _x, int _y, AnimationFilm* film, const std::string& _typeId = "") :
-		x(_x), y(_y), currFilm(film), typeId(_typeId)
-	{
-		//frameNo = currFilm->GetTotalFrames(); SetFrame(0);
-	}
-	*/
 
 	Mover MakeSpriteGridLayerMover(GridLayer* glLayer);
 
