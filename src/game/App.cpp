@@ -251,7 +251,7 @@ void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimatio
 	/*if (frameRangeAnimator->GetCurrFrame() != anim.GetStartFrame() ||
 		frameRangeAnimator->GetCurrRep())*/
 
-	sprite->Move(((MovingAnimation)anim).GetDx(), ((MovingAnimation)anim).GetDy());
+	//sprite->Move(((MovingAnimation)anim).GetDx(), ((MovingAnimation)anim).GetDy());
 	//frames[getcurrframe()]
 	printf("FramList_Action2\n");
 	printf("index in frameslist %d\n", frameListAnimator->GetCurrFrame());
@@ -297,7 +297,7 @@ void SuperMario::Load(void) {
 
 	std::vector<unsigned> frames = { 0,1,2 };
 	int reps = 1, dx = 2, dy = 0;
-	unsigned int delay = 0.5;
+	unsigned int delay = 150;
 
 	FrameListAnimation* mario_walking = new FrameListAnimation("mario_walking_right", frames, reps, dx, dy, delay);
 

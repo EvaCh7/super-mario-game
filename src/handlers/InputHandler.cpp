@@ -46,11 +46,11 @@ void Game::InputHandler(void) {
 		
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
-			//sMario->Move(2 * mult, 0);
+			sMario->Move(2 * mult, 0);
 
 			
 			if (AnimatorManager::GetSingleton().mario_walking_animator->HasFinished()) {
-				sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+				//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
 				AnimatorManager::GetSingleton().mario_walking_animator->Start(AnimatorManager::GetSingleton().mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
 
 				AnimatorManager::GetSingleton().MarkAsRunning(AnimatorManager::GetSingleton().mario_walking_animator);
