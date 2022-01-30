@@ -8,6 +8,12 @@
 #include <game/Audio.h>
 #include "engine/Sprite.h"
 
+#include "engine/Animations/Animation.h"
+#include "engine/Animations/Animator.h"
+#include "engine/Animations/AnimatorManager.h"
+#include "engine/Animations/SystemClock.h"
+
+
 void SuperMario::Initialise(void) {
 	json jGameConfig = Config::GetConfig("config/game.json");
 
@@ -50,6 +56,8 @@ void SuperMario::Initialise(void) {
 CollisionChecker CollisionChecker::singleton;
 SpriteManager SpriteManager::singleton;
 FilmHolder FilmHolder::holder;
+
+AnimatorManager AnimatorManager::singleton;
 
 Sprite *addItemToTypeList(std::string id, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
 	Bitmap* bm = al_create_sub_bitmap(pngBitmap, x, y, width, height);
@@ -232,6 +240,28 @@ void registerCollisionsActions(GridLayer *glLayer) {
 	}
 }
 
+
+
+void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimation& anim) {
+	printf("FramList_Action\n");
+
+	FrameListAnimator* frameListAnimator = (FrameListAnimator*)animator;
+
+
+	/*if (frameRangeAnimator->GetCurrFrame() != anim.GetStartFrame() ||
+		frameRangeAnimator->GetCurrRep())*/
+
+	sprite->Move(((MovingAnimation)anim).GetDx(), ((MovingAnimation)anim).GetDy());
+	//frames[getcurrframe()]
+	printf("FramList_Action2\n");
+	printf("index in frameslist %d\n", frameListAnimator->GetCurrFrame());
+
+
+	sprite->SetFrame(anim.GetFrames().at(frameListAnimator->GetCurrFrame()));
+}
+
+
+
 void SuperMario::Load(void) {
 	json jGameConfig = Config::GetConfig("config/game.json");
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
@@ -260,6 +290,50 @@ void SuperMario::Load(void) {
 
 	this->game.mMap->ParseObjects(jMapConfig["objects"]);
 	SpawnObjects(jMapConfig["objects"]);
+
+
+
+
+
+	std::vector<unsigned> frames = { 0,1,2 };
+	int reps = 1, dx = 2, dy = 0;
+	unsigned int delay = 0.5;
+
+	FrameListAnimation* mario_walking = new FrameListAnimation("mario_walking_right", frames, reps, dx, dy, delay);
+
+
+
+	AnimatorManager::GetSingleton().mario_walking_animator = new FrameListAnimator();
+
+
+	AnimatorManager::GetSingleton().mario_walking_animator->setAnimation(mario_walking);
+
+
+
+
+	//AnimatorManager::GetSingleton().mario_walking_animator->SetOnStart(AnimatorManager::GetSingleton().mario_walking_animator->Start(mario_walking, SystemClock::Get().getgametime());
+	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("mario").front();
+	
+
+	AnimatorManager::GetSingleton().mario_walking_animator->SetOnAction(
+		[mario](Animator* animator, const Animation& anim) {
+			FramList_Action(mario, animator, (const FrameListAnimation&)anim);
+		}
+	);
+
+	AnimatorManager::GetSingleton().mario_walking_animator->SetOnFinish(
+		[](Animator* anim) {
+			anim->setState(ANIMATOR_STOPPED);
+		});
+
+	AnimatorManager::GetSingleton().mario_walking_animator->SetOnStart(
+		[](Animator* anim) {
+			anim->setState(ANIMATOR_RUNNING);
+		});
+	AnimatorManager::GetSingleton().Register(AnimatorManager::GetSingleton().mario_walking_animator);
+
+
+
 
 
 

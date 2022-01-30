@@ -13,6 +13,9 @@ private:
 	AnimatorManager(const AnimatorManager&) = delete;
 	AnimatorManager(AnimatorManager&&) = delete;
 public:
+	Animator* getFirstRunning() {
+		return (*running.begin());
+	}
 	void Register(Animator* a)
 	{
 		assert(a->HasFinished()); suspended.insert(a);
@@ -29,11 +32,18 @@ public:
 	{
 		assert(a->HasFinished()); running.erase(a); suspended.insert(a);
 	}
+
 	void Progress(timestamp_t currTime) {
+
 		auto copied(running);
 		for (auto* a : copied)
+		{
 			a->Progress(currTime);
+
+		}
 	}
+
+	FrameListAnimator* mario_walking_animator;
 	static auto GetSingleton(void) -> AnimatorManager& { return singleton; }
 	static auto GetSingletonConst(void) -> const AnimatorManager& { return singleton; }
 };

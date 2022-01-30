@@ -4,6 +4,8 @@
 #include "display/DisplayTools.h"
 #include "engine/Game.h"
 
+#include "engine/Animations/AnimatorManager.h"
+#include "engine/Animations/SystemClock.h"
 void Game::InputHandler(void) {
 	ALLEGRO_EVENT events;
 	al_wait_for_event(event_queue, &events);
@@ -44,17 +46,30 @@ void Game::InputHandler(void) {
 		
 
 		if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_RIGHT)) {
-			sMario->Move(2 * mult, 0);
+			//sMario->Move(2 * mult, 0);
+
 			
+			if (AnimatorManager::GetSingleton().mario_walking_animator->HasFinished()) {
+				sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+				AnimatorManager::GetSingleton().mario_walking_animator->Start(AnimatorManager::GetSingleton().mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
+
+				AnimatorManager::GetSingleton().MarkAsRunning(AnimatorManager::GetSingleton().mario_walking_animator);
+
+			}
+
+
+			AnimatorManager::GetSingleton().Progress(SystemClock::Get().getgametime());
+
+			/*
 			if (!sMario->GetGravityHandler().IsFalling() && !sMario->GetGravityHandler().IsJumping())
 				if(FilmHolder::Get().GetFilm("mario.small.walking.right") != nullptr)
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.small.walking.right");
 				else if(FilmHolder::Get().GetFilm("mario.big.walking.left") != nullptr)
 					sMario->currFilm = FilmHolder::Get().GetFilm("mario.big.walking.right");
 				else
-					sMario->currFilm = FilmHolder::Get().GetFilm("herochar.run");
+					sMario->currFilm = FilmHolder::Get().GetFilm("herochar.run");*/
 
-			sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
+			//sMario->SetFrame((sMario->GetFrame() + 1) % sMario->currFilm->GetTotalFrames());
 			sMario->bLooking = true;
 			sMario->bAttacking = false;
 			//this->iViewWindowX++;

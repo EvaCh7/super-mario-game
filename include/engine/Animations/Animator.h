@@ -11,6 +11,7 @@ enum animatorstate_t {
 	ANIMATOR_STOPPED = 2
 };
 
+
 class Animator {
 public:
 	//function called on animation finish
@@ -22,7 +23,7 @@ public:
 
 protected:
 
-	timestamp_t		lastTime = 0;
+	timestamp_t		lastTime = 0;//h teleutaia xronikh stigmh poy exei efarmostei ena bhma toy animation, teleutaia energeia toy animation
 
 	animatorstate_t state = ANIMATOR_FINISHED;
 	OnFinish		onFinish;
@@ -37,7 +38,12 @@ public:
 	void			Stop(void);
 	bool			HasFinished(void) { return state != ANIMATOR_RUNNING; }
 
-	virtual void	TimeShift(timestamp_t offset);
+	void setState(animatorstate_t state) { this->state = state; }
+
+	virtual void	TimeShift(timestamp_t offset);//
+
+
+
 	virtual void	Progress(timestamp_t currTime) = 0;
 	void NotifyAction(const Animation& anim);
 
@@ -45,7 +51,7 @@ public:
 	template <typename Tfunc> void SetOnFinish(const Tfunc& f) { onFinish = f; }
 	template <typename Tfunc> void SetOnStart(const Tfunc& f) { onStart = f; }
 	template <typename Tfunc> void SetOnAction(const Tfunc& f) { onAction = f; }
-	Animator(void);
+	Animator(void) {  }
 	Animator(const Animator&) = delete;
 	Animator(Animator&&) = delete;
 };
@@ -78,7 +84,7 @@ public:
 
 
 
-
+/*
 class FrameRangeAnimator : public Animator {
 protected:
 	FrameRangeAnimation* anim = nullptr;
@@ -100,11 +106,54 @@ public:
 	FrameRangeAnimator(void) = default;
 
 
-	
+
 
 
 
 };
+*/
+
+
+
+class FrameListAnimator : public Animator {
+protected:
+	FrameListAnimation* anim = nullptr;
+	unsigned				IndexInFramesVector = 0; // animation state
+	unsigned				curr_rep = 0; // animation state
+
+
+public:
+	void					Progress(timestamp_t currTime);
+	FrameListAnimation* getAnimation() { return anim; }
+
+	void setAnimation(FrameListAnimation* anim) { this->anim = anim; }
+	unsigned				GetCurrFrame(void) const { return IndexInFramesVector; }
+	unsigned				GetCurrRep(void) const { return curr_rep; }
+
+	void					Start(FrameListAnimation* a, timestamp_t t) {
+		anim = a;
+		lastTime = t;
+		state = ANIMATOR_RUNNING;
+		IndexInFramesVector = 0;
+		NotifyStarted();
+		curr_rep = 0;
+		NotifyAction(*anim);
+	}
+	FrameListAnimator(void) = default;
+
+	//void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimation& anim);
+
+
+
+
+};
+
+
+
+
+
+
+
 /*
 void FrameRange_Action(Sprite* sprite, Animator* animator, const FrameRangeAnimation& anim) {
 		auto* frameRangeAnimator = (FrameRangeAnimator*)animator;
@@ -114,25 +163,6 @@ void FrameRange_Action(Sprite* sprite, Animator* animator, const FrameRangeAnima
 		sprite->SetFrame(frameRangeAnimator->GetCurrFrame());
 	}
 */
-
-void FrameRangeAnimator::Progress(timestamp_t currTime) {
-	while (currTime > lastTime && (currTime - lastTime) >= anim->GetDelay()) {
-		if (currFrame == anim->GetEndFrame()) {
-			assert(anim->IsForever() || currRep < anim->GetReps());
-			currFrame = anim->GetStartFrame(); // flip to start
-		}
-		else
-			++currFrame;
-		lastTime += anim->GetDelay();
-		NotifyAction(*anim);
-		if (currFrame == anim->GetEndFrame())
-			if (!anim->IsForever() && ++currRep == anim->GetReps()) {
-				state = ANIMATOR_FINISHED;
-				NotifyStopped();
-				return;
-			}
-	}
-}
 
 
 

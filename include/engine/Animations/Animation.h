@@ -78,8 +78,8 @@ public:
 	FrameRangeAnimation(
 		const std::string& _id,
 		unsigned s, unsigned e,
-		unsigned r, int dx, int dy, int d
-	) : start(s), end(e), MovingAnimation(id, r, dx, dy, d) {}
+		unsigned _reps, int dx, int dy, int _delay
+	) : start(s), end(e), MovingAnimation(id, _reps, dx, dy, _delay) {}
 
 
 
@@ -89,6 +89,7 @@ public:
 class FrameListAnimation : public MovingAnimation {
 public:
 	using Frames = std::vector<unsigned>;
+
 protected:
 	Frames frames;
 public:
@@ -109,8 +110,11 @@ public:
 	FrameListAnimation(
 		const std::string& _id,
 		const Frames& _frames,
-		unsigned r, int dx, int dy, unsigned d, bool c
-	) : frames(_frames), MovingAnimation(id, r, dx, dy, d) {}
+		unsigned _reps, int dx, int dy, unsigned _delay
+	) : frames(_frames), MovingAnimation(id, _reps, dx, dy, _delay) {}
+
+
+
 };
 
 

@@ -46,8 +46,8 @@
         "tile": 20
       },
       {
-        "external_name": "herochar",
-        "external_path": "config/sprites/herochar.json",
+        "external_name": "small_mario",
+        "external_path": "config/sprites/mario.json",
         "is_external": true,
         "name": "mario",
         "tile": 552

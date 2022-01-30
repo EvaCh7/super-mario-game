@@ -74,7 +74,7 @@
     <LinkIncremental>true</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
-    <IncludePath>C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jason\source\repos\super_mario_game_2D\src;C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include;C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jason\source\repos\super_mario_game_2D\src;C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
@@ -89,7 +89,7 @@
     <LinkIncremental>false</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
-    <IncludePath>C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include</IncludePath>
+    <IncludePath>C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include</IncludePath>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
@@ -113,13 +113,13 @@
     <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
     <Allegro_AddonColor>true</Allegro_AddonColor>
     <Allegro_AddonVideo>true</Allegro_AddonVideo>
-    <IncludePath>C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include\engine;C:\Users\Jason\source\repos\super_mario_game_2D\src;C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include\engine;C:\Users\Jason\source\repos\super_mario_game_2D\src;C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonFont>true</Allegro_AddonFont>
-    <IncludePath>C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jason\source\repos\super_mario_game_2D\src;C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\kokol\source\repos\kokol16\super_mario_game_2D\include;C:\Users\Jas\source\repos\super_mario_game_2D\include;C:\Users\Jason\source\repos\super_mario_game_2D\src;C:\Users\Jason\source\repos\super_mario_game_2D\include;$(IncludePath)</IncludePath>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonAudio>true</Allegro_AddonAudio>
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -166,7 +166,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,7 +181,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -192,6 +192,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\engine\Animations\AnimatorManager.cpp" />
+    <ClCompile Include="include\engine\Animations\SystemClock.cpp" />
     <ClCompile Include="src\config\Config.cpp" />
     <ClCompile Include="src\display\DisplayTools.cpp" />
     <ClCompile Include="src\engine\animations\Animation.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="include\engine\Animations\Animator.h" />
     <ClInclude Include="include\engine\Animations\AnimatorManager.h" />
     <ClInclude Include="include\engine\Animations\Film.h" />
+    <ClInclude Include="include\engine\Animations\SystemClock.h" />
     <ClInclude Include="include\engine\Game.h" />
     <ClInclude Include="include\engine\Grid.h" />
     <ClInclude Include="include\engine\Map.h" />
