@@ -227,6 +227,7 @@
     <None Include="config\sprites\herochar.json" />
     <None Include="config\sprites\mario.json" />
     <None Include="config\sprites\slime.json" />
+    <None Include="config\sprites\zombie.json" />
     <None Include="packages.config" />
     <None Include="resources\map\final_map\final_map_Front.csv" />
     <None Include="resources\map\final_map\final_map_Ground.csv" />

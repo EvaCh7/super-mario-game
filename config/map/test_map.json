@@ -48,6 +48,14 @@
         "tile": 20
       },
       {
+        "external_name": "zombie",
+        "external_path": "config/sprites/zombie.json",
+        "is_playable": false,
+        "is_external": true,
+        "name": "zombie",
+        "tile": 550
+      },
+      {
         "external_name": "herochar",
         "external_path": "config/sprites/herochar.json",
         "is_external": true,
@@ -62,7 +70,10 @@
       156,
       157,
       183,
-      208
+      208,
+      446,
+      447,
+      448
     ],
     "empty": [
       137,

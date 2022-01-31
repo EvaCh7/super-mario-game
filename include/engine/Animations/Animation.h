@@ -8,6 +8,13 @@ class Animation {
 public:
 	std::string id;
 	const std::string& GetId(void) { return id; }
+	std::string GetTrimmedID(void) {
+		std::string idd(GetId());
+		std::string trimmed_id = idd.substr(0, idd.find("_"));
+		idd.erase(0, idd.find("."));
+		trimmed_id += idd;
+		return trimmed_id;
+	}
 	void SetId(std::string& _id);
 	virtual Animation* Clone(void) const = 0;
 	Animation(const std::string& _id) : id(_id) {}

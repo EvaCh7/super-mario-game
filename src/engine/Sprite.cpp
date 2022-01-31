@@ -17,6 +17,11 @@ void SpriteManager::Add(Sprite* s) {
 	// insert by ascending zorder
 }
 
+std::string Sprite::GetTrimmedID(void)
+{
+	return this->id.substr(0, id.find("_"));
+}
+
 void Sprite::RegisterAction(std::string id, std::function<void(Sprite *)> fAction)
 {
 	vActions[id] = fAction;

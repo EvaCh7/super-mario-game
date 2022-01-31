@@ -248,7 +248,7 @@ void registerCollisionsActions(GridLayer *glLayer) {
 
 
 void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimation& anim) {
-	printf("FramList_Action\n");
+	//printf("FramList_Action\n");
 
 	FrameListAnimator* frameListAnimator = (FrameListAnimator*)animator;
 
@@ -260,8 +260,8 @@ void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimatio
 	//frames[getcurrframe()]
 	//printf("FramList_Action2\n");
 	//printf("index in frameslist %d\n", frameListAnimator->GetCurrFrame());
-
-	sprite->currFilm = FilmHolder::Get().GetFilm(anim.id);
+	//std::cout << "GetID: " << ((Animation&)anim).GetId() << " GetTrimmedID: " << ((Animation&)anim).GetTrimmedID() << std::endl;
+	sprite->currFilm = FilmHolder::Get().GetFilm(((Animation&)anim).GetTrimmedID());
 	sprite->SetFrame(anim.GetFrames().at(frameListAnimator->GetCurrFrame()));
 }
 
@@ -391,6 +391,7 @@ void SuperMario::Clear(void) {
 bool SuperMario::SpawnObjects(json jObjectConfig) {
 	Map *map = this->game.mMap;
 	int** lObjLayer = map->GetObjectLayer();
+	int lSpriteCounter = 0;
 
 	/*
 	* Spawn Sprites
@@ -399,6 +400,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 		for (int j = 0; j < map->GetWidthTileSize(); ++j) {
 			for (auto& js : jObjectConfig["bindings"]) {
 				if (lObjLayer[i][j] == js["tile"]) {
+					lSpriteCounter++;
 					//std::cout << "(" << i << ", " << j << ") " << js["name"] << std::endl;
 					
 					if (js["is_external"]) {
@@ -420,11 +422,12 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						Film* fDefaultFilm = FilmHolder::Get().GetFilm(jExternalConfig["sprites"][sExternalName]["default_animation"]);
 						Rect rDefaultBox = fDefaultFilm->GetFrameBox(0);
 
+						// std::string(js["name"]) + std::string("_") + std::to_string(lSpriteCounter)
 						Sprite* newSprite;
 						if(js["is_playable"])
-							newSprite = addItemToTypeList("main", js["name"], rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
+							newSprite = addItemToTypeList("main", std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						else
-							newSprite = addItemToTypeList(js["name"], js["name"], rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
+							newSprite = addItemToTypeList(js["name"], std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						newSprite->dx = 1;
 						newSprite->RegisterDefaultActions();
 						newSprite->currFilm = fDefaultFilm;
@@ -445,7 +448,14 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							unsigned int delay = 75;
 							if (jAnim["id"] == "herochar.idle.right" || jAnim["id"] == "herochar.idle.left")
 								delay = jAnim["delay"];
-							FrameListAnimation* hero_run = new FrameListAnimation(jAnim["id"], frames, reps, dx, dy, delay);
+
+							// make id
+							std::string id = std::string(jAnim["id"]);
+							std::string anim_id = id.substr(0, id.find(".")) + "_" + std::to_string(lSpriteCounter);
+							id.erase(0, id.find("."));
+							anim_id += id;
+
+							FrameListAnimation* hero_run = new FrameListAnimation(anim_id, frames, reps, dx, dy, delay);
 							FrameListAnimator* hero_run_animator = new FrameListAnimator();
 							hero_run_animator->setAnimation(hero_run);
 
@@ -481,9 +491,9 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								if (pAnim->HasFinished()) {
 									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
 									if(s->bLooking)
-										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".attack.sword.right");
+										s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.right");
 									else
-										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".attack.sword.left");
+										s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.left");
 									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 								}

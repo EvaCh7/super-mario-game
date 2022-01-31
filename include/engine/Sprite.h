@@ -61,6 +61,8 @@ public:
 
 	Film* currFilm = nullptr;
 
+	std::string GetTrimmedID(void);
+
 	/*
 	* Movement
 	*/
