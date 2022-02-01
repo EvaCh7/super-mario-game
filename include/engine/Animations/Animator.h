@@ -28,7 +28,7 @@ protected:
 	animatorstate_t state = ANIMATOR_FINISHED;
 	OnFinish		onFinish;
 	OnStart			onStart;
-	OnAction		onAction;
+	std::function<void(Animator*, const Animation&)> onAction;
 	void			NotifyStopped(void);
 	void			NotifyStarted(void);
 	void			NotifyAction(void);
@@ -48,9 +48,9 @@ public:
 	void NotifyAction(const Animation& anim);
 
 	//call set functions to set finish,start,action functions
-	template <typename Tfunc> void SetOnFinish(const Tfunc& f) { onFinish = f; }
+	void SetOnFinish(std::function<void(Animator*)> f) { onFinish = f; }
 	template <typename Tfunc> void SetOnStart(const Tfunc& f) { onStart = f; }
-	template <typename Tfunc> void SetOnAction(const Tfunc& f) { onAction = f; }
+	void SetOnAction(std::function<void(Animator*, const Animation&)> f) { onAction = f; }
 	Animator(void) {  }
 	Animator(const Animator&) = delete;
 	Animator(Animator&&) = delete;

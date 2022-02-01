@@ -61,7 +61,7 @@ AnimatorManager AnimatorManager::singleton;
 
 Sprite *addItemToTypeList(std::string id, std::string spriteName, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
 	Bitmap* bm = al_create_sub_bitmap(pngBitmap, x, y, width, height);
-	Sprite* s = new Sprite(spriteName, i, j, bm, width, height);
+	Sprite* s = new Sprite(spriteName, i, j, bm, width, height, true);
 
 	SpriteManager::GetSingleton().Add(s);
 	SpriteManager::GetSingleton().AddToTypeList(id, s);
@@ -75,7 +75,7 @@ Sprite *addItemToTypeList(std::string id, std::string spriteName, int x, int y, 
 */
 
 
-void registerCollisionsActions(GridLayer *glLayer) {
+void registerCollisionsActions(GridLayer *glLayer, Game *g) {
 	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("main").front();
 
 	for (Sprite* ubaluba : SpriteManager::GetSingleton().GetTypeList("goomba"))
@@ -83,7 +83,8 @@ void registerCollisionsActions(GridLayer *glLayer) {
 		CollisionChecker::GetSingleton().Register(mario, ubaluba,
 			[](Sprite* s1, Sprite* s2) {
 				if (s1->GetBox().y < s2->GetBox().y) {
-					SpriteManager::GetSingleton().Remove(s2);
+					//SpriteManager::GetSingleton().Remove(s2);
+					s2->CallAction("death");
 					s1->GetGravityHandler().Jump();
 
 
@@ -91,7 +92,8 @@ void registerCollisionsActions(GridLayer *glLayer) {
 				}
 				else {
 					if (s1->bAttacking) {
-						SpriteManager::GetSingleton().Remove(s2);
+						//SpriteManager::GetSingleton().Remove(s2);
+						s2->CallAction("death");
 						CollisionChecker::GetSingleton().Cancel(s1, s2);
 						printf("character sliced goomba");
 					}
@@ -146,20 +148,17 @@ void registerCollisionsActions(GridLayer *glLayer) {
 
 		CollisionChecker::GetSingleton().Register(mario, enemy_turtle,
 			[](Sprite* s1, Sprite* s2) {
-				printf("===================================\n");
 				if (s1->GetBox().y < s2->GetBox().y) {
-
-					printf("mario smashed bird\n");
-
-					SpriteManager::GetSingleton().RemoveTypeList("slime", s2);
-					SpriteManager::GetSingleton().Remove(s2);
-					CollisionChecker::GetSingleton().Cancel(s1, s2);
+					s2->CallAction("death");
 					s1->GetGravityHandler().Jump();
 
+
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
 				}
 				else {
 					if (s1->bAttacking) {
-						SpriteManager::GetSingleton().Remove(s2);
+						//SpriteManager::GetSingleton().Remove(s2);
+						s2->CallAction("death");
 						CollisionChecker::GetSingleton().Cancel(s1, s2);
 						printf("character sliced goomba");
 					}
@@ -167,42 +166,32 @@ void registerCollisionsActions(GridLayer *glLayer) {
 						printf("mario died from uba luba\n");
 						s1->CallAction("damage");
 					}
-				}
-				printf("===================================\n");
 
+				}
 			}
 		);
-
-
-
-
 	}
 
-	for (Sprite* enemy_piranha_plant : SpriteManager::GetSingleton().GetTypeList("enemy_piranha_plant"))
+	for (Sprite* enemy_piranha_plant : SpriteManager::GetSingleton().GetTypeList("zombie"))
 	{
-
 		CollisionChecker::GetSingleton().Register(mario, enemy_piranha_plant,
 			[](Sprite* s1, Sprite* s2) {
-
-
-				printf("mario died from piranha\n");
-
 				if (s1->GetBox().y < s2->GetBox().y) {
-
-					printf("mario smashed bird\n");
-
-					SpriteManager::GetSingleton().RemoveTypeList("enemy_turtle", s2);
-					SpriteManager::GetSingleton().Remove(s2);
-					CollisionChecker::GetSingleton().Cancel(s1, s2);
-					s1->GetGravityHandler().Jump();
-
-				}
-				else {
-					printf("mario died from bird \n");
+					printf("mario died from uba luba\n");
 					s1->CallAction("damage");
 				}
-				//action if mario collides with uba luba
-				//printf("mario  collided with piranha plant\n");
+				else {
+					if (s1->bAttacking) {
+						//SpriteManager::GetSingleton().Remove(s2);
+						s2->CallAction("damage");
+						//CollisionChecker::GetSingleton().Cancel(s1, s2);
+						printf("character sliced goomba");
+					}
+					else {
+						printf("mario died from uba luba\n");
+						s1->CallAction("damage");
+					}
+				}
 
 			}
 		);
@@ -211,24 +200,50 @@ void registerCollisionsActions(GridLayer *glLayer) {
 	for (Sprite* brick : SpriteManager::GetSingleton().GetTypeList("question_brick"))
 	{
 		CollisionChecker::GetSingleton().Register(mario, brick,
+			[glLayer, g](Sprite* s1, Sprite* s2) {
+
+				printf("MARIO HIT A BRICK {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
+				if (s1->y + s1->GetBox().h <= s2->y + s2->GetBox().h) {
+					int dy = s1->y + s1->GetBox().h - s2->y;
+					s1->y -= dy;
+				}else 
+				if (s1->y <= s2->y + s2->GetBox().h) {
+					printf("HIT FROM BELOW {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
+					s1->GetGravityHandler().SetJumping(false);
+					//s1->GetGravityHandler().SetFalling(true);
+					s1->GetGravityHandler().SetJumpSpeed(1);
+					s1->Move(0, 4);
+
+					SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 4, s2->y - 32, glLayer, g);
+
+					// make block solid
+					glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
+					SpriteManager::GetSingleton().Remove(s2);
+				}
+				else {
+					printf("HIT FROM ELSEWHERE\n");
+				}
+			}
+		);
+	}
+
+	for (Sprite* pipe : SpriteManager::GetSingleton().GetTypeList("pipe"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, pipe,
 			[glLayer](Sprite* s1, Sprite* s2) {
-				printf("MARIO HIT A BRICK\n");
-				s1->GetGravityHandler().SetJumping(false);
-				//s1->GetGravityHandler().SetFalling(true);
-				s1->GetGravityHandler().SetJumpSpeed(1);
-				s1->Move(0, 4);
-
-
-				
-
-				s2->Move(0, -8);
-
-				SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/slime.json"), "slime", "slime", s2->x + 4, s2->y - 32, glLayer);
-
-				s2->Move(0, 8);
-
-				// make block solid
-				glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
+				//printf("MARIO HIT A PIPE\n");
+				printf("%d %d\n", s2->x, s2->y);
+				if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
+					if (s2->x == 1376 && s2->y == 1472) {
+						s1->x = 16 * 1;
+						s1->y = 16 * 2;
+					}
+					else if(s2->x == 624 && s2->y == 352) {
+						s1->x = 130 * 16;
+						s1->y = 91 * 16;
+					}
+				}
 			}
 		);
 	}
@@ -237,8 +252,10 @@ void registerCollisionsActions(GridLayer *glLayer) {
 	{
 		CollisionChecker::GetSingleton().Register(mario, coin,
 			[](Sprite* s1, Sprite* s2) {
-				printf("MARIO ATE A COIN\n");
-				s1->GetGravityHandler().lGravity = 0.2;
+
+
+
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s2->id + ".idle.right")->Stop();
 				SpriteManager::GetSingleton().RemoveTypeList("coin", s2);
 				SpriteManager::GetSingleton().Remove(s2);
 				CollisionChecker::GetSingleton().Cancel(s1, s2);
@@ -246,8 +263,93 @@ void registerCollisionsActions(GridLayer *glLayer) {
 			}
 		);
 	}
+
+	for (Sprite* death : SpriteManager::GetSingleton().GetTypeList("death"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, death,
+			[](Sprite* s1, Sprite* s2) {
+				s1->x = 2 * 16;
+				s1->y = 90 * 16;
+			}
+		);
+	}
+
+	for (Sprite* mushroom : SpriteManager::GetSingleton().GetTypeList("mushroom"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, mushroom,
+			[](Sprite* s1, Sprite* s2) {
+				CollisionChecker::GetSingleton().Cancel(s1, s2);
+				SpriteManager::GetSingleton().Remove(s2);
+
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.left")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.right")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.left")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.right")->Stop();
+				s1->id = "herochar";
+				s1->CallAction("idle");
+
+				std::cout << "Mario Ate Shroom" << std::endl;
+			}
+		);
+	}
+
+	for (Sprite* flag : SpriteManager::GetSingleton().GetTypeList("flag"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, flag,
+			[g](Sprite* s1, Sprite* s2) {
+				g->bInputAllowed = false;
+				g->bIsGameEnding = true;
+			}
+		);
+	}
+
+	for (Sprite* hppotion : SpriteManager::GetSingleton().GetTypeList("hppotion"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, hppotion,
+			[](Sprite* s1, Sprite* s2) {
+				CollisionChecker::GetSingleton().Cancel(s1, s2);
+				SpriteManager::GetSingleton().Remove(s2);
+
+				s1->health += 5;
+
+				std::cout << "Mario Got 5 HP" << std::endl;
+			}
+		);
+	}
+
+	for (Sprite* breakable_box : SpriteManager::GetSingleton().GetTypeList("breakable_box"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, breakable_box,
+			[](Sprite* s1, Sprite* s2) {
+				printf("MARIO HIT A BRICK {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
+				if (s1->y + s1->GetBox().h <= s2->y + s2->GetBox().h) {
+					int dy = s1->y + s1->GetBox().h - s2->y;
+					s1->y -= dy;
+				}
+				else
+					if (s1->y <= s2->y + s2->GetBox().h) {
+						printf("HIT FROM BELOW {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
+						s1->GetGravityHandler().SetJumping(false);
+						s1->GetGravityHandler().SetJumpSpeed(1);
+						s1->Move(0, 4);
+
+						// make block solid
+	
+						CollisionChecker::GetSingleton().Cancel(s1, s2);
+						SpriteManager::GetSingleton().Remove(s2);
+					}
+					else {
+						printf("HIT FROM ELSEWHERE\n");
+					}
+			}
+		);
+	}
 }
 
+
+void SuperMario::RegisterCollisionsActions(void) {
+	registerCollisionsActions(this->game.mMap->GetTileLayer()->GetGridLayer(), &this->game);
+}
 
 
 void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimation& anim) {
@@ -255,15 +357,6 @@ void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimatio
 
 	FrameListAnimator* frameListAnimator = (FrameListAnimator*)animator;
 
-
-	/*if (frameRangeAnimator->GetCurrFrame() != anim.GetStartFrame() ||
-		frameRangeAnimator->GetCurrRep())*/
-
-	//sprite->Move(((MovingAnimation)anim).GetDx(), ((MovingAnimation)anim).GetDy());
-	//frames[getcurrframe()]
-	//printf("FramList_Action2\n");
-	//printf("index in frameslist %d\n", frameListAnimator->GetCurrFrame());
-	//std::cout << "GetID: " << ((Animation&)anim).GetId() << " GetTrimmedID: " << ((Animation&)anim).GetTrimmedID() << std::endl;
 	sprite->currFilm = FilmHolder::Get().GetFilm(((Animation&)anim).GetTrimmedID());
 	sprite->SetFrame(anim.GetFrames().at(frameListAnimator->GetCurrFrame()));
 }
@@ -276,7 +369,7 @@ void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
-	int currentMap = 3;
+	int currentMap = 4;
 
 	/*
 	* Set Event Handlers
@@ -303,46 +396,7 @@ void SuperMario::Load(void) {
 	SpawnObjects(jMapConfig["objects"]);
 
 
-
-
-
-	std::vector<unsigned> frames = { 0,1,2 };
-	int reps = 1, dx = 2, dy = 0;
-	unsigned int delay = 45;
-	FrameListAnimation* mario_walking = new FrameListAnimation("mario.walking.right", frames, reps, dx, dy, delay);
-	FrameListAnimator *mario_walking_animator = new FrameListAnimator();
-	mario_walking_animator->setAnimation(mario_walking);
-
-	//AnimatorManager::GetSingleton().mario_walking_animator->SetOnStart(AnimatorManager::GetSingleton().mario_walking_animator->Start(mario_walking, SystemClock::Get().getgametime());
-	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("main").front();
-	
-
-	mario_walking_animator->SetOnAction(
-		[mario](Animator* animator, const Animation& anim) {
-			FramList_Action(mario, animator, (const FrameListAnimation&)anim);
-		}
-	);
-
-	mario_walking_animator->SetOnFinish(
-		[](Animator* anim) {
-			anim->setState(ANIMATOR_STOPPED);
-		});
-
-	mario_walking_animator->SetOnStart(
-		[](Animator* anim) {
-			anim->setState(ANIMATOR_RUNNING);
-		});
-	mario_walking_animator->Start(mario_walking_animator->getAnimation(), SystemClock::Get().getgametime());
-	AnimatorManager::GetSingleton().Register(mario_walking_animator);
-
-
-
-	
-
-
-	registerCollisionsActions(this->game.mMap->GetTileLayer()->GetGridLayer());
-
-
+	this->RegisterCollisionsActions();
 
 
 	//addItemToTypeList("enemy_piranha_plant", js_enemies["enemy_piranha_plant"][str]["x_pos"], js_enemies["enemy_piranha_plant"][str]["y_pos"], js_enemies["enemy_piranha_plant"][str]["width"], js_enemies["enemy_piranha_plant"][str]["height"], bm_enemies);
@@ -399,6 +453,59 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 	int lSpriteCounter = 0;
 
 	/*
+	* Load Playable Animations
+	*/
+	for (auto& js : jObjectConfig["bindings"]) {
+		if (js["is_playable"]) {
+			json jExternalConfig = Config::GetConfig(js["external_path"]);
+			std::string sExternalName(js["external_name"]);
+
+			//bobjbitmap object's bitmap, all the png
+			Bitmap* bObjBitmap = al_load_bitmap(std::string(jExternalConfig["spritesheet"]).c_str());
+
+			for (auto& jAnim : jExternalConfig["sprites"][sExternalName]["animations"]) {
+				FilmHolder::Get().Load(jAnim["id"], jAnim["animation"], bObjBitmap);
+		
+			}
+
+			for (auto& jAnim : jExternalConfig["sprites"][sExternalName]["animations"]) {
+				//get the frames list for the current sprite
+				std::vector<unsigned> frames;
+				for (auto& frame : jAnim["animation_frames"]) {
+					frames.push_back(frame);
+				}
+
+				int reps = 1, dx = 2, dy = 0;
+				unsigned int delay = 75;
+
+				if (jAnim["id"] == "herochar.idle.right" || jAnim["id"] == "herochar.idle.left")
+					delay = jAnim["delay"];
+
+				//missleading variable names 
+				FrameListAnimation* hero_run = new FrameListAnimation(jAnim["id"], frames, reps, dx, dy, delay);
+				FrameListAnimator* hero_run_animator = new FrameListAnimator();
+				hero_run_animator->SetOnAction(
+					[](Animator* animator, const Animation& anim) {
+						std::string animId = ((FrameListAnimation&)anim).id;
+						Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
+						FramList_Action(s, animator, (const FrameListAnimation&)anim);
+					}
+				);
+
+				hero_run_animator->SetOnFinish([](Animator* anim) {
+					anim->setState(ANIMATOR_STOPPED);
+					});
+
+				hero_run_animator->SetOnStart([](Animator* anim) {
+					anim->setState(ANIMATOR_RUNNING);
+					});
+				hero_run_animator->setAnimation(hero_run);
+				AnimatorManager::GetSingleton().Register(hero_run_animator);
+			}
+		}
+	}
+
+	/*
 	* Spawn Sprites
 	*/
 	for (int i = 0; i < map->GetHeightTileSize(); ++i) {
@@ -435,7 +542,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						Sprite* newSprite;
 						
 						if(js["is_playable"])
-							newSprite = addItemToTypeList("main", std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
+							newSprite = addItemToTypeList("main", std::string(js["name"]), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						else
 							newSprite = addItemToTypeList(js["name"], std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						newSprite->dx = 1;
@@ -443,8 +550,10 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						newSprite->RegisterDefaultActions();
 						newSprite->currFilm = fDefaultFilm;
 						newSprite->GetGravityHandler().Enable();
+						newSprite->health = js["health"];
 
-
+						if (js["has_gravity"] == false)
+							newSprite->GetGravityHandler().Disable();
 
 						// test
 
@@ -459,7 +568,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							int reps = 1, dx = 2, dy = 0;
 							unsigned int delay = 75;
 
-							if (jAnim["id"] == "herochar.idle.right" || jAnim["id"] == "herochar.idle.left")
+							if (jAnim["id"] == "herochar.idle.right" || jAnim["id"] == "herochar.idle.left" || jAnim["id"] == "coin.idle.right" || jAnim["id"] == "coin.idle.left")
 								delay = jAnim["delay"];
 
 							// make id
@@ -474,8 +583,10 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							hero_run_animator->setAnimation(hero_run);
 
 							hero_run_animator->SetOnAction(
-								[newSprite](Animator *animator, const Animation& anim) {
-									FramList_Action(newSprite, animator, (const FrameListAnimation&)anim);
+								[](Animator *animator, const Animation& anim) {
+									std::string animId = ((FrameListAnimation&)anim).id;
+									Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
+									FramList_Action(s, animator, (const FrameListAnimation&)anim);
 								}
 							);
 
@@ -487,6 +598,30 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								anim->setState(ANIMATOR_RUNNING);
 							});
 							AnimatorManager::GetSingleton().Register(hero_run_animator);
+						}
+
+						if (js["external_name"] == "goomba" || js["external_name"] == "slime") {
+							newSprite->RegisterAction("death", [](Sprite* s) {
+								s->bDead = true;
+								Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".death");
+
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
+								if (pAnim->HasFinished()) {
+									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+									((FrameListAnimator*)pAnim)->SetOnFinish(
+										[](Animator* anim) {
+											std::string animId = ((FrameListAnimator*)anim)->getAnimation()->GetId();
+											Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
+											SpriteManager::GetSingleton().Remove(s);
+										}
+									);
+								}
+							});
 						}
 
 						if (js["is_playable"]) {
@@ -513,34 +648,6 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 								}
 							});
-
-
-							newSprite->RegisterAction("damage", [](Sprite* s) {
-
-								Animator* pAnim;
-								if (s->bLooking) {
-									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".damage.right");
-								}
-								else {
-									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".damage.left");
-								}
-
-
-								if (pAnim->HasFinished()) {
-									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-									if (s->bLooking){
-										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".damage.right");
-										
-									}
-									else {
-										s->currFilm = FilmHolder::Get().GetFilm(s->id + ".damage.left");
-										
-									}
-									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
-									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
-								}
-							});
-
 						}
 
 
@@ -553,7 +660,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						//pre registered map tiles
 						Bitmap* bm = this->game.mMap->GetTiles()[js["tile"]];
 
-						Sprite* s = new Sprite(js["name"], j * 16, i * 16, bm, 16, 16);
+						Sprite* s = new Sprite(js["name"], j * 16, i * 16, bm, 16, 16, false);
 						s->GetGravityHandler().Disable();
 							
 						SpriteManager::GetSingleton().Add(s);

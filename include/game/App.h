@@ -27,11 +27,15 @@ public:
 };
 
 class SuperMario : public App {
+public:
 	void Initialise(void);
 	void Load(void);
 	void Clear(void);
 	bool SpawnObjects(json jObjectConfig);
-public:
+	void RegisterCollisionsActions(void);
 	SuperMario();
 };
+
+extern SuperMario* gApp;
+
 #endif

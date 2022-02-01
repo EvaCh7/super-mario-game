@@ -1,11 +1,12 @@
 {
   "spritesheet": "resources/sprites/marioi.png",
   "sprites": {
-    "mario.small": {
-      "default_animation": "mario.small.walking.right",
+    "mariosmall": {
+      "default_animation": "mariosmall.run.right",
       "animations": [
         {
-          "id": "mario.small.walking.left",
+          "id": "mariosmall.run.left",
+          "animation_frames": [ 0, 1, 2 ],
           "animation": [
             {
               "width": 16,
@@ -28,7 +29,8 @@
           ]
         },
         {
-          "id": "mario.small.walking.right",
+          "id": "mariosmall.run.right",
+          "animation_frames": [ 0, 1, 2 ],
           "animation": [
             {
               "width": 16,
@@ -51,7 +53,8 @@
           ]
         },
         {
-          "id": "mario.small.jumping.left",
+          "id": "mariosmall.jumping.left",
+          "animation_frames": [ 0, 1 ],
           "animation": [
             {
               "width": 16,
@@ -68,7 +71,8 @@
           ]
         },
         {
-          "id": "mario.small.jumping.right",
+          "id": "mariosmall.jumping.right",
+          "animation_frames": [ 0, 1 ],
           "animation": [
             {
               "width": 16,
@@ -85,7 +89,8 @@
           ]
         },
         {
-          "id": "mario.small.standing.left",
+          "id": "mariosmall.idle.left",
+          "animation_frames": [ 0 ],
           "animation": [
             {
               "width": 16,
@@ -96,13 +101,50 @@
           ]
         },
         {
-          "id": "mario.small.standing.right",
+          "id": "mariosmall.idle.right",
+          "animation_frames": [ 0 ],
           "animation": [
             {
               "width": 16,
               "height": 16,
               "x_pos": 127,
               "y_pos": 25
+            }
+          ]
+        },
+        {
+          "id": "mariosmall.damage.right",
+          "animation_frames": [ 0, 1, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 215,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 215,
+              "y_pos": 158
+            }
+          ]
+        },
+        {
+          "id": "mariosmall.damage.left",
+          "animation_frames": [ 0, 1, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 25
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 66,
+              "y_pos": 183
             }
           ]
         }

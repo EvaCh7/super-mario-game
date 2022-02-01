@@ -267,6 +267,90 @@
               "y_pos": 128
             }
           ]
+        },
+        {
+          "id": "slime.death",
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 224,
+              "y_pos": 32
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 208,
+              "y_pos": 32
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 32
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 176,
+              "y_pos": 32
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 160,
+              "y_pos": 32
+            }
+          ]
+        },
+        {
+          "id": "slime.damage.left",
+          "animation_frames": [ 0, 1, 2 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 0,
+              "y_pos": 144
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 16,
+              "y_pos": 144
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 32,
+              "y_pos": 144
+            }
+          ]
+        },
+        {
+          "id": "slime.damage.right",
+          "animation_frames": [ 0, 1, 2 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 224,
+              "y_pos": 64
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 208,
+              "y_pos": 64
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 64
+            }
+          ]
         }
       ]
     }

@@ -2,10 +2,10 @@
   "spritesheet": "resources/sprites/enemies.png",
   "sprites": {
     "enemy_turtle": {
-      "default_animation": "turtle.walking.left",
+      "default_animation": "turtle.run.left",
       "animations": [
         {
-          "id": "turtle.walking.left",
+          "id": "turtle.run.left",
           "animation": [
             {
               "width": 16,
@@ -22,7 +22,7 @@
           ]
         },
         {
-          "id": "turtle.walking.right",
+          "id": "turtle.run.right",
           "animation": [
             {
               "width": 16,
@@ -63,10 +63,11 @@
       ]
     },
     "goomba": {
-      "default_animation": "goomba.walking",
+      "default_animation": "goomba.run.left",
       "animations": [
         {
-          "id": "goomba.walking",
+          "id": "goomba.run.left",
+          "animation_frames": [ 0, 1 ],
           "animation": [
             {
               "width": 16,
@@ -83,7 +84,62 @@
           ]
         },
         {
-          "id": "goomba.smashed",
+          "id": "goomba.run.right",
+          "animation_frames": [ 0, 1 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 38,
+              "y_pos": 0
+            }
+          ]
+        },
+        {
+          "id": "goomba.idle.right",
+          "animation_frames": [ 0, 1 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 38,
+              "y_pos": 0
+            }
+          ]
+        },
+        {
+          "id": "goomba.idle.left",
+          "animation_frames": [ 0, 1 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 6,
+              "y_pos": 0
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 38,
+              "y_pos": 0
+            }
+          ]
+        },
+        {
+          "id": "goomba.death",
+          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
           "animation": [
             {
               "width": 16,

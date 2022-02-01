@@ -23,16 +23,31 @@
     "bindings": [
       {
         "is_external": false,
+        "is_playable": false,
         "name": "coin",
         "tile": 286
       },
       {
         "is_external": false,
+        "is_playable": false,
         "name": "question_brick",
         "tile": 0
       },
       {
+        "is_external": false,
+        "is_playable": false,
+        "name": "mushroom",
+        "tile": 216
+      },
+      {
+        "is_external": false,
+        "is_playable": false,
+        "name": "pipe",
+        "tile": 237
+      },
+      {
         "external_name": "slime",
+        "health": 2,
         "external_path": "config/sprites/slime.json",
         "is_playable": false,
         "is_external": true,
@@ -40,15 +55,17 @@
         "tile": 43
       },
       {
-        "external_name": "slime",
-        "external_path": "config/sprites/slime.json",
+        "external_name": "goomba",
+        "health": 1,
+        "external_path": "config/sprites/enemies.json",
         "is_playable": false,
         "is_external": true,
-        "name": "slime",
+        "name": "goomba",
         "tile": 20
       },
       {
         "external_name": "zombie",
+        "health": 3,
         "external_path": "config/sprites/zombie.json",
         "is_playable": false,
         "is_external": true,
@@ -56,15 +73,40 @@
         "tile": 550
       },
       {
+        "external_name": "mariosmall",
+        "health": 500,
+        "external_path": "config/sprites/mario.json",
+        "is_external": true,
+        "is_playable": true,
+        "name": "mariosmall",
+        "tile": 552
+      },
+      {
         "external_name": "herochar",
+        "health": 500,
         "external_path": "config/sprites/herochar.json",
         "is_external": true,
         "is_playable": true,
         "name": "herochar",
-        "tile": 552
+        "tile": 9999999
+      },
+      {
+        "external_name": "zombie",
+        "health": 500,
+        "external_path": "config/sprites/zombie.json",
+        "is_external": true,
+        "is_playable": true,
+        "name": "zombie",
+        "tile": 9999992
       }
     ]
   },
+  "teleports": [
+    {
+      "from": 0,
+      "to": 0
+    }
+  ],
   "grid": {
     "solid": [
       156,

@@ -5,7 +5,7 @@
 #include <functional>
 #include "Structs.h"
 #include "Map.h"
-#include<engine/Sprite.h>
+//#include<engine/Sprite.h>
 
 extern Display *display;
 extern ALLEGRO_KEYBOARD_STATE ksKeyboardState;
@@ -20,6 +20,9 @@ public:
 	bool		isPaused = false;
 	uint64_t	pauseTime = 0;
 	Map *mMap;
+	
+	bool bInputAllowed = true;
+	bool bIsGameEnding = false;
 
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;

@@ -78,7 +78,7 @@ Rect TileLayer::GetViewWindow(void)
 		sMario = obj;
 	}
 
-	ScrollWithBoundsCheck(&this->rViewWindow, sMario->x - (this->rViewWindow.x + this->rViewWindow.w / 2), sMario->y - (this->rViewWindow.y + this->rViewWindow.h / 2));
+	ScrollWithBoundsCheck(&this->rViewWindow, sMario->x - (this->rViewWindow.x + this->rViewWindow.w / 2) - 16, sMario->y - (this->rViewWindow.y + this->rViewWindow.h / 2) - 16);
 
 	return this->rViewWindow;
 }
@@ -343,6 +343,7 @@ bool GridLayer::IsOnSolidGround(Rect rRect) {
 bool GridLayer::CanMoveLeft(Rect rRect) {
 	int dx = -1;
 	auto x1_next = rRect.x + dx;
+
 	if (x1_next < 0) {
 		//*dx = -rRect.x;
 	}
@@ -362,7 +363,8 @@ bool GridLayer::CanMoveLeft(Rect rRect) {
 			}
 		}
 	}
-	return true;
+
+	return IsOnSolidGround(Rect{rRect.x - 4, rRect.y, rRect.w, rRect.h});
 }
 
 bool GridLayer::CanMoveRight(Rect rRect) {
@@ -467,6 +469,13 @@ void GridLayer::FilterGridMotionDown(Rect rRect, int* dy)
 	int currGridY = currPixelY >> 2;
 	int nextGridY = nextPixelY >> 2;
 
+	if (nextPixelY >= 100 * 16) {
+		std::cout << "Fell Off\n";
+		//*dy = ((nextGridY << 2) - 1) - currPixelY;
+		*dy = 0;
+		return;
+	}
+
 	if (currGridY == nextGridY) {
 		return;
 	}
@@ -520,11 +529,6 @@ int **Map::ParseObjects(json jObjectConfig) {
 	std::ifstream iFile(sSpritesheetPath);
 	std::string sIndex = "";
 
-	/*tlObjectLayer = new int* [GetHeightTileSize()];
-	for (int i = 0; i < GetHeightTileSize(); i++) {
-		tlObjectLayer[i] = new int[GetWidthTileSize()];
-		memset(tlObjectLayer[i], -1, GetHeightTileSize());
-	}*/
 	tlObjectLayer = (int**)malloc(GetHeightTileSize() * sizeof(int*));
 	for (int i = 0; i < GetHeightTileSize(); ++i) {
 		tlObjectLayer[i] = (int*)malloc(GetWidthTileSize() * sizeof(int));

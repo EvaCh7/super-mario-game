@@ -7,6 +7,7 @@
 #include "engine/Structs.h"
 #include "engine/animations/AnimatorManager.h"
 #include "engine/animations/SystemClock.h"
+#include "game/App.h"
 
 void SpriteManager::AddToTypeList(std::string id, Sprite* sprite) {
 	GetTypeList(id).push_back(sprite);
@@ -37,6 +38,8 @@ void Sprite::RegisterDefaultActions(void)
 
 	RegisterAction("idle", [](Sprite* s) {
 		Animator* pAnim;
+
+
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
 		if (s->bLooking)
@@ -44,20 +47,14 @@ void Sprite::RegisterDefaultActions(void)
 		else
 			pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left");
 
-
 		if (pAnim->HasFinished()) {
-			//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-			if (s->bLooking)
-				s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.right");
-			else
-				s->currFilm = FilmHolder::Get().GetFilm(s->id + ".idle.left");
 			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 		}
 	});
 
 	RegisterDefaultAction("run.left", [](Sprite* s) {
-		s->Move(-s->dx, 0);
+	 	s->Move(-s->dx, 0);
 
 		Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left");
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
@@ -107,6 +104,69 @@ void Sprite::RegisterDefaultActions(void)
 			s->GetGravityHandler().Jump();
 		}
 	});
+
+	if (bKillable) {
+		RegisterDefaultAction("death", [](Sprite* s) {
+			s->bDead = true;
+			Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".death");
+
+			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
+			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
+			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
+			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
+			if (pAnim->HasFinished()) {
+				((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+				AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+			}
+		});
+	}
+
+	RegisterDefaultAction("damage", [](Sprite* s) {
+
+		std::cout << s->id << " health: " << s->health << std::endl;
+		Animator* pAnim;
+		if (s->bLooking) {
+			pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".damage.right");
+		}
+		else {
+			pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".damage.left");
+		}
+
+
+		if (pAnim->HasFinished()) {
+			if (s->bLooking) {
+				s->currFilm = FilmHolder::Get().GetFilm(s->id + ".damage.right");
+
+			}
+			else {
+				s->currFilm = FilmHolder::Get().GetFilm(s->id + ".damage.left");
+
+			}
+			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+			if (s->health <= 0) {
+				((FrameListAnimator*)pAnim)->SetOnFinish(
+					[](Animator* anim) {
+						std::string animId = ((FrameListAnimator*)anim)->getAnimation()->GetId();
+						Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
+						
+						s->CallAction("death");
+						CollisionChecker::GetSingleton().Cancel(SpriteManager::GetSingleton().GetTypeList("main").front(), s);
+					}
+				);
+			}
+			else {
+				((FrameListAnimator*)pAnim)->SetOnFinish(
+					[](Animator* anim) {
+						std::string animId = ((FrameListAnimator*)anim)->getAnimation()->GetId();
+						Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
+						s->health--;
+					}
+				);
+			}
+		}
+		});
 }
 
 void Sprite::CallAction(std::string id)
@@ -290,7 +350,7 @@ bool Sprite::CollisionCheck(Sprite* s) {
 	}
 }
 
-Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer) {
+Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer, Game *g) {
 	Bitmap* bObjBitmap = al_load_bitmap(std::string(jObject["spritesheet"]).c_str());
 
 	for (auto& jAnim : jObject["sprites"][sName]["animations"]) {
@@ -303,7 +363,7 @@ Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string 
 
 
 	Bitmap* bSpriteBitmap = al_create_sub_bitmap(bObjBitmap, rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h);
-	Sprite* s = new Sprite(id, x, y, bSpriteBitmap, rDefaultBox.w, rDefaultBox.h);
+	Sprite* s = new Sprite(id, x, y, bSpriteBitmap, rDefaultBox.w, rDefaultBox.h, true);
 
 	SpriteManager::GetSingleton().Add(s);
 	SpriteManager::GetSingleton().AddToTypeList(id, s);
@@ -339,22 +399,20 @@ Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string 
 	);
 
 	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("main").front();
-	CollisionChecker::GetSingleton().Register(mario, s,
-		[](Sprite* s1, Sprite* s2) {
-			printf("===================================\n");
-			if (s1->GetBox().y < s2->GetBox().y) {
-				SpriteManager::GetSingleton().RemoveTypeList("turtles", s2);
-				SpriteManager::GetSingleton().Remove(s2);
-				CollisionChecker::GetSingleton().Cancel(s1, s2);
-				s1->GetGravityHandler().Jump();
-			}
-			else {
-				printf("mario died from bird \n");
-			}
-			printf("===================================\n");
 
-		}
-	);
+	for (Sprite* hppotion : SpriteManager::GetSingleton().GetTypeList("hppotion"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, hppotion,
+			[](Sprite* s1, Sprite* s2) {
+				CollisionChecker::GetSingleton().Cancel(s1, s2);
+				SpriteManager::GetSingleton().Remove(s2);
+
+				s1->health += 5;
+
+				std::cout << "Mario Got 5 HP" << std::endl;
+			}
+		);
+	}
 
 	return s;
 }

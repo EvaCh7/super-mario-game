@@ -10,6 +10,8 @@ public:
 	const std::string& GetId(void) { return id; }
 	std::string GetTrimmedID(void) {
 		std::string idd(GetId());
+		if (idd.find("_") == std::string::npos)
+			return idd;
 		std::string trimmed_id = idd.substr(0, idd.find("_"));
 		idd.erase(0, idd.find("."));
 		trimmed_id += idd;

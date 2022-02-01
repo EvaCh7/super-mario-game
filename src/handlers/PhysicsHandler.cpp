@@ -1,4 +1,5 @@
 #include "engine/Game.h"
+#include "engine/Sprite.h"
 
 void Game::PhysicsHandler(void) {
 

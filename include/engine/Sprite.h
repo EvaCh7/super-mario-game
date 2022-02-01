@@ -10,6 +10,7 @@
 #include <engine/Map.h>
 #include <engine/Physics.h>
 #include "engine/animations/Film.h"
+#include "engine/Game.h"
 
 //class Clipper;
 //class MotionQuantizer;
@@ -52,6 +53,9 @@ public:
 	* Meta Data
 	*/
 	std::string id;
+	bool bKillable = false;
+	bool bDead = false;
+	int health;
 
 
 	int frameNo = 0;
@@ -116,8 +120,8 @@ public:
 	void Display(Bitmap* dest, const Rect& dpyArea) const;
 
 
-	Sprite(std::string id, int _x, int _y, Bitmap * bitmap,int width,int height) :
-		id(id), x(_x), y(_y), bitmap(bitmap)
+	Sprite(std::string id, int _x, int _y, Bitmap * bitmap,int width,int height, bool bKillable) :
+		id(id), x(_x), y(_y), bitmap(bitmap), bKillable(bKillable)
 	{
 		this->frameBox = Rect(_x, _y, width, height);
 		//frameNo = currFilm->GetTotalFrames(); SetFrame(0);
@@ -140,7 +144,7 @@ private:
 	static  SpriteManager singleton;
 
 public:
-	Sprite* SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer);
+	Sprite* SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer, Game *g);
 
 	void Add(Sprite* s); // insert by ascending zorder
 	void Remove(Sprite* s);
@@ -161,6 +165,13 @@ public:
 	static auto GetSingletonConst(void) -> const SpriteManager&
 	{
 		return singleton;
+	}
+
+	Sprite* GetSprite(std::string id) {
+		for (Sprite *s : dpyList) {
+			if (s->id == id)
+				return s;
+		}
 	}
 };
 //template <typename Tnum>

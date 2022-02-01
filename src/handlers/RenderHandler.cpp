@@ -1,5 +1,6 @@
 #include "display/DisplayTools.h"
 #include "engine/Game.h"
+#include "engine/Sprite.h"
 #include <math.h>
 
 void Game::RenderHandler(void) {
