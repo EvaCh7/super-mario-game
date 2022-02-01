@@ -85,6 +85,8 @@ void registerCollisionsActions(GridLayer *glLayer) {
 				if (s1->GetBox().y < s2->GetBox().y) {
 					SpriteManager::GetSingleton().Remove(s2);
 					s1->GetGravityHandler().Jump();
+
+
 					CollisionChecker::GetSingleton().Cancel(s1, s2);
 				}
 				else {
@@ -102,6 +104,7 @@ void registerCollisionsActions(GridLayer *glLayer) {
 			}
 		);
 	}
+
 
 	for (Sprite* enemy_bird : SpriteManager::GetSingleton().GetTypeList("sl"))
 	{
@@ -268,6 +271,7 @@ void FramList_Action(Sprite* sprite, Animator* animator, const FrameListAnimatio
 
 
 void SuperMario::Load(void) {
+
 	json jGameConfig = Config::GetConfig("config/game.json");
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
@@ -277,6 +281,7 @@ void SuperMario::Load(void) {
 	/*
 	* Set Event Handlers
 	*/
+
 	this->game.SetRender(std::bind(&Game::RenderHandler, &this->game));
 	this->game.SetInput(std::bind(&Game::InputHandler, &this->game));
 	this->game.SetPhysics(std::bind(&Game::PhysicsHandler, &this->game));
@@ -403,14 +408,18 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 					lSpriteCounter++;
 					//std::cout << "(" << i << ", " << j << ") " << js["name"] << std::endl;
 					
+					//is_external is in different tileset
 					if (js["is_external"]) {
 						json jExternalConfig = Config::GetConfig(js["external_path"]);
 						std::string sExternalName(js["external_name"]);
+
+						//bobjbitmap object's bitmap, all the png
 						Bitmap* bObjBitmap = al_load_bitmap(std::string(jExternalConfig["spritesheet"]).c_str());
 
 						
 						/*
 						* Parse Animations
+						* cut animations from object's bitmap
 						*/
 						for (auto& jAnim : jExternalConfig["sprites"][sExternalName]["animations"]) {
 							FilmHolder::Get().Load(jAnim["id"], jAnim["animation"], bObjBitmap);
@@ -424,11 +433,13 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 						// std::string(js["name"]) + std::string("_") + std::to_string(lSpriteCounter)
 						Sprite* newSprite;
+						
 						if(js["is_playable"])
 							newSprite = addItemToTypeList("main", std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						else
 							newSprite = addItemToTypeList(js["name"], std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						newSprite->dx = 1;
+						//all the shits have default left right idle and moving
 						newSprite->RegisterDefaultActions();
 						newSprite->currFilm = fDefaultFilm;
 						newSprite->GetGravityHandler().Enable();
@@ -439,6 +450,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 
 						for (auto& jAnim : jExternalConfig["sprites"][sExternalName]["animations"]) {
+							//get the frames list for the current sprite
 							std::vector<unsigned> frames;
 							for (auto& frame : jAnim["animation_frames"]) {
 								frames.push_back(frame);
@@ -446,6 +458,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 							int reps = 1, dx = 2, dy = 0;
 							unsigned int delay = 75;
+
 							if (jAnim["id"] == "herochar.idle.right" || jAnim["id"] == "herochar.idle.left")
 								delay = jAnim["delay"];
 
@@ -455,6 +468,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							id.erase(0, id.find("."));
 							anim_id += id;
 
+							//missleading variable names 
 							FrameListAnimation* hero_run = new FrameListAnimation(anim_id, frames, reps, dx, dy, delay);
 							FrameListAnimator* hero_run_animator = new FrameListAnimator();
 							hero_run_animator->setAnimation(hero_run);
@@ -478,6 +492,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						if (js["is_playable"]) {
 							newSprite->dx = 2;
 
+							//specific callbacks for the main character
 							newSprite->RegisterAction("attack.sword", [](Sprite* s) {
 								s->bAttacking = true;
 
@@ -535,6 +550,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 					}
 					else {
+						//pre registered map tiles
 						Bitmap* bm = this->game.mMap->GetTiles()[js["tile"]];
 
 						Sprite* s = new Sprite(js["name"], j * 16, i * 16, bm, 16, 16);
