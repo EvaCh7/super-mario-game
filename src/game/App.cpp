@@ -369,7 +369,7 @@ void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
-	int currentMap = 4;
+	int currentMap = 3;
 
 	/*
 	* Set Event Handlers

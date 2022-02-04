@@ -1,12 +1,11 @@
 {
   "map": [
     {
-      "path": "resources/map/map_one/final_map_Sky.csv"
-    },
-    {
+      "type": "ground",
       "path": "resources/map/map_one/final_map_Ground.csv"
     },
     {
+      "type": "front",
       "path": "resources/map/map_one/final_map_Front.csv"
     }
   ],

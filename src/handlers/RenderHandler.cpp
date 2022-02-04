@@ -19,7 +19,8 @@ void Game::RenderHandler(void) {
 
 	al_set_target_backbuffer(display);
 
-	BlitNoRefresh(display, (Rect&)Rect{0, 0, 640, 480}, this->mMap->GetTileLayer()->GetBuffer(), vw);
+	BlitNoRefresh(display, (Rect&)Rect { 0, 0, 640, 480 }, this->mMap->GetBackgroundLayer()->GetBuffer(), (Rect&)Rect { (int)floor(0.5 * vw.x), vw.y, vw.w, vw.h });
+	BlitNoRefresh(display, (Rect&)Rect { 0, 0, 640, 480 }, this->mMap->GetTileLayer()->GetBuffer(), vw);
 
 	for (auto obj : SpriteManager::GetSingleton().GetDisplayList()) {
 		Rect sb = obj->GetBox();

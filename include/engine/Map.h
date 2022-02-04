@@ -60,6 +60,7 @@ public:
 	* Computation
 	*/
 	void ComputeTileGridBlocks(int **tlTileMap);
+	void InitTileGridBlocks();
 	void SetGridTileBlock(int iCol, int iRow, int iFlag);
 
 	/*
@@ -155,7 +156,8 @@ private:
 	/*
 	* Tile Layer
 	*/
-	TileLayer *tlLayer;
+	TileLayer* tlLayer;
+	TileLayer* tlBackground;
 
 	/*
 	* Object Tile Layer
@@ -173,6 +175,7 @@ public:
 	* Tile Layer
 	*/
 	TileLayer *GetTileLayer(void);
+	TileLayer* GetBackgroundLayer(void);
 	int GetHeightTileSize(void);
 	int GetWidthTileSize(void);
 

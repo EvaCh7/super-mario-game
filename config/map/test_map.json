@@ -1,13 +1,15 @@
 {
   "map": [
     {
+      "path": "resources/map/test_map/test_map_Ground.csv"
+    }
+  ],
+  "background": [
+    {
       "path": "resources/map/test_map/test_map_Sky.csv"
     },
     {
       "path": "resources/map/test_map/test_map_Background.csv"
-    },
-    {
-      "path": "resources/map/test_map/test_map_Ground.csv"
     }
   ],
   "tiles": {
@@ -22,8 +24,12 @@
     "path": "resources/map/test_map/test_map_Objects.csv",
     "bindings": [
       {
-        "is_external": false,
+        "external_name": "coin",
+        "health": 2,
+        "external_path": "config/sprites/coin.json",
+        "has_gravity": false,
         "is_playable": false,
+        "is_external": true,
         "name": "coin",
         "tile": 286
       },

@@ -20,6 +20,11 @@ TileLayer *Map::GetTileLayer(void)
 	return this->tlLayer;
 }
 
+TileLayer* Map::GetBackgroundLayer(void)
+{
+	return this->tlBackground;
+}
+
 Map::Map(json jConfig) {
 	Bitmap *bm = al_load_bitmap(std::string(jConfig["tiles"]["path"]).c_str());
 
@@ -45,11 +50,24 @@ Map::Map(json jConfig) {
 	*/
 	TileLayer *tlLayer = new TileLayer(100, 300, this->mTiles, jConfig["grid"]);
 	tlLayer->SetViewWindow(Rect{0, 100 * 16 - 480, gGameSettings.lWindowWidth, gGameSettings.lWindowHeight });
+	tlLayer->GetGridLayer()->InitTileGridBlocks();
 	json jMaps = jConfig["map"];
 	for (auto& itMap : jMaps) {
 		tlLayer->ParseCSV(itMap["path"]);
 	}
 	this->tlLayer = tlLayer;
+
+	/*
+	* Create Tile Layer and parse layers
+	*/
+	TileLayer* tlBackground = new TileLayer(100, 300, this->mTiles, jConfig["grid"]);
+	tlBackground->SetViewWindow(Rect{ 0, 100 * 16 - 480, gGameSettings.lWindowWidth, gGameSettings.lWindowHeight });
+	tlBackground->GetGridLayer()->InitTileGridBlocks();
+	jMaps = jConfig["background"];
+	for (auto& itMap : jMaps) {
+		tlBackground->ParseCSV(itMap["path"]);
+	}
+	this->tlBackground = tlBackground;
 }
 
 
@@ -223,6 +241,14 @@ void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 			if (std::find(lSolidList.begin(), lSolidList.end(), tile) != lSolidList.end()) {
 				this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
 			}
+		}
+	}
+}
+
+void GridLayer::InitTileGridBlocks() {
+	for (int i = 0; i < 100; ++i) {
+		for (int j = 0; j < 300; ++j) {
+			this->SetGridTileBlock(j, i, GridLayer::GRID_EMPTY_TILE);
 		}
 	}
 }
