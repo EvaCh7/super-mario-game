@@ -5,7 +5,10 @@
 #include <functional>
 #include "Structs.h"
 #include "Map.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 //#include<engine/Sprite.h>
+
 
 extern Display *display;
 extern ALLEGRO_KEYBOARD_STATE ksKeyboardState;

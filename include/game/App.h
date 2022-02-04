@@ -2,6 +2,9 @@
 #define __APP_H__
 
 #include "engine/Game.h"
+#include "audio.h"
+
+
 
 class App {
 protected:
@@ -28,10 +31,14 @@ public:
 		std::cout << "sss\n";
 		Clear();
 	}
+
+	Audio* audio_sample;
+
 };
 
 class SuperMario : public App {
 public:
+
 	void Initialise(void);
 	void Load(void);
 	void Clear(void);

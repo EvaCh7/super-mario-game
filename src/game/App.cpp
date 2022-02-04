@@ -1,13 +1,13 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
+
 #include "display/DisplayTools.h"
 #include <game/App.h>
-#include <game/Audio.h>
 #include "engine/Sprite.h"
 
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "engine/Animations/Animation.h"
 #include "engine/Animations/Animator.h"
 #include "engine/Animations/AnimatorManager.h"
@@ -35,8 +35,39 @@ void SuperMario::Initialise(void) {
 	gGameSettings.fGravity = jGameConfig["physics"]["gravity"];
 	gGameSettings.lJumpSpeed = jGameConfig["physics"]["jump_speed"];
 
-	Audio audio_sample;
-	//audio_sample.playSample("config/sound.mp3");
+	ALLEGRO_VOICE* voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+	//game.mixer= al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+
+	//al_set_default_mixer(game.mixer);
+
+
+	//al_attach_mixer_to_voice(game.mixer, voice);
+
+
+	al_reserve_samples(1);
+
+
+
+	Audio::singleton.playSample("config/sounds/main.mp3", ALLEGRO_PLAYMODE_ONCE);
+
+	Audio::singleton.Voice = al_create_voice(
+		44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2
+	);
+	Audio::singleton.Mixer= al_create_mixer(
+		44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2
+	);
+
+
+	al_set_default_mixer(Audio::singleton.Mixer);
+	al_attach_mixer_to_voice(Audio::singleton.Mixer, Audio::singleton.Voice);
+
+
+	/*
+	this->audio_sample = new Audio;
+
+
+	audio_sample->playSample("config/sound.mp3");*/
+
 	//al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP | ALLEGRO_MIPMAP);
 	display = al_create_display(gGameSettings.lWindowWidth, gGameSettings.lWindowHeight);
 	if (!display) {
@@ -44,22 +75,28 @@ void SuperMario::Initialise(void) {
 		exit(0);
 	}
 
+
+
 	this->game.timer = al_create_timer(1.0 / gGameSettings.lFpsLimit);
 	this->game.event_queue = al_create_event_queue();
 	al_register_event_source(this->game.event_queue, al_get_keyboard_event_source());
 	al_register_event_source(this->game.event_queue, al_get_timer_event_source(this->game.timer));
 	al_start_timer(this->game.timer);
-	//audio_sample.stopSample();
+
+	/*
+	Audio* audio_sample = new Audio;
+	audio_sample->playSample("config/sounds/main.mp3");*/
 
 }
 
 CollisionChecker CollisionChecker::singleton;
 SpriteManager SpriteManager::singleton;
+Audio Audio::singleton;
 FilmHolder FilmHolder::holder;
 
 AnimatorManager AnimatorManager::singleton;
 
-Sprite *addItemToTypeList(std::string id, std::string spriteName, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
+Sprite* addItemToTypeList(std::string id, std::string spriteName, int x, int y, int width, int height, Bitmap* pngBitmap, int i, int j) {
 	Bitmap* bm = al_create_sub_bitmap(pngBitmap, x, y, width, height);
 	Sprite* s = new Sprite(spriteName, i, j, bm, width, height, true);
 
@@ -75,7 +112,7 @@ Sprite *addItemToTypeList(std::string id, std::string spriteName, int x, int y, 
 */
 
 
-void registerCollisionsActions(GridLayer *glLayer, Game *g) {
+void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 	Sprite* mario = SpriteManager::GetSingleton().GetTypeList("main").front();
 
 	for (Sprite* ubaluba : SpriteManager::GetSingleton().GetTypeList("goomba"))
@@ -101,7 +138,7 @@ void registerCollisionsActions(GridLayer *glLayer, Game *g) {
 						printf("mario died from uba luba\n");
 						s1->CallAction("damage");
 					}
-						
+
 				}
 			}
 		);
@@ -206,24 +243,25 @@ void registerCollisionsActions(GridLayer *glLayer, Game *g) {
 				if (s1->y + s1->GetBox().h <= s2->y + s2->GetBox().h) {
 					int dy = s1->y + s1->GetBox().h - s2->y;
 					s1->y -= dy;
-				}else 
-				if (s1->y <= s2->y + s2->GetBox().h) {
-					printf("HIT FROM BELOW {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
-					s1->GetGravityHandler().SetJumping(false);
-					//s1->GetGravityHandler().SetFalling(true);
-					s1->GetGravityHandler().SetJumpSpeed(1);
-					s1->Move(0, 4);
-
-					SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 4, s2->y - 32, glLayer, g);
-
-					// make block solid
-					glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
-					CollisionChecker::GetSingleton().Cancel(s1, s2);
-					SpriteManager::GetSingleton().Remove(s2);
 				}
-				else {
-					printf("HIT FROM ELSEWHERE\n");
-				}
+				else
+					if (s1->y <= s2->y + s2->GetBox().h) {
+						printf("HIT FROM BELOW {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
+						s1->GetGravityHandler().SetJumping(false);
+						//s1->GetGravityHandler().SetFalling(true);
+						s1->GetGravityHandler().SetJumpSpeed(1);
+						s1->Move(0, 4);
+
+						SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 4, s2->y - 32, glLayer, g);
+
+						// make block solid
+						glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
+						CollisionChecker::GetSingleton().Cancel(s1, s2);
+						SpriteManager::GetSingleton().Remove(s2);
+					}
+					else {
+						printf("HIT FROM ELSEWHERE\n");
+					}
 			}
 		);
 	}
@@ -239,7 +277,7 @@ void registerCollisionsActions(GridLayer *glLayer, Game *g) {
 						s1->x = 16 * 1;
 						s1->y = 16 * 2;
 					}
-					else if(s2->x == 624 && s2->y == 352) {
+					else if (s2->x == 624 && s2->y == 352) {
 						s1->x = 130 * 16;
 						s1->y = 91 * 16;
 					}
@@ -334,7 +372,7 @@ void registerCollisionsActions(GridLayer *glLayer, Game *g) {
 						s1->Move(0, 4);
 
 						// make block solid
-	
+
 						CollisionChecker::GetSingleton().Cancel(s1, s2);
 						SpriteManager::GetSingleton().Remove(s2);
 					}
@@ -386,7 +424,7 @@ void SuperMario::Load(void) {
 	* Create Map
 	*/
 	this->game.SetMap(new Map(Config::GetConfig(Config::GetConfig("config/game.json")["maps"][currentMap]["cfg"])));
-	
+
 	/*
 	* Parse Objects
 	*/
@@ -444,11 +482,25 @@ SuperMario::SuperMario(void) {
 
 void SuperMario::Clear(void) {
 	al_destroy_display(display);
+	audio_sample->stopSample();
+
+
+	for (int i = 0; i < Audio::singleton.samples_vec.size(); ++i) {
+		al_destroy_sample(Audio::singleton.samples_vec.at(i));
+	}
+	for (int i = 0; i < Audio::singleton.samples_instances_vec.size(); ++i) {
+		al_destroy_sample_instance(Audio::singleton.samples_instances_vec.at(i));
+	}
+
+
+	al_destroy_mixer(Audio::singleton.Mixer);
+	al_destroy_voice(Audio::singleton.Voice);
+
 }
 
 
 bool SuperMario::SpawnObjects(json jObjectConfig) {
-	Map *map = this->game.mMap;
+	Map* map = this->game.mMap;
 	int** lObjLayer = map->GetObjectLayer();
 	int lSpriteCounter = 0;
 
@@ -465,7 +517,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 			for (auto& jAnim : jExternalConfig["sprites"][sExternalName]["animations"]) {
 				FilmHolder::Get().Load(jAnim["id"], jAnim["animation"], bObjBitmap);
-		
+
 			}
 
 			for (auto& jAnim : jExternalConfig["sprites"][sExternalName]["animations"]) {
@@ -514,7 +566,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 				if (lObjLayer[i][j] == js["tile"]) {
 					lSpriteCounter++;
 					//std::cout << "(" << i << ", " << j << ") " << js["name"] << std::endl;
-					
+
 					//is_external is in different tileset
 					if (js["is_external"]) {
 						json jExternalConfig = Config::GetConfig(js["external_path"]);
@@ -523,7 +575,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 						//bobjbitmap object's bitmap, all the png
 						Bitmap* bObjBitmap = al_load_bitmap(std::string(jExternalConfig["spritesheet"]).c_str());
 
-						
+
 						/*
 						* Parse Animations
 						* cut animations from object's bitmap
@@ -540,8 +592,8 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 						// std::string(js["name"]) + std::string("_") + std::to_string(lSpriteCounter)
 						Sprite* newSprite;
-						
-						if(js["is_playable"])
+
+						if (js["is_playable"])
 							newSprite = addItemToTypeList("main", std::string(js["name"]), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
 						else
 							newSprite = addItemToTypeList(js["name"], std::string(js["name"]) + "_" + std::to_string(lSpriteCounter), rDefaultBox.x, rDefaultBox.y, rDefaultBox.w, rDefaultBox.h, bObjBitmap, 16 * j, 16 * i);
@@ -583,7 +635,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							hero_run_animator->setAnimation(hero_run);
 
 							hero_run_animator->SetOnAction(
-								[](Animator *animator, const Animation& anim) {
+								[](Animator* animator, const Animation& anim) {
 									std::string animId = ((FrameListAnimation&)anim).id;
 									Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
 									FramList_Action(s, animator, (const FrameListAnimation&)anim);
@@ -592,11 +644,11 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 							hero_run_animator->SetOnFinish([](Animator* anim) {
 								anim->setState(ANIMATOR_STOPPED);
-							});
+								});
 
 							hero_run_animator->SetOnStart([](Animator* anim) {
 								anim->setState(ANIMATOR_RUNNING);
-							});
+								});
 							AnimatorManager::GetSingleton().Register(hero_run_animator);
 						}
 
@@ -621,7 +673,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 										}
 									);
 								}
-							});
+								});
 						}
 
 						if (js["is_playable"]) {
@@ -632,7 +684,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								s->bAttacking = true;
 
 								Animator* pAnim;
-								if(s->bLooking)
+								if (s->bLooking)
 									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.right");
 								else
 									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.left");
@@ -640,14 +692,14 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 								if (pAnim->HasFinished()) {
 									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-									if(s->bLooking)
+									if (s->bLooking)
 										s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.right");
 									else
 										s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.left");
 									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 								}
-							});
+								});
 						}
 
 
@@ -662,7 +714,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 
 						Sprite* s = new Sprite(js["name"], j * 16, i * 16, bm, 16, 16, false);
 						s->GetGravityHandler().Disable();
-							
+
 						SpriteManager::GetSingleton().Add(s);
 						SpriteManager::GetSingleton().AddToTypeList(js["name"], s);
 					}

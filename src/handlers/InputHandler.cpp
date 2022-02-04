@@ -5,6 +5,7 @@
 #include "engine/Game.h"
 
 #include "engine/Animations/AnimatorManager.h"
+#include "game/audio.h"
 #include "engine/Animations/SystemClock.h"
 void Game::InputHandler(void) {
 	ALLEGRO_EVENT events;
@@ -42,6 +43,9 @@ void Game::InputHandler(void) {
 				sMario->GetGravityHandler().lBaseJumpSpeed = gGameSettings.lJumpSpeed * 1.15;
 				sMario->GetGravityHandler().lGravity = gGameSettings.fGravity * 0.90;
 				bDidSomething = true;
+
+
+
 			}
 			else {
 				sMario->GetGravityHandler().lBaseJumpSpeed = gGameSettings.lJumpSpeed;
@@ -75,8 +79,11 @@ void Game::InputHandler(void) {
 
 			if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_X)) {
 				if (sMario->id == "herochar") {
+
+					Audio::singleton.playSample("config/sounds/sword-hit.mp3", ALLEGRO_PLAYMODE_ONCE);
 					sMario->CallAction("attack.sword");
 					bDidSomething = true;
+
 				}
 			}
 			if (!bDidSomething) {
