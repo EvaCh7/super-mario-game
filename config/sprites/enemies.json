@@ -1,7 +1,7 @@
 {
   "spritesheet": "resources/sprites/enemies.png",
   "sprites": {
-    "enemy_turtle": {
+    "turtle": {
       "default_animation": "turtle.run.left",
       "animations": [
         {
@@ -57,6 +57,18 @@
               "height": 23,
               "x_pos": 239,
               "y_pos": 28
+            }
+          ]
+        },
+        {
+          "id": "turtle.death",
+          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 182,
+              "y_pos": 60
             }
           ]
         }

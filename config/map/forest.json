@@ -36,6 +36,24 @@
         "tile": 3192
       },
       {
+        "external_name": "turtle",
+        "health": 3,
+        "external_path": "config/sprites/enemies.json",
+        "is_playable": false,
+        "is_external": true,
+        "name": "turtle",
+        "tile": 666
+      },
+      {
+        "external_name": "shell",
+        "health": 3,
+        "external_path": "config/sprites/shell.json",
+        "is_playable": true,
+        "is_external": true,
+        "name": "shell",
+        "tile": 123231321342
+      },
+      {
         "external_name": "mariosmall",
         "health": 500,
         "external_path": "config/sprites/mario.json",

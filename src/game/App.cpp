@@ -53,7 +53,7 @@ void SuperMario::Initialise(void) {
 	Audio::singleton.Voice = al_create_voice(
 		44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2
 	);
-	Audio::singleton.Mixer= al_create_mixer(
+	Audio::singleton.Mixer = al_create_mixer(
 		44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2
 	);
 
@@ -209,9 +209,9 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		);
 	}
 
-	for (Sprite* enemy_piranha_plant : SpriteManager::GetSingleton().GetTypeList("zombie"))
+	for (Sprite* zombie : SpriteManager::GetSingleton().GetTypeList("zombie"))
 	{
-		CollisionChecker::GetSingleton().Register(mario, enemy_piranha_plant,
+		CollisionChecker::GetSingleton().Register(mario, zombie,
 			[](Sprite* s1, Sprite* s2) {
 				if (s1->GetBox().y < s2->GetBox().y) {
 					printf("mario died from uba luba\n");
@@ -307,6 +307,98 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		);
 	}
 
+
+
+	for (Sprite* turtle : SpriteManager::GetSingleton().GetTypeList("turtle"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, turtle,
+			[glLayer, g](Sprite* s1, Sprite* s2) {
+
+				//CollisionChecker::GetSingleton().Cancel(s1, s2);
+				if (s1->GetBox().y < s2->GetBox().y) {
+					//SpriteManager::GetSingleton().Remove(s2);
+					//s2->CallAction("death");
+
+
+					s1->GetGravityHandler().Jump();
+
+					//SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 32, s2->y - 32, glLayer, g);
+
+
+					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x + 32, s2->y - 32, glLayer, g);
+				
+					shell->bDead = true;
+
+
+					shell->RegisterDefaultActions();
+
+
+
+					for (Sprite* zombie : SpriteManager::GetSingleton().GetTypeList("zombie"))
+					{
+						CollisionChecker::GetSingleton().Register(shell, zombie,
+							[](Sprite* s1, Sprite* s2) {
+								printf("shell hitted zombie\n");
+								
+
+								s2->CallAction("damage");
+
+
+
+							}
+						);
+					}
+
+					for (Sprite* main : SpriteManager::GetSingleton().GetTypeList("main"))
+					{
+						CollisionChecker::GetSingleton().Register(shell, main,
+							[](Sprite* s1, Sprite* s2) {
+								printf("shell hitted main\n");
+
+
+								s2->CallAction("damage");
+
+
+
+							}
+						);
+					}
+
+
+					Sprite* main_character = SpriteManager::GetSingleton().GetTypeList("main").front();
+
+
+					CollisionChecker::GetSingleton().Register(shell, main_character,
+						[](Sprite* s1, Sprite* s2) {
+							if (s2->x < s1->x) {
+
+
+
+								s1->bDead = false;
+
+							}
+
+
+						}
+					);
+
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
+					SpriteManager::GetSingleton().Remove(s2);
+
+				}
+
+
+				/*
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.left")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.right")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.left")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.right")->Stop();
+				s1->id = "herochar";
+				s1->CallAction("idle");
+				*/
+			}
+		);
+	}
 	for (Sprite* mushroom : SpriteManager::GetSingleton().GetTypeList("mushroom"))
 	{
 		CollisionChecker::GetSingleton().Register(mario, mushroom,

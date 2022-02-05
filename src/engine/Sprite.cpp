@@ -353,6 +353,7 @@ bool Sprite::CollisionCheck(Sprite* s) {
 Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer, Game *g) {
 	Bitmap* bObjBitmap = al_load_bitmap(std::string(jObject["spritesheet"]).c_str());
 
+	
 	for (auto& jAnim : jObject["sprites"][sName]["animations"]) {
 		FilmHolder::Get().Load(jAnim["id"], jAnim["animation"], bObjBitmap);
 	}

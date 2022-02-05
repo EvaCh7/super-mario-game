@@ -273,6 +273,9 @@
     <None Include="resources\map\forest\forest_Objects.csv">
       <Filter>Resource Files\resources\map\forest</Filter>
     </None>
+    <None Include="config\sprites\shell.json">
+      <Filter>Resource Files\config\sprite</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\display\DisplayTools.h">
