@@ -1,22 +1,31 @@
 {
   "map": [
     {
-      "path": "resources/map/forest/forest_Ground.csv"
+      "path": "resources/map/forest/second_map_FrontGround.csv"
+    },
+    {
+      "path": "resources/map/forest/second_map_Ground.csv"
     }
   ],
   "background": [
     {
-      "path": "resources/map/forest/forest_Background_2.csv"
+      "path": "resources/map/forest/second_map_Sky.csv"
     },
     {
-      "path": "resources/map/forest/forest_Background_1.csv"
+      "path": "resources/map/forest/second_map_Clouds.csv"
     },
     {
-      "path": "resources/map/forest/forest_Background3.csv"
+      "path": "resources/map/forest/second_map_Mountains.csv"
+    },
+    {
+      "path": "resources/map/forest/second_map_Background.csv"
+    },
+    {
+      "path": "resources/map/forest/second_map_TreesBackground.csv"
     }
   ],
   "tiles": {
-    "path": "resources/map/forest/XDDFD.png",
+    "path": "resources/map/forest/combined.png",
     "width": 16,
     "height": 16
   },
@@ -24,8 +33,24 @@
     "path": "config/sprites/sprites.json"
   },
   "objects": {
-    "path": "resources/map/forest/forest_Objects.csv",
+    "path": "resources/map/forest/second_map_Objects.csv",
     "bindings": [
+      {
+        "external_name": "coin",
+        "health": 2,
+        "external_path": "config/sprites/coin.json",
+        "has_gravity": false,
+        "is_playable": false,
+        "is_external": true,
+        "name": "coin",
+        "tile": 4111
+      },
+      {
+        "is_external": false,
+        "is_playable": false,
+        "name": "pipe",
+        "tile": 5442
+      },
       {
         "external_name": "zombie",
         "health": 3,
@@ -54,13 +79,22 @@
         "tile": 123231321342
       },
       {
+        "external_name": "waterfall",
+        "health": 3,
+        "external_path": "config/sprites/waterfall.json",
+        "is_playable": false,
+        "is_external": true,
+        "name": "waterfall",
+        "tile": 6028
+      },
+      {
         "external_name": "mariosmall",
         "health": 500,
         "external_path": "config/sprites/mario.json",
         "is_external": true,
         "is_playable": true,
         "name": "mariosmall",
-        "tile": 4744
+        "tile": 5731
       },
       {
         "external_name": "herochar",
@@ -81,11 +115,36 @@
   ],
   "grid": {
     "solid": [
-      4418,
-      4523,
-      4732,
-      4733,
-      4734
+      693,
+      1136,
+      1137,
+      1138,
+      694,
+      842,
+      692,
+      840,
+      1139,
+      3959,
+      3960,
+      3961,
+      3962,
+      3817,
+      5736,
+      5884,
+      3953,
+      101,
+      103,
+      399,
+      248,
+      100,
+      398,
+      249,
+      250,
+      102,
+      545,
+      396,
+      397,
+      546
     ],
     "empty": [
       137,

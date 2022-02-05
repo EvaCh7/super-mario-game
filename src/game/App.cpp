@@ -268,6 +268,15 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 				//printf("MARIO HIT A PIPE\n");
 				printf("%d %d\n", s2->x, s2->y);
 				if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
+					if (s2->x == 2032 && s2->y == 1488) {
+						s1->x = 16 * 3;
+						s1->y = 16 * 12;
+					}
+					else if (s2->x == 624 && s2->y == 352) {
+						s1->x = 130 * 16;
+						s1->y = 91 * 16;
+					}
+
 					if (s2->x == 1376 && s2->y == 1472) {
 						s1->x = 16 * 1;
 						s1->y = 16 * 2;

@@ -7,6 +7,10 @@ void Game::AIHandler(void) {
 		s->CallAction("idle");
 	}
 
+	for (Sprite* s : SpriteManager::GetSingleton().GetTypeList("waterfall")) {
+		s->CallAction("idle");
+	}
+
 	for (Sprite* s : SpriteManager::GetSingleton().GetTypeList("slime")) {
 		int* currX = &s->x;
 		if (s->bDead)
