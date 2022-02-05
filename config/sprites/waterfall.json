@@ -7,7 +7,7 @@
         {
           "id": "waterfall.idle.right",
           "animation_frames": [ 0, 1, 2, 3 ],
-          "delay": 170,
+          "delay": 500,
           "animation": [
             {
               "width": 400,

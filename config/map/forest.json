@@ -46,8 +46,11 @@
         "tile": 4111
       },
       {
-        "is_external": false,
+        "external_name": "pipe",
+        "health": 3,
+        "external_path": "config/sprites/pipe.json",
         "is_playable": false,
+        "is_external": true,
         "name": "pipe",
         "tile": 5442
       },
@@ -126,6 +129,7 @@
       1139,
       3959,
       3960,
+      3951,
       3961,
       3962,
       3817,
@@ -144,7 +148,10 @@
       545,
       396,
       397,
-      546
+      546,
+      544,
+      4100,
+      547
     ],
     "empty": [
       137,

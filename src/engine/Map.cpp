@@ -104,6 +104,9 @@ Rect TileLayer::GetViewWindow(void)
 	if (sMario->x <= 640 / 2) {
 		dx = -this->rViewWindow.x;
 	}
+	if (sMario->y <= 640 / 2) {
+		dy = -this->rViewWindow.y;
+	}
 
 	//printf("Mario|%d %d| ViewWindow|%d %d| New|%d %d|\n", sMario->x, sMario->y, (this->rViewWindow.x + this->rViewWindow.w / 2), (this->rViewWindow.y + this->rViewWindow.h / 2), dx, dy);
 	ScrollWithBoundsCheck(&this->rViewWindow, dx, dy);

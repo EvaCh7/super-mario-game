@@ -269,6 +269,8 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 				printf("%d %d\n", s2->x, s2->y);
 				if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_DOWN)) {
 					if (s2->x == 2032 && s2->y == 1488) {
+						/*s1->x = 16 * 113;
+						s1->y = 16 * 27;*/
 						s1->x = 16 * 3;
 						s1->y = 16 * 12;
 					}
