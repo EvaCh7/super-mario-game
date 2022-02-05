@@ -9,6 +9,14 @@
       "path": "resources/map/map_one/final_map_Front.csv"
     }
   ],
+  "background": [
+    {
+      "path": "resources/map/map_one/final_map_Sky.csv"
+    },
+    {
+      "path": "resources/map/map_one/final_map_Background.csv"
+    }
+  ],
   "tiles": {
     "path": "resources/map/map_one/DirtBrick_Assets_V5.png",
     "width": 16,
@@ -224,6 +232,9 @@
       164,
       38,
       58
+    ],
+    "top_solid": [
+      282
     ]
   }
 }

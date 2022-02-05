@@ -80,7 +80,7 @@ void Game::InputHandler(void) {
 			if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_X)) {
 				if (sMario->id == "herochar") {
 
-					Audio::singleton.playSample("config/sounds/sword-hit.mp3", ALLEGRO_PLAYMODE_ONCE);
+					//Audio::singleton.playSample("config/sounds/sword-hit.mp3", ALLEGRO_PLAYMODE_ONCE);
 					sMario->CallAction("attack.sword");
 					bDidSomething = true;
 

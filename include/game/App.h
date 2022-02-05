@@ -22,13 +22,9 @@ public:
 	const Game &GetGame(void) const { return game; }
 	virtual void	Clear(void) = 0;
 	void Main(void) {
-		std::cout << "sss\n";
 		Initialise();
-		std::cout << "sss\n";
 		Load();
-		std::cout << "sss\n";
 		Run();
-		std::cout << "sss\n";
 		Clear();
 	}
 

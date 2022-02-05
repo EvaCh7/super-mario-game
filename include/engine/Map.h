@@ -37,7 +37,6 @@ public:
 	void SetSolidGridTile(int iCol, int iRow);
 	void SetEmptyGridTile(int iCol, int iRow);
 	void SetGridTileFlags(int iCol, int iRow, int fFlags);
-	void SetGridTileTopSolidOnly(int iCol, int iRow);
 
 	int CanPassGridTile(int iCol, int iRow, int fFlags);
 	void FilterGridMotion(Rect rRect, int *dx, int *dy);
@@ -62,6 +61,7 @@ public:
 	void ComputeTileGridBlocks(int **tlTileMap);
 	void InitTileGridBlocks();
 	void SetGridTileBlock(int iCol, int iRow, int iFlag);
+	void SetSolidGridTop(int iCol, int iRow);
 
 	/*
 	* Utils

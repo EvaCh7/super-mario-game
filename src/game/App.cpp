@@ -48,7 +48,7 @@ void SuperMario::Initialise(void) {
 
 
 
-	Audio::singleton.playSample("config/sounds/main.mp3", ALLEGRO_PLAYMODE_ONCE);
+	//Audio::singleton.playSample("config/sounds/main.mp3", ALLEGRO_PLAYMODE_ONCE);
 
 	Audio::singleton.Voice = al_create_voice(
 		44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2
@@ -240,28 +240,23 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 			[glLayer, g](Sprite* s1, Sprite* s2) {
 
 				printf("MARIO HIT A BRICK {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
-				if (s1->y + s1->GetBox().h <= s2->y + s2->GetBox().h) {
-					int dy = s1->y + s1->GetBox().h - s2->y;
-					s1->y -= dy;
+				if (s1->y <= s2->y + s2->GetBox().h) {
+					printf("HIT FROM BELOW {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
+					s1->GetGravityHandler().SetJumping(false);
+					//s1->GetGravityHandler().SetFalling(true);
+					s1->GetGravityHandler().SetJumpSpeed(1);
+					s1->Move(0, 4);
+
+					SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 4, s2->y - 32, glLayer, g);
+
+					// make block solid
+					glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
+					SpriteManager::GetSingleton().Remove(s2);
 				}
-				else
-					if (s1->y <= s2->y + s2->GetBox().h) {
-						printf("HIT FROM BELOW {%d %d}\n", s2->x - s1->x, s2->y - s1->y);
-						s1->GetGravityHandler().SetJumping(false);
-						//s1->GetGravityHandler().SetFalling(true);
-						s1->GetGravityHandler().SetJumpSpeed(1);
-						s1->Move(0, 4);
-
-						SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 4, s2->y - 32, glLayer, g);
-
-						// make block solid
-						glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
-						CollisionChecker::GetSingleton().Cancel(s1, s2);
-						SpriteManager::GetSingleton().Remove(s2);
-					}
-					else {
-						printf("HIT FROM ELSEWHERE\n");
-					}
+				else {
+					printf("HIT FROM ELSEWHERE\n");
+				}
 			}
 		);
 	}
@@ -370,9 +365,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 						s1->GetGravityHandler().SetJumping(false);
 						s1->GetGravityHandler().SetJumpSpeed(1);
 						s1->Move(0, 4);
-
 						// make block solid
-
 						CollisionChecker::GetSingleton().Cancel(s1, s2);
 						SpriteManager::GetSingleton().Remove(s2);
 					}
@@ -407,7 +400,7 @@ void SuperMario::Load(void) {
 	Bitmap* bm = al_load_bitmap("resources/sprites/marioi.png");
 	Bitmap* bm_enemies = al_load_bitmap("resources/sprites/enemies.png");
 
-	int currentMap = 3;
+	int currentMap = 5;
 
 	/*
 	* Set Event Handlers

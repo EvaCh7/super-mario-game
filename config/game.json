@@ -26,6 +26,9 @@
 		},
 		{
 			"cfg": "config/map/map_one.json"
+		},
+		{
+			"cfg": "config/map/forest.json"
 		}
 	]
 }

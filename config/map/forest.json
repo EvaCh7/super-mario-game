@@ -1,0 +1,82 @@
+{
+  "map": [
+    {
+      "path": "resources/map/forest/forest_Ground.csv"
+    }
+  ],
+  "background": [
+    {
+      "path": "resources/map/forest/forest_Background_2.csv"
+    },
+    {
+      "path": "resources/map/forest/forest_Background_1.csv"
+    },
+    {
+      "path": "resources/map/forest/forest_Background3.csv"
+    }
+  ],
+  "tiles": {
+    "path": "resources/map/forest/XDDFD.png",
+    "width": 16,
+    "height": 16
+  },
+  "sprites": {
+    "path": "config/sprites/sprites.json"
+  },
+  "objects": {
+    "path": "resources/map/forest/forest_Objects.csv",
+    "bindings": [
+      {
+        "external_name": "zombie",
+        "health": 3,
+        "external_path": "config/sprites/zombie.json",
+        "is_playable": false,
+        "is_external": true,
+        "name": "zombie",
+        "tile": 3192
+      },
+      {
+        "external_name": "mariosmall",
+        "health": 500,
+        "external_path": "config/sprites/mario.json",
+        "is_external": true,
+        "is_playable": true,
+        "name": "mariosmall",
+        "tile": 4744
+      },
+      {
+        "external_name": "herochar",
+        "health": 500,
+        "external_path": "config/sprites/herochar.json",
+        "is_external": true,
+        "is_playable": true,
+        "name": "herochar",
+        "tile": 9999999
+      }
+    ]
+  },
+  "teleports": [
+    {
+      "from": 0,
+      "to": 0
+    }
+  ],
+  "grid": {
+    "solid": [
+      4418,
+      4523,
+      4732,
+      4733,
+      4734
+    ],
+    "empty": [
+      137,
+      164,
+      38,
+      58
+    ],
+    "top_solid": [
+
+    ]
+  }
+}

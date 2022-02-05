@@ -24,7 +24,7 @@ void Audio::playSample(std::string path,  ALLEGRO_PLAYMODE moder ) {
 
 void Audio::stopSample() {
 
-		al_stop_sample(&sampleID);
+		//al_stop_sample(&sampleID);
 }
 
 

@@ -96,7 +96,17 @@ Rect TileLayer::GetViewWindow(void)
 		sMario = obj;
 	}
 
-	ScrollWithBoundsCheck(&this->rViewWindow, sMario->x - (this->rViewWindow.x + this->rViewWindow.w / 2) - 16, sMario->y - (this->rViewWindow.y + this->rViewWindow.h / 2) - 16);
+
+	// HALF FIXED TODO: FIX Y
+
+	int dx = sMario->x - (this->rViewWindow.x + this->rViewWindow.w / 2);
+	int dy = sMario->y - (this->rViewWindow.y + this->rViewWindow.h / 2);
+	if (sMario->x <= 640 / 2) {
+		dx = -this->rViewWindow.x;
+	}
+
+	//printf("Mario|%d %d| ViewWindow|%d %d| New|%d %d|\n", sMario->x, sMario->y, (this->rViewWindow.x + this->rViewWindow.w / 2), (this->rViewWindow.y + this->rViewWindow.h / 2), dx, dy);
+	ScrollWithBoundsCheck(&this->rViewWindow, dx, dy);
 
 	return this->rViewWindow;
 }
@@ -228,6 +238,7 @@ void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 {
 	std::list<int> lEmptyList = mGridMasks.find(std::string("empty"))->second;
 	std::list<int> lSolidList = mGridMasks.find(std::string("solid"))->second;
+	std::list<int> lTopSolidList = mGridMasks.find(std::string("top_solid"))->second;
 
 	for (int i = 0; i < 100; ++i) {
 		for (int j = 0; j < 300; ++j) {
@@ -240,6 +251,9 @@ void GridLayer::ComputeTileGridBlocks(int** tlTileMap)
 
 			if (std::find(lSolidList.begin(), lSolidList.end(), tile) != lSolidList.end()) {
 				this->SetGridTileBlock(j, i, GridLayer::GRID_SOLID_TILE);
+			}else if (std::find(lTopSolidList.begin(), lTopSolidList.end(), tile) != lTopSolidList.end()) {
+				this->SetSolidGridTop(j, i);
+				std::cout << "Found " << tile << " in topsolid\n";
 			}
 		}
 	}
@@ -261,6 +275,15 @@ void GridLayer::SetGridTileBlock(int iCol, int iRow, int iFlag)
 		for (int j = iCol; j < iCol + 4; ++j) {
 			this->SetGridTile(j, i, iFlag);
 		}
+	}
+}
+
+void GridLayer::SetSolidGridTop(int iCol, int iRow)
+{
+	iCol *= 4;
+	iRow *= 4;
+	for (int j = iCol; j < iCol + 4; ++j) {
+		this->SetGridTile(j, iRow, GridLayer::GRID_SOLID_TILE);
 	}
 }
 

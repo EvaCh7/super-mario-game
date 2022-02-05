@@ -76,6 +76,9 @@
     <Filter Include="Resource Files\resources\map\test_map">
       <UniqueIdentifier>{d9e07dda-0f0e-485b-9420-60cd80aa1777}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\resources\map\forest">
+      <UniqueIdentifier>{36793577-652d-4b20-80bb-bdbc1c0ba3a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\handlers\RenderHandler.cpp">
@@ -251,6 +254,24 @@
     </None>
     <None Include="config\sprites\hppotion.json">
       <Filter>Resource Files\config\sprite</Filter>
+    </None>
+    <None Include="config\map\forest.json">
+      <Filter>Resource Files\config\map</Filter>
+    </None>
+    <None Include="resources\map\forest\forest_Background_1.csv">
+      <Filter>Resource Files\resources\map\forest</Filter>
+    </None>
+    <None Include="resources\map\forest\forest_Background_2.csv">
+      <Filter>Resource Files\resources\map\forest</Filter>
+    </None>
+    <None Include="resources\map\forest\forest_Background3.csv">
+      <Filter>Resource Files\resources\map\forest</Filter>
+    </None>
+    <None Include="resources\map\forest\forest_Ground.csv">
+      <Filter>Resource Files\resources\map\forest</Filter>
+    </None>
+    <None Include="resources\map\forest\forest_Objects.csv">
+      <Filter>Resource Files\resources\map\forest</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
