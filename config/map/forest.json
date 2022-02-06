@@ -55,7 +55,7 @@
             "tile": 5442
         },
         {
-            "external_name": "pipe_sec",
+            "external_name": "pipe",
             "health": 3,
             "external_path": "config/sprites/pipe.json",
             "is_playable": false,
@@ -64,7 +64,7 @@
             "tile": 5447
         },
         {
-            "external_name": "pipexit",
+            "external_name": "pipe",
             "health": 3,
             "external_path": "config/sprites/pipe.json",
             "is_playable": false,
