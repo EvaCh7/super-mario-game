@@ -6,7 +6,7 @@
       "animations": [
         {
           "id": "waterfall.idle.right",
-          "animation_frames": [ 0, 1, 2, 3 ],
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
           "delay": 500,
           "animation": [
             {
@@ -43,7 +43,7 @@
         },
         {
           "id": "waterfall.idle.left",
-          "animation_frames": [ 0, 1, 2, 3 ],
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
           "delay": 170,
           "animation": [
             {
@@ -80,7 +80,7 @@
         },
         {
           "id": "waterfall.run.left",
-          "animation_frames": [ 0, 1, 2, 3 ],
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
           "delay": 170,
           "animation": [
             {
@@ -117,7 +117,7 @@
         },
         {
           "id": "waterfall.run.right",
-          "animation_frames": [ 0, 1, 2, 3 ],
+          "animation_frames": [ 0, 1, 2, 3, 4 ],
           "delay": 170,
           "animation": [
             {
