@@ -233,6 +233,7 @@
     <None Include="config\sprites\flag.json" />
     <None Include="config\sprites\herochar.json" />
     <None Include="config\sprites\hppotion.json" />
+    <None Include="config\sprites\ladder.json" />
     <None Include="config\sprites\mario.json" />
     <None Include="config\sprites\pipe.json" />
     <None Include="config\sprites\shell.json" />

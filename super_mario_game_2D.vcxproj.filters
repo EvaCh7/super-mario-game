@@ -282,6 +282,9 @@
     <None Include="config\sprites\finishwaterfall.json">
       <Filter>Resource Files\config\sprite</Filter>
     </None>
+    <None Include="config\sprites\ladder.json">
+      <Filter>Resource Files\config\sprite</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\display\DisplayTools.h">

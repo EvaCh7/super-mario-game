@@ -287,6 +287,32 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 						s1->x = 130 * 16;
 						s1->y = 91 * 16;
 					}
+
+					if (s2->x == 1104 && s2->y == 96) {
+						s1->x = 239 * 16;
+						s1->y = 4 * 16;
+					}
+
+					if (s2->x == 4720 && s2->y == 176) {
+						s1->x = 169 * 16;
+						s1->y = 93 * 16;
+					}
+				}
+			}
+		);
+	}
+
+	for (Sprite* ladder : SpriteManager::GetSingleton().GetTypeList("ladder"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, ladder,
+			[glLayer](Sprite* s1, Sprite* s2) {
+				if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_UP)) {
+					s1->GetGravityHandler().Disable();
+					s1->Move(0, -2);
+					if (s1->y == 1392) {
+						s1->x = 3568;
+						s1->GetGravityHandler().Enable();
+					}
 				}
 			}
 		);
@@ -337,7 +363,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 
 
 					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x + 32, s2->y - 32, glLayer, g);
-				
+
 					shell->bDead = true;
 
 
@@ -350,7 +376,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 						CollisionChecker::GetSingleton().Register(shell, zombie,
 							[](Sprite* s1, Sprite* s2) {
 								printf("shell hitted zombie\n");
-								
+
 
 								s2->CallAction("damage");
 
