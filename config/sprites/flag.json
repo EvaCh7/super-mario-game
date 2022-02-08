@@ -14,8 +14,31 @@
               "x_pos": 304,
               "y_pos": 0
             }
-          ]
-        }
+          ],
+          {
+            "id": "flag.damage.right",
+            "animation_frames": [ 0 ],
+            "animation": [
+              {
+                "width": 16,
+                "height": 96,
+                "x_pos": 304,
+                "y_pos": 0
+              }
+            ]
+          },
+          {
+            "id": "flag.damage.left",
+            "animation_frames": [ 0 ],
+            "animation": [
+              {
+                "width": 16,
+                "height": 96,
+                "x_pos": 304,
+                "y_pos": 0
+              }
+            ]
+          }
       ]
     }
   }

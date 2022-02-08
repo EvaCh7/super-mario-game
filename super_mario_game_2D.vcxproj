@@ -224,6 +224,7 @@
     <None Include="config\map\forest.json" />
     <None Include="config\map\map_one.json" />
     <None Include="config\map\test_map.json" />
+    <None Include="config\sprites\boomerang.json" />
     <None Include="config\sprites\chest.json" />
     <None Include="config\sprites\coin.json" />
     <None Include="config\sprites\death.json" />

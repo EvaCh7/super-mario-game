@@ -34,153 +34,153 @@
     },
     "objects": {
         "path": "resources/map/forest/second_map_Objects.csv",
-        "bindings": [
-            {
-                "external_name": "coin",
-                "health": 2,
-                "external_path": "config/sprites/coin.json",
-                "has_gravity": false,
-                "is_playable": false,
-                "is_external": true,
-                "name": "coin",
-                "tile": 4111
-            },
-            {
-                "external_name": "pipe",
-                "health": 3,
-                "external_path": "config/sprites/pipe.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "pipe",
-                "tile": 5442
-            },
-            {
-                "external_name": "pipe",
-                "health": 3,
-                "external_path": "config/sprites/pipe.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "pipe",
-                "tile": 5447
-            },
-            {
-                "external_name": "pipe",
-                "health": 3,
-                "external_path": "config/sprites/pipe.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "pipe",
-                "tile": 5740
-            },
-            {
-                "external_name": "ladder",
-                "health": 3,
-                "external_path": "config/sprites/ladder.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "ladder",
-                "tile": 7352
-            },
-            {
-                "external_name": "zombie",
-                "health": 3,
-                "external_path": "config/sprites/zombie.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "zombie",
-                "tile": 5445
-            },
-            {
-                "external_name": "turtle",
-                "health": 3,
-                "external_path": "config/sprites/enemies.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "turtle",
-                "tile": 4406
-            },
-            {
-                "external_name": "shell",
-                "health": 3,
-                "external_path": "config/sprites/shell.json",
-                "is_playable": true,
-                "is_external": true,
-                "name": "shell",
-                "tile": 123231321342
-            },
-            {
-                "external_name": "goomba",
-                "health": 3,
-                "external_path": "config/sprites/enemies.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "goomba",
-                "tile": 4404
-            },
-            {
-                "external_name": "piranha",
-                "health": 1000,
-                "external_path": "config/sprites/enemies.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "piranha",
-                "tile": 4405
-            },
-            {
-                "external_name": "waterfall",
-                "health": 3,
-                "external_path": "config/sprites/waterfall.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "waterfall",
-                "tile": 6028
-            },
-            {
-                "external_name": "finishwaterfall",
-                "health": 3,
-                "external_path": "config/sprites/finishwaterfall.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "finishwaterfall",
-                "tile": 4259
-            },
-            {
-                "external_name": "finishsign",
-                "health": 3,
-                "external_path": "config/sprites/finishsign.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "finishsign",
-                "tile": 6761
-            },
-            {
-                "external_name": "death",
-                "health": 3,
-                "external_path": "config/sprites/skull.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "death",
-                "tile": 3814
-            },
-            {
-                "external_name": "mariosmall",
-                "health": 500,
-                "external_path": "config/sprites/mario.json",
-                "is_external": true,
-                "is_playable": true,
-                "name": "mariosmall",
-                "tile": 5731
-            },
-            {
-                "external_name": "herochar",
-                "health": 500,
-                "external_path": "config/sprites/herochar.json",
-                "is_external": true,
-                "is_playable": true,
-                "name": "herochar",
-                "tile": 9999999
-            }
-        ]
+      "bindings": [
+        {
+          "external_name": "coin",
+          "health": 2,
+          "external_path": "config/sprites/coin.json",
+          "has_gravity": false,
+          "is_playable": false,
+          "is_external": true,
+          "name": "coin",
+          "tile": 4111
+        },
+        {
+          "external_name": "pipe",
+          "health": 3,
+          "external_path": "config/sprites/pipe.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "pipe",
+          "tile": 5442
+        },
+        {
+          "external_name": "pipe",
+          "health": 3,
+          "external_path": "config/sprites/pipe.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "pipe",
+          "tile": 5447
+        },
+        {
+          "external_name": "pipe",
+          "health": 3,
+          "external_path": "config/sprites/pipe.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "pipe",
+          "tile": 5740
+        },
+        {
+          "external_name": "ladder",
+          "health": 3,
+          "external_path": "config/sprites/ladder.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "ladder",
+          "tile": 7352
+        },
+        {
+          "external_name": "zombie",
+          "health": 3,
+          "external_path": "config/sprites/zombie.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "zombie",
+          "tile": 5445
+        },
+        {
+          "external_name": "boomerang",
+          "health": 3,
+          "external_path": "config/sprites/boomerang.json",
+          "is_playable": true,
+          "is_external": true,
+          "name": "boomerang",
+          "tile": 6666
+        },
+        {
+          "external_name": "turtle",
+          "health": 3,
+          "external_path": "config/sprites/enemies.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "turtle",
+          "tile": 4406
+        },
+        {
+          "external_name": "shell",
+          "health": 3,
+          "external_path": "config/sprites/shell.json",
+          "is_playable": true,
+          "is_external": true,
+          "name": "shell",
+          "tile": 123231321342
+        },
+        {
+          "external_name": "goomba",
+          "health": 3,
+          "external_path": "config/sprites/enemies.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "goomba",
+          "tile": 4404
+        },
+        {
+          "external_name": "piranha",
+          "health": 1000,
+          "external_path": "config/sprites/enemies.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "piranha",
+          "tile": 4405
+        },
+        {
+          "external_name": "waterfall",
+          "health": 3,
+          "external_path": "config/sprites/waterfall.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "waterfall",
+          "tile": 6028
+        },
+        {
+          "external_name": "finishwaterfall",
+          "health": 3,
+          "external_path": "config/sprites/finishwaterfall.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "finishwaterfall",
+          "tile": 4259
+        },
+        {
+          "external_name": "finishsign",
+          "health": 3,
+          "external_path": "config/sprites/finishsign.json",
+          "is_playable": false,
+          "is_external": true,
+          "name": "finishsign",
+          "tile": 6761
+        },
+        {
+          "external_name": "mariosmall",
+          "health": 500,
+          "external_path": "config/sprites/mario.json",
+          "is_external": true,
+          "is_playable": true,
+          "name": "mariosmall",
+          "tile": 666
+        },
+        {
+          "external_name": "herochar",
+          "health": 500,
+          "external_path": "config/sprites/herochar.json",
+          "is_external": true,
+          "is_playable": true,
+          "name": "herochar",
+          "tile": 5731
+        }
+      ]
     },
     "teleports": [
         {

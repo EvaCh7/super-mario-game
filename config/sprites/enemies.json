@@ -71,6 +71,30 @@
               "y_pos": 60
             }
           ]
+        },
+        {
+          "id": "turtle.damage.right",
+          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 182,
+              "y_pos": 60
+            }
+          ]
+        },
+        {
+          "id": "turtle.damage.left",
+          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 32,
+              "x_pos": 182,
+              "y_pos": 60
+            }
+          ]
         }
       ]
     },
@@ -151,6 +175,30 @@
         },
         {
           "id": "goomba.death",
+          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 182,
+              "y_pos": 0
+            }
+          ]
+        },
+        {
+          "id": "goomba.damage.right",
+          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 182,
+              "y_pos": 0
+            }
+          ]
+        },
+        {
+          "id": "goomba.damage.left",
           "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
           "animation": [
             {

@@ -288,7 +288,11 @@
     <None Include="config\sprites\finishsign.json">
       <Filter>Resource Files\config\sprite</Filter>
     </None>
+<<<<<<< Updated upstream
     <None Include="config\sprites\skull.json">
+=======
+    <None Include="config\sprites\boomerang.json">
+>>>>>>> Stashed changes
       <Filter>Resource Files\config\sprite</Filter>
     </None>
   </ItemGroup>
