@@ -154,6 +154,15 @@
                 "tile": 6761
             },
             {
+                "external_name": "death",
+                "health": 3,
+                "external_path": "config/sprites/skull.json",
+                "is_playable": false,
+                "is_external": true,
+                "name": "death",
+                "tile": 3814
+            },
+            {
                 "external_name": "mariosmall",
                 "health": 500,
                 "external_path": "config/sprites/mario.json",
