@@ -145,6 +145,15 @@
                 "tile": 4259
             },
             {
+                "external_name": "finishsign",
+                "health": 3,
+                "external_path": "config/sprites/finishsign.json",
+                "is_playable": false,
+                "is_external": true,
+                "name": "finishsign",
+                "tile": 6761
+            },
+            {
                 "external_name": "mariosmall",
                 "health": 500,
                 "external_path": "config/sprites/mario.json",
@@ -273,7 +282,8 @@
             137,
             164,
             38,
-            58
+            58,
+            6909
         ],
         "top_solid": [
 

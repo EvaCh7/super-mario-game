@@ -465,6 +465,16 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		);
 	}
 
+	for (Sprite* finishsign : SpriteManager::GetSingleton().GetTypeList("finishsign"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, finishsign,
+			[g](Sprite* s1, Sprite* s2) {
+				g->bInputAllowed = false;
+				g->bIsGameEnding = true;
+			}
+		);
+	}
+
 	for (Sprite* hppotion : SpriteManager::GetSingleton().GetTypeList("hppotion"))
 	{
 		CollisionChecker::GetSingleton().Register(mario, hppotion,

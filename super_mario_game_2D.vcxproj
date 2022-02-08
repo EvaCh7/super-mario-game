@@ -229,6 +229,7 @@
     <None Include="config\sprites\death.json" />
     <None Include="config\sprites\elemental_knight.json" />
     <None Include="config\sprites\enemies.json" />
+    <None Include="config\sprites\finishsign.json" />
     <None Include="config\sprites\finishwaterfall.json" />
     <None Include="config\sprites\flag.json" />
     <None Include="config\sprites\herochar.json" />

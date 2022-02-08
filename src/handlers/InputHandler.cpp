@@ -30,7 +30,12 @@ void Game::InputHandler(void) {
 
 			sMario->CallAction("run.right");
 			
-			if (sMario->x == 296 * 16 && sMario->y == 88 * 16) {
+			if (sMario->x == 296 * 16 && sMario->y == 88 * 16) {	//flag
+				bIsGameEnding = false;
+				sMario->bLooking = false;
+				sMario->CallAction("idle");
+			}
+			else if (sMario->x == 296 * 16 && sMario->y == 94 * 16) { //finishsign
 				bIsGameEnding = false;
 				sMario->bLooking = false;
 				sMario->CallAction("idle");
