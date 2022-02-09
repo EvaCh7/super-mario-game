@@ -362,7 +362,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 					//SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 32, s2->y - 32, glLayer, g);
 
 
-					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x + 32, s2->y - 32, glLayer, g);
+					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x, s2->y, glLayer, g);
 
 					shell->bDead = true;
 
@@ -407,13 +407,24 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 
 					CollisionChecker::GetSingleton().Register(shell, main_character,
 						[](Sprite* s1, Sprite* s2) {
-							if (s2->x < s1->x) {
 
-
-
-								s1->bDead = false;
+							if (s2->GetBox().y < s1->GetBox().y) {
+								s2->GetGravityHandler().Jump();
+								s1->bDead = true;
 
 							}
+							else
+								if (s2->GetBox().x < s1->GetBox().x) { //hit from left
+
+
+									s1->bLooking = true;
+									s1->bDead = false;
+
+								}
+								else if (s2->GetBox().x > s1->GetBox().x) {//hit from right
+									s1->bDead = false;
+									s1->bLooking = false;
+								}
 
 
 						}
@@ -812,12 +823,17 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							newSprite->dx = 2;
 
 							//specific callbacks for the main character
-							newSprite->RegisterAction("attack.sword", [](Sprite* s) {
+							Game* game = &this->game;
+							newSprite->RegisterAction("attack.sword", [game](Sprite* s) {
 								s->bAttacking = true;
 
-								Animator* pAnim;
+								Animator* pAnim, * pAnimBoomer = NULL;
+
 								if (s->bLooking)
+								{
 									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.right");
+
+								}
 								else
 									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.left");
 
@@ -857,4 +873,4 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 	}
 
 	return true;
-}
+} 

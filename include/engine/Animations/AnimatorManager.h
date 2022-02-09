@@ -61,6 +61,7 @@ public:
 		auto copied(running);
 		for (auto* a : copied)
 		{
+
 			a->Progress(currTime);
 
 		}

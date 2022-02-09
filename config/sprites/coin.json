@@ -129,6 +129,32 @@
               "y_pos": 32
             }
           ]
+        },
+        {
+          "id": "coin.damage.right",
+          "animation_frames": [ 0 ],
+          "delay": 170,
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 32
+            }
+          ]
+        },
+        {
+          "id": "coin.damage.left",
+          "animation_frames": [ 0 ],
+          "delay": 170,
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 192,
+              "y_pos": 32
+            }
+          ]
         }
       ]
     }

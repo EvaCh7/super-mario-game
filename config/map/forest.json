@@ -169,17 +169,26 @@
                 "is_external": true,
                 "is_playable": true,
                 "name": "mariosmall",
-                "tile": 5731
+                "tile": 666
             },
-            {
-                "external_name": "herochar",
-                "health": 500,
-                "external_path": "config/sprites/herochar.json",
-                "is_external": true,
-                "is_playable": true,
-                "name": "herochar",
-                "tile": 9999999
-            }
+          {
+            "external_name": "herochar",
+            "health": 500,
+            "external_path": "config/sprites/herochar.json",
+            "is_external": true,
+            "is_playable": true,
+            "name": "herochar",
+            "tile": 5731
+          },
+          {
+            "external_name": "boomerang",
+            "health": 500,
+            "external_path": "config/sprites/boomerang.json",
+            "is_external": true,
+            "is_playable": true,
+            "name": "boomerang",
+            "tile": 6666
+          }
         ]
     },
     "teleports": [

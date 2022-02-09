@@ -110,16 +110,22 @@ void Sprite::RegisterDefaultActions(void)
 			s->bDead = true;
 			Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".death");
 
+
 			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
 			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
 			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
 			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
 
-			if (pAnim->HasFinished()) {
+
+			SpriteManager::GetSingleton().Remove(s);
+			/*
+			if (pAnim && pAnim->HasFinished()) {
 				((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 				AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 			}
+			*/	
 		});
+
 	}
 
 	RegisterDefaultAction("damage", [](Sprite* s) {
@@ -151,8 +157,16 @@ void Sprite::RegisterDefaultActions(void)
 						std::string animId = ((FrameListAnimator*)anim)->getAnimation()->GetId();
 						Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
 						
-						s->CallAction("death");
-						CollisionChecker::GetSingleton().Cancel(SpriteManager::GetSingleton().GetTypeList("main").front(), s);
+						if (s) {
+
+							s->CallAction("death");
+
+							CollisionChecker::GetSingleton().Cancel(SpriteManager::GetSingleton().GetTypeList("main").front(), s);
+						}
+
+
+
+
 					}
 				);
 			}
