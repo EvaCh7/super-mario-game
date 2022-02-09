@@ -730,7 +730,8 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 					[](Animator* animator, const Animation& anim) {
 						std::string animId = ((FrameListAnimation&)anim).id;
 						Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
-						FramList_Action(s, animator, (const FrameListAnimation&)anim);
+						if(s != nullptr && s != (Sprite*)0x45)
+							FramList_Action(s, animator, (const FrameListAnimation&)anim);
 					}
 				);
 
@@ -828,7 +829,8 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								[](Animator* animator, const Animation& anim) {
 									std::string animId = ((FrameListAnimation&)anim).id;
 									Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
-									FramList_Action(s, animator, (const FrameListAnimation&)anim);
+									if(s != nullptr && s != (Sprite*)0x45)
+										FramList_Action(s, animator, (const FrameListAnimation&)anim);
 								}
 							);
 

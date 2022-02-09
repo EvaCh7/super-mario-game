@@ -118,6 +118,7 @@ void Game::InputHandler(void) {
 
 								SpriteManager::GetSingleton().Remove(s2);
 
+
 								CollisionChecker::GetSingleton().Cancel(s1, s2);
 
 
