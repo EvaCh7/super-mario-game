@@ -115,8 +115,13 @@ void Game::InputHandler(void) {
 							[](Sprite* s1, Sprite* s2) {
 
 
+
 								SpriteManager::GetSingleton().Remove(s2);
+
 								CollisionChecker::GetSingleton().Cancel(s1, s2);
+
+
+
 								//CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s2);
 
 								if (s1->id.find("turtle") != std::string::npos || s1->id.find("goomba") != std::string::npos || s1->id.find("slime") != std::string::npos || s1->id.find("zombie") != std::string::npos) {
@@ -133,8 +138,11 @@ void Game::InputHandler(void) {
 								}
 
 
+
 							
 								s2->bDead = true;
+
+								//free(s2);
 
 
 
