@@ -11,7 +11,7 @@
 
 void SpriteManager::AddToTypeList(std::string id, Sprite* sprite) {
 	GetTypeList(id).push_back(sprite);
-	
+
 }
 void SpriteManager::Add(Sprite* s) {
 	dpyList.push_back(s);
@@ -23,7 +23,7 @@ std::string Sprite::GetTrimmedID(void)
 	return this->id.substr(0, id.find("_"));
 }
 
-void Sprite::RegisterAction(std::string id, std::function<void(Sprite *)> fAction)
+void Sprite::RegisterAction(std::string id, std::function<void(Sprite*)> fAction)
 {
 	vActions[id] = fAction;
 }
@@ -51,10 +51,10 @@ void Sprite::RegisterDefaultActions(void)
 			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 		}
-	});
+		});
 
 	RegisterDefaultAction("run.left", [](Sprite* s) {
-	 	s->Move(-s->dx, 0);
+		s->Move(-s->dx, 0);
 
 		Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left");
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
@@ -73,7 +73,7 @@ void Sprite::RegisterDefaultActions(void)
 		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
 		s->bLooking = false;
 		s->bAttacking = false;
-	});
+		});
 
 	RegisterDefaultAction("run.right", [](Sprite* s) {
 		s->Move(s->dx, 0);
@@ -97,17 +97,20 @@ void Sprite::RegisterDefaultActions(void)
 
 		s->bLooking = true;
 		s->bAttacking = false;
-	});
+		});
 
 	RegisterDefaultAction("jump", [](Sprite* s) {
 		if (!s->GetGravityHandler().IsJumping() && !s->GetGravityHandler().IsFalling()) {
 			s->GetGravityHandler().Jump();
 		}
-	});
+		});
 
 	if (bKillable) {
 		RegisterDefaultAction("death", [](Sprite* s) {
+			//SpriteManager::GetSingleton().Remove(s);
+			std::cout << "called death for: " << s->id << std::endl;
 			s->bDead = true;
+			CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s);
 			Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".death");
 
 
@@ -117,14 +120,13 @@ void Sprite::RegisterDefaultActions(void)
 			AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
 
 
-			SpriteManager::GetSingleton().Remove(s);
-			/*
+
 			if (pAnim && pAnim->HasFinished()) {
 				((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 				AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 			}
-			*/	
-		});
+
+			});
 
 	}
 
@@ -152,17 +154,24 @@ void Sprite::RegisterDefaultActions(void)
 			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
 			AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
 			if (s->health <= 0) {
+				s->bDead = true;
 				((FrameListAnimator*)pAnim)->SetOnFinish(
-					[](Animator* anim) {
+					[s](Animator* anim) {
 						std::string animId = ((FrameListAnimator*)anim)->getAnimation()->GetId();
-						Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
-						
-						if (s) {
+						Sprite* s2 = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
 
-							s->CallAction("death");
 
-							CollisionChecker::GetSingleton().Cancel(SpriteManager::GetSingleton().GetTypeList("main").front(), s);
+						if (s2) {
+
+							//CollisionChecker::GetSingleton().Cancel(s, s2);
+							//CollisionChecker::GetSingleton().Cancel(SpriteManager::GetSingleton().GetTypeList("main").front(), s);
+
+							s2->CallAction("death");
+
 						}
+
+
+
 
 
 
@@ -186,6 +195,7 @@ void Sprite::RegisterDefaultActions(void)
 void Sprite::CallAction(std::string id)
 {
 	std::function<void(Sprite*)> f = vActions[id];
+
 	if (!f) {
 		CallDefaultAction(id);
 		return;
@@ -212,7 +222,7 @@ void SpriteManager::RemoveTypeList(std::string id, Sprite* sprite) {
 	this->types[id].remove(sprite);
 
 
-	
+
 }
 
 MotionQuantizer& Sprite::GetMotionQuantizer(void)
@@ -289,7 +299,7 @@ bool Clipper::Clip(const Rect& r, const Rect& dpyArea, Point* dpyPos, Rect* clip
 }
 
 
-void Sprite::Display(Bitmap* dest, const Rect& displayArea) const 
+void Sprite::Display(Bitmap* dest, const Rect& displayArea) const
 {
 	Rect clippedBox;
 	Point dpyPos;
@@ -328,6 +338,21 @@ auto CollisionChecker::Find(Sprite* s1, Sprite* s2) -> std::vector<Entry>::itera
 	);
 }
 
+void CollisionChecker::CancelAllCollisionsForSprite(Sprite* s) {
+
+	auto e = entries.begin();
+	while (e != entries.end())
+	{
+		if ( std::get<0>(*e)==s  || std::get<1>(*e) == s)
+		{
+			e = entries.erase(e);
+		}
+		else {
+			++e;
+		}
+	}
+
+}
 
 
 void CollisionChecker::Cancel(Sprite* s1, Sprite* s2) {
@@ -346,7 +371,7 @@ void CollisionChecker::Check(void) const {
 }
 
 bool Sprite::CollisionCheck(Sprite* s) {
-	
+
 	if (this->GetBox().x < s->GetBox().x + s->GetBox().w &&
 		this->GetBox().x + this->GetBox().w > s->GetBox().x &&
 		this->GetBox().y < s->GetBox().y + s->GetBox().h &&
@@ -364,10 +389,10 @@ bool Sprite::CollisionCheck(Sprite* s) {
 	}
 }
 
-Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer *glLayer, Game *g) {
+Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string id, int x, int y, GridLayer* glLayer, Game* g) {
 	Bitmap* bObjBitmap = al_load_bitmap(std::string(jObject["spritesheet"]).c_str());
 
-	
+
 	for (auto& jAnim : jObject["sprites"][sName]["animations"]) {
 		FilmHolder::Get().Load(jAnim["id"], jAnim["animation"], bObjBitmap);
 	}

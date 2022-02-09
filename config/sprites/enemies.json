@@ -175,7 +175,7 @@
         },
         {
           "id": "goomba.death",
-          "animation_frames": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          "animation_frames": [ 0 ],
           "animation": [
             {
               "width": 16,

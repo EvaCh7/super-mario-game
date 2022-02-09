@@ -257,6 +257,30 @@
               "y_pos": 128
             }
           ]
+        },
+        {
+          "id": "herochar.death",
+          "animation_frames": [ 0, 1, 2 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 240,
+              "y_pos": 128
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 224,
+              "y_pos": 128
+            },
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 208,
+              "y_pos": 128
+            }
+          ]
         }
       ]
     }

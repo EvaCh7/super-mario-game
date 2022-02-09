@@ -214,7 +214,6 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		CollisionChecker::GetSingleton().Register(mario, zombie,
 			[](Sprite* s1, Sprite* s2) {
 				if (s1->GetBox().y < s2->GetBox().y) {
-					printf("mario died from uba luba\n");
 					s1->CallAction("damage");
 				}
 				else {
@@ -222,10 +221,8 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 						//SpriteManager::GetSingleton().Remove(s2);
 						s2->CallAction("damage");
 						//CollisionChecker::GetSingleton().Cancel(s1, s2);
-						printf("character sliced goomba");
 					}
 					else {
-						printf("mario died from uba luba\n");
 						s1->CallAction("damage");
 					}
 				}
@@ -351,8 +348,9 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		CollisionChecker::GetSingleton().Register(mario, turtle,
 			[glLayer, g](Sprite* s1, Sprite* s2) {
 
-				//CollisionChecker::GetSingleton().Cancel(s1, s2);
-				if (s1->GetBox().y < s2->GetBox().y) {
+
+				if (s1->GetBox().y < s2->GetBox().y)
+				{
 					//SpriteManager::GetSingleton().Remove(s2);
 					//s2->CallAction("death");
 
@@ -360,6 +358,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 					s1->GetGravityHandler().Jump();
 
 					//SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 32, s2->y - 32, glLayer, g);
+					CollisionChecker::GetSingleton().Cancel(s1, s2);
 
 
 					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x, s2->y, glLayer, g);
@@ -369,7 +368,28 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 
 					shell->RegisterDefaultActions();
 
+					for (Sprite* goomba : SpriteManager::GetSingleton().GetTypeList("goomba"))
+					{
+						CollisionChecker::GetSingleton().Register(shell, goomba,
+							[](Sprite* s1, Sprite* s2) {
+								printf("shell hitted goomba\n");
 
+								/*CollisionChecker::GetSingleton().Cancel(s1, s2);//tuning
+								s2->CallAction("damage");
+								*/
+
+								s2->CallAction("death");
+								//s1->GetGravityHandler().Jump();
+
+
+								//CollisionChecker::GetSingleton().Cancel(s1, s2);
+
+
+
+
+							}
+						);
+					}
 
 					for (Sprite* zombie : SpriteManager::GetSingleton().GetTypeList("zombie"))
 					{
@@ -377,23 +397,60 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 							[](Sprite* s1, Sprite* s2) {
 								printf("shell hitted zombie\n");
 
-
-								s2->CallAction("damage");
+								if (!s2->bDead)
+									s2->CallAction("damage");
 
 
 
 							}
 						);
 					}
+
 
 					for (Sprite* main : SpriteManager::GetSingleton().GetTypeList("main"))
 					{
 						CollisionChecker::GetSingleton().Register(shell, main,
 							[](Sprite* s1, Sprite* s2) {
-								printf("shell hitted main\n");
+								if (!s1->bDead) {//check if shell is moving only then can hit a champ
+									printf("shell hitted main\n");
 
 
-								s2->CallAction("damage");
+									if (s2->GetBox().y < s1->GetBox().y) {
+										s2->GetGravityHandler().Jump();
+										s1->bDead = true;
+
+									}
+									else if (!s2->bDead)
+										s2->CallAction("damage");
+
+								}
+								else {
+									if (s2->GetBox().y < s1->GetBox().y) {
+										s2->GetGravityHandler().Jump();
+										s1->bDead = true;
+
+									}
+									else if (s2->GetBox().x < s1->GetBox().x) { //hit from left
+
+
+										s1->x = s1->GetBox().x + 8;//be careful this 8 is very dangerous
+
+
+										s1->bLooking = true;
+										s1->bDead = false;
+
+									}
+									else if (s2->GetBox().x > s1->GetBox().x) {//hit from right
+
+										s1->x = s1->GetBox().x - 8;//be careful this 8 is very dangerous
+
+										s1->bDead = false;
+										s1->bLooking = false;
+									}
+
+
+								}
+
 
 
 
@@ -402,36 +459,26 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 					}
 
 
-					Sprite* main_character = SpriteManager::GetSingleton().GetTypeList("main").front();
 
 
-					CollisionChecker::GetSingleton().Register(shell, main_character,
-						[](Sprite* s1, Sprite* s2) {
-
-							if (s2->GetBox().y < s1->GetBox().y) {
-								s2->GetGravityHandler().Jump();
-								s1->bDead = true;
-
-							}
-							else
-								if (s2->GetBox().x < s1->GetBox().x) { //hit from left
-
-
-									s1->bLooking = true;
-									s1->bDead = false;
-
-								}
-								else if (s2->GetBox().x > s1->GetBox().x) {//hit from right
-									s1->bDead = false;
-									s1->bLooking = false;
-								}
-
-
-						}
-					);
 
 					CollisionChecker::GetSingleton().Cancel(s1, s2);
 					SpriteManager::GetSingleton().Remove(s2);
+
+				}
+				else {
+					if (!s2->bDead) {
+						printf("turtle hitted main\n");
+
+
+						if (!s1->bDead)
+							s1->CallAction("damage");
+
+					}
+
+
+
+
 
 				}
 
@@ -795,15 +842,61 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 							AnimatorManager::GetSingleton().Register(hero_run_animator);
 						}
 
-						if (js["external_name"] == "goomba" || js["external_name"] == "slime") {
-							newSprite->RegisterAction("death", [](Sprite* s) {
+						SuperMario * app = this;
+						
+						if (js["external_name"] == "mario" || js["external_name"] == "herochar") {
+
+							newSprite->RegisterAction("death", [app](Sprite* s) {
+
+
+
 								s->bDead = true;
+								//CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s);
+
 								Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".death");
 
 								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
 								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
 								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
 								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
+
+								if (pAnim->HasFinished()) {
+									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+									((FrameListAnimator*)pAnim)->SetOnFinish(
+										[app](Animator* anim) {
+											std::string animId = ((FrameListAnimator*)anim)->getAnimation()->GetId();
+											Sprite* s = SpriteManager::GetSingleton().GetSprite(animId.substr(0, animId.find(".")));
+
+											s->x = 2 * 16;
+											s->y = 90 * 16;
+											s->health = 0;
+											s->bDead = false;
+											//app->Initialise();
+											//app->Load();
+											//reset game
+
+											//SpriteManager::GetSingleton().Remove(s);
+										}
+									);
+								}
+								});
+
+						}
+						if (js["external_name"] == "goomba" || js["external_name"] == "slime") {
+							newSprite->RegisterAction("death", [](Sprite* s) {
+
+								s->bDead = true;
+								CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s);
+
+								Animator* pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".death");
+
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
 
 								if (pAnim->HasFinished()) {
 									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
@@ -873,4 +966,4 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 	}
 
 	return true;
-} 
+}

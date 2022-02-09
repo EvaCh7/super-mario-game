@@ -89,6 +89,9 @@ public:
 		//quantizer.SetMover(mover = f);
 	}
 
+	void SetX(int x) {
+		this->x = x;
+	}
 	Rect GetBox(void)
 	{
 		if (currFilm) {
@@ -150,6 +153,7 @@ public:
 	void Remove(Sprite* s);
 	void AddToTypeList(std::string id, Sprite *); // insert by ascending zorder
 	void RemoveTypeList(std::string id, Sprite* sprite);
+
 	SpriteList& GetDisplayList(void)
 	{
 		return dpyList;
@@ -204,7 +208,11 @@ class CollisionChecker final {
 public:
 	using Action = std::function<void(Sprite* s1, Sprite* s2)>;
 	static CollisionChecker singleton;
+
+
 protected:
+
+
 	using Entry = std::tuple<Sprite*, Sprite*, Action>;
 	std::vector< std::tuple<Sprite*, Sprite*, Action> > entries;
 	/*	
@@ -212,6 +220,9 @@ protected:
 		finds if there is a tupple between s1 and s2 
 	*/
 	auto Find(Sprite* s1, Sprite* s2)->std::vector< std::tuple<Sprite*, Sprite*, Action>>::iterator;
+
+
+
 public:
 	void Register(Sprite* s1, Sprite* s2, const Action& f)
 	{
@@ -228,6 +239,8 @@ public:
 	{
 		return singleton;
 	}
+	void CancelAllCollisionsForSprite(Sprite* s);
+
 };
 
 

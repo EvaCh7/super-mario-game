@@ -522,7 +522,7 @@ void GridLayer::FilterGridMotionDown(Rect rRect, int* dy)
 	int nextGridY = nextPixelY >> 2;
 
 	if (nextPixelY >= 100 * 16) {
-		std::cout << "Fell Off\n";
+		//std::cout << "Fell Off\n";
 		//*dy = ((nextGridY << 2) - 1) - currPixelY;
 		*dy = 0;
 		return;

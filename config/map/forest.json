@@ -83,7 +83,7 @@
             },
             {
                 "external_name": "zombie",
-                "health": 3,
+                "health": 2,
                 "external_path": "config/sprites/zombie.json",
                 "is_playable": false,
                 "is_external": true,
@@ -110,7 +110,7 @@
             },
             {
                 "external_name": "goomba",
-                "health": 3,
+                "health": 0,
                 "external_path": "config/sprites/enemies.json",
                 "is_playable": false,
                 "is_external": true,
@@ -153,15 +153,16 @@
                 "name": "finishsign",
                 "tile": 6761
             },
-            {
-                "external_name": "death",
-                "health": 3,
-                "external_path": "config/sprites/skull.json",
-                "is_playable": false,
-                "is_external": true,
-                "name": "death",
-                "tile": 3814
-            },
+          {
+            "external_name": "death",
+            "health": 3,
+            "external_path": "config/sprites/skull.json",
+            "is_playable": false,
+            "is_external": true,
+            "name": "death",
+            "has_gravity": false,
+            "tile": 3814
+          },
             {
                 "external_name": "mariosmall",
                 "health": 500,
@@ -173,7 +174,7 @@
             },
           {
             "external_name": "herochar",
-            "health": 500,
+            "health": 1,
             "external_path": "config/sprites/herochar.json",
             "is_external": true,
             "is_playable": true,

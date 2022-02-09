@@ -110,20 +110,36 @@ void Game::InputHandler(void) {
 						if (obj->id.find("boomerang") != std::string::npos) {
 							continue;
 						}
-						if (obj == boomerang || obj == sMario) continue;
+						if (obj == boomerang || obj == sMario || obj->bDead) continue;
 						CollisionChecker::GetSingleton().Register(obj, boomerang,
 							[](Sprite* s1, Sprite* s2) {
 
-								s2->bDead = true;
+
 								SpriteManager::GetSingleton().Remove(s2);
 								CollisionChecker::GetSingleton().Cancel(s1, s2);
+								//CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s2);
 
+								if (s1->id.find("turtle") != std::string::npos || s1->id.find("goomba") != std::string::npos || s1->id.find("slime") != std::string::npos || s1->id.find("zombie") != std::string::npos) {
+									if (!s2->bDead) {
+										std::cout << "collision damaged id: " << s1->id << std::endl;
+										if(!s1->bDead){
+											s1->CallAction("damage");
 
+										}
+			
 
-								if (s1->id.find("turtle") != std::string::npos || s1->id.find("goomba") != std::string::npos || s1->id.find("slime") != std::string::npos) {
-									std::cout << "collision damaged id: " << s1->id << std::endl;
-									s1->CallAction("damage");
+									}
+
 								}
+
+
+							
+								s2->bDead = true;
+
+
+
+				
+
 
 
 
