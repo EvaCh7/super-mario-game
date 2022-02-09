@@ -153,16 +153,16 @@
                 "name": "finishsign",
                 "tile": 6761
             },
-          {
-            "external_name": "death",
-            "health": 3,
-            "external_path": "config/sprites/skull.json",
-            "is_playable": false,
-            "is_external": true,
-            "name": "death",
-            "has_gravity": false,
-            "tile": 3814
-          },
+            {
+                "external_name": "death",
+                "health": 3,
+                "external_path": "config/sprites/skull.json",
+                "is_playable": false,
+                "is_external": true,
+                "name": "death",
+                "has_gravity": false,
+                "tile": 3814
+            },
             {
                 "external_name": "mariosmall",
                 "health": 500,
@@ -172,24 +172,33 @@
                 "name": "mariosmall",
                 "tile": 666
             },
-          {
-            "external_name": "herochar",
-            "health": 1,
-            "external_path": "config/sprites/herochar.json",
-            "is_external": true,
-            "is_playable": true,
-            "name": "herochar",
-            "tile": 5731
-          },
-          {
-            "external_name": "boomerang",
-            "health": 500,
-            "external_path": "config/sprites/boomerang.json",
-            "is_external": true,
-            "is_playable": true,
-            "name": "boomerang",
-            "tile": 6666
-          }
+            {
+                "external_name": "herochar",
+                "health": 1,
+                "external_path": "config/sprites/herochar.json",
+                "is_external": true,
+                "is_playable": true,
+                "name": "herochar",
+                "tile": 5731
+            },
+            {
+                "external_name": "bigboss",
+                "health": 1,
+                "external_path": "config/sprites/bigboss.json",
+                "is_external": true,
+                "is_playable": false,
+                "name": "bigboss",
+                "tile": 571
+            },
+            {
+                "external_name": "boomerang",
+                "health": 500,
+                "external_path": "config/sprites/boomerang.json",
+                "is_external": true,
+                "is_playable": true,
+                "name": "boomerang",
+                "tile": 6666
+            }
         ]
     },
     "teleports": [
@@ -203,11 +212,6 @@
             701,
             702,
             850,
-            4934,
-            4787,
-            4788,
-            4807,
-            4659,
             693,
             1136,
             1137,
