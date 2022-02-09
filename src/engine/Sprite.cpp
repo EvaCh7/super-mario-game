@@ -454,5 +454,24 @@ Sprite* SpriteManager::SpawnSprite(json jObject, std::string sName, std::string 
 		);
 	}
 
+	for (Sprite* mushroom : SpriteManager::GetSingleton().GetTypeList("sushi"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, mushroom,
+			[](Sprite* s1, Sprite* s2) {
+				CollisionChecker::GetSingleton().Cancel(s1, s2);
+				SpriteManager::GetSingleton().Remove(s2);
+
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.left")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.right")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.left")->Stop();
+				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.right")->Stop();
+				s1->id = "herochar";
+				s1->CallAction("idle");
+
+				std::cout << "Mario Ate Shroom" << std::endl;
+			}
+		);
+	}
+
 	return s;
 }

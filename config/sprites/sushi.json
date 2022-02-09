@@ -1,0 +1,22 @@
+{
+  "spritesheet": "resources/map/forest/combined.png",
+  "sprites": {
+    "sushi": {
+      "default_animation": "sushi.idle.right",
+      "animations": [
+        {
+          "id": "sushi.idle.right",
+          "animation_frames": [ 0 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 16,
+              "x_pos": 2176,
+              "y_pos": 48
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

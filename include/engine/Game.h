@@ -23,12 +23,17 @@ public:
 	bool		isPaused = false;
 	uint64_t	pauseTime = 0;
 	Map *mMap;
+	Bitmap* bWinScreen;
 	
 	bool bInputAllowed = true;
 	bool bIsGameEnding = false;
 
+	int iCoinCounter = 0;
+	bool bIsGameWon = false;
+
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;
+	ALLEGRO_FONT* fFont;
 private:
 	Action render, anim, input, ai, physics, destruct, collisions, user;
 	Pred done;

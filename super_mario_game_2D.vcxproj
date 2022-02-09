@@ -224,6 +224,7 @@
     <None Include="config\map\forest.json" />
     <None Include="config\map\map_one.json" />
     <None Include="config\map\test_map.json" />
+    <None Include="config\sprites\bigboss.json" />
     <None Include="config\sprites\chest.json" />
     <None Include="config\sprites\coin.json" />
     <None Include="config\sprites\death.json" />
@@ -240,6 +241,7 @@
     <None Include="config\sprites\shell.json" />
     <None Include="config\sprites\skull.json" />
     <None Include="config\sprites\slime.json" />
+    <None Include="config\sprites\sushi.json" />
     <None Include="config\sprites\waterfall.json" />
     <None Include="config\sprites\zombie.json" />
     <None Include="packages.config" />

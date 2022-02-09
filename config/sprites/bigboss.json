@@ -90,85 +90,85 @@
                 },
                 {
                     "id": "bigboss.run.left",
-                    "animation_frames": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+                    "animation_frames": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
                     "animation": [
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 112,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 395,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 692,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 971,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 1255,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 1549,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 1836,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 2119,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 2408,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 2697,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 2991,
-                            "y_pos": 215
-                        },
-                        {
-                            "width": 79,
-                            "height": 102,
-                            "x_pos": 3269,
-                            "y_pos": 215
-                        }
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 112,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 395,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 692,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 971,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 1255,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 1549,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 1836,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 2119,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 2408,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 2697,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 2991,
+                        "y_pos": 215
+                      },
+                      {
+                        "width": 79,
+                        "height": 104,
+                        "x_pos": 3269,
+                        "y_pos": 215
+                      }
                     ]
                 },
                 {
                     "id": "bigboss.run.right",
-                    "animation_frames": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+                    "animation_frames": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
                     "animation": [
                         {
                             "width": 79,

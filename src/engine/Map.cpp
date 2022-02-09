@@ -25,6 +25,11 @@ TileLayer* Map::GetBackgroundLayer(void)
 	return this->tlBackground;
 }
 
+TileLayer* Map::GetUI(void)
+{
+	return tlUi;
+}
+
 Map::Map(json jConfig) {
 	Bitmap *bm = al_load_bitmap(std::string(jConfig["tiles"]["path"]).c_str());
 
@@ -68,6 +73,7 @@ Map::Map(json jConfig) {
 		tlBackground->ParseCSV(itMap["path"]);
 	}
 	this->tlBackground = tlBackground;
+
 }
 
 
@@ -336,7 +342,7 @@ void GridLayer::SetGridTile(int iCol, int iRow, int iIndex)
 
 int GridLayer::GetGridTile(int iCol, int iRow)
 {
-	return this->vGrid[iRow][iCol];
+ 	return this->vGrid[iRow][iCol];
 }
 
 void GridLayer::SetSolidGridTile(int iCol, int iRow)

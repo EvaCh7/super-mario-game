@@ -158,6 +158,7 @@ private:
 	*/
 	TileLayer* tlLayer;
 	TileLayer* tlBackground;
+	TileLayer* tlUi;
 
 	/*
 	* Object Tile Layer
@@ -176,6 +177,7 @@ public:
 	*/
 	TileLayer *GetTileLayer(void);
 	TileLayer* GetBackgroundLayer(void);
+	TileLayer* GetUI(void);
 	int GetHeightTileSize(void);
 	int GetWidthTileSize(void);
 

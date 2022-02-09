@@ -34,7 +34,7 @@ void Game::InputHandler(void) {
 				sMario->bLooking = false;
 				sMario->CallAction("idle");
 			}
-			else if (sMario->x == 296 * 16 && sMario->y == 94 * 16) { //finishsign
+			else if (sMario->x >= 296 * 16 && sMario->y >= 94 * 16) { //finishsign
 				bIsGameEnding = false;
 				sMario->bLooking = false;
 				sMario->CallAction("idle");
@@ -48,9 +48,6 @@ void Game::InputHandler(void) {
 				sMario->GetGravityHandler().lBaseJumpSpeed = gGameSettings.lJumpSpeed * 1.15;
 				sMario->GetGravityHandler().lGravity = gGameSettings.fGravity * 0.90;
 				bDidSomething = true;
-
-
-
 			}
 			else {
 				sMario->GetGravityHandler().lBaseJumpSpeed = gGameSettings.lJumpSpeed;
@@ -58,8 +55,6 @@ void Game::InputHandler(void) {
 				sMario->dx = 2;
 				bDidSomething = false;
 			}
-
-
 
 			if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
 				sMario->CallAction("jump");
@@ -99,7 +94,7 @@ void Game::InputHandler(void) {
 					//Audio::singleton.playSample("config/sounds/sword-hit.mp3", ALLEGRO_PLAYMODE_ONCE);
 					//sMario->CallAction("attack.sword");
 					Sprite* boomerang = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/boomerang.json"), "boomerang", "boomerang", sMario->x + 4, sMario->y, this->mMap->GetTileLayer()->GetGridLayer(), this);
-
+					boomerang->dx *= 2;
 					boomerang->bDead = false;
 
 					//boomerang->GetGravityHandler().Disable();
@@ -113,72 +108,22 @@ void Game::InputHandler(void) {
 						if (obj == boomerang || obj == sMario || obj->bDead) continue;
 						CollisionChecker::GetSingleton().Register(obj, boomerang,
 							[](Sprite* s1, Sprite* s2) {
-
-
-
 								SpriteManager::GetSingleton().Remove(s2);
-
-
 								CollisionChecker::GetSingleton().Cancel(s1, s2);
 
-
-
-								//CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s2);
-
-								if (s1->id.find("turtle") != std::string::npos || s1->id.find("goomba") != std::string::npos || s1->id.find("slime") != std::string::npos || s1->id.find("zombie") != std::string::npos) {
+								if (s1->id.find("turtle") != std::string::npos || s1->id.find("goomba") != std::string::npos || s1->id.find("slime") != std::string::npos || s1->id.find("zombie") != std::string::npos || s1->id.find("bigboss") != std::string::npos) {
 									if (!s2->bDead) {
 										std::cout << "collision damaged id: " << s1->id << std::endl;
 										if(!s1->bDead){
 											s1->CallAction("damage");
-
 										}
-			
-
 									}
-
 								}
 
-
-
-							
 								s2->bDead = true;
-
-								//free(s2);
-
-
-
-				
-
-
-
-
-
-
-
 							}
 						);
 					}
-
-					/*Animator* pAnim, * pAnimBoomer = NULL;
-
-
-					pAnimBoomer = AnimatorManager::GetSingleton().GetAnimatorByAnimationID("boomerang.run.right");
-
-
-					if (pAnimBoomer && pAnimBoomer->HasFinished()) {
-
-						Sprite * boomerang=SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/boomerang.json"), "boomerang", "boomerang", sMario->x + 4, sMario->y, this->mMap->GetTileLayer()->GetGridLayer(), this);
-
-						//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
-						if (sMario->bLooking)
-							boomerang->currFilm = FilmHolder::Get().GetFilm("boomerang.run.right");
-						//else
-							//s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.left");
-						((FrameListAnimator*)pAnimBoomer)->Start(((FrameListAnimator*)pAnimBoomer)->getAnimation(), SystemClock::Get().getgametime());
-						AnimatorManager::GetSingleton().MarkAsRunning(pAnimBoomer);
-					}
-					*/
-
 
 					bDidSomething = true;
 

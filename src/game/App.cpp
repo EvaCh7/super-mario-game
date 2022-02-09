@@ -26,6 +26,8 @@ void SuperMario::Initialise(void) {
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_DIRECT3D_INTERNAL);
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_DIRECT3D_INTERNAL);
 
+	this->game.fFont = al_create_builtin_font();
+
 	/*
 	* Load Game Settings
 	*/
@@ -231,6 +233,26 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		);
 	}
 
+	for (Sprite* bigboss : SpriteManager::GetSingleton().GetTypeList("bigboss"))
+	{
+		CollisionChecker::GetSingleton().Register(mario, bigboss,
+			[](Sprite* s1, Sprite* s2) {
+				if (s1->GetBox().y < s2->GetBox().y) {
+					s1->CallAction("damage");
+				}
+				else {
+					if (s1->bAttacking) {
+						s2->CallAction("damage");
+					}
+					else {
+						s1->CallAction("damage");
+					}
+				}
+
+			}
+		);
+	}
+
 	for (Sprite* brick : SpriteManager::GetSingleton().GetTypeList("question_brick"))
 	{
 		CollisionChecker::GetSingleton().Register(mario, brick,
@@ -244,7 +266,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 					s1->GetGravityHandler().SetJumpSpeed(1);
 					s1->Move(0, 4);
 
-					SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 4, s2->y - 32, glLayer, g);
+					SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/sushi.json"), "sushi", "sushi", s2->x + 4, s2->y - 32, glLayer, g);
 
 					// make block solid
 					glLayer->SetGridTileBlock(s2->x / 16, s2->y / 16, GridLayer::GRID_SOLID_TILE);
@@ -290,7 +312,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 						s1->y = 4 * 16;
 					}
 
-					if (s2->x == 4720 && s2->y == 176) {
+					if (s2->x == 4720 && s2->y == 320) {
 						s1->x = 169 * 16;
 						s1->y = 93 * 16;
 					}
@@ -318,9 +340,9 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 	for (Sprite* coin : SpriteManager::GetSingleton().GetTypeList("coin"))
 	{
 		CollisionChecker::GetSingleton().Register(mario, coin,
-			[](Sprite* s1, Sprite* s2) {
+			[g](Sprite* s1, Sprite* s2) {
 
-
+				g->iCoinCounter++;
 
 				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s2->id + ".idle.right")->Stop();
 				SpriteManager::GetSingleton().RemoveTypeList("coin", s2);
@@ -494,7 +516,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 			}
 		);
 	}
-	for (Sprite* mushroom : SpriteManager::GetSingleton().GetTypeList("mushroom"))
+	for (Sprite* mushroom : SpriteManager::GetSingleton().GetTypeList("sushi"))
 	{
 		CollisionChecker::GetSingleton().Register(mario, mushroom,
 			[](Sprite* s1, Sprite* s2) {
@@ -519,6 +541,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 			[g](Sprite* s1, Sprite* s2) {
 				g->bInputAllowed = false;
 				g->bIsGameEnding = true;
+				g->bIsGameWon = true;
 			}
 		);
 	}
@@ -528,6 +551,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 		CollisionChecker::GetSingleton().Register(mario, finishsign,
 			[g](Sprite* s1, Sprite* s2) {
 				g->bInputAllowed = false;
+				g->bIsGameWon = true;
 				g->bIsGameEnding = true;
 			}
 		);
@@ -609,6 +633,8 @@ void SuperMario::Load(void) {
 	this->game.SetCollisionChecking(std::bind(&Game::CollisionHandler, &this->game));
 	this->game.SetAI(std::bind(&Game::AIHandler, &this->game));
 	this->game.SetProgressAnimations(std::bind(&Game::AnimationHandler, &this->game));
+
+	this->game.bWinScreen = al_load_bitmap("resources/winwin.png");
 
 	/*
 	* Create Map
@@ -753,6 +779,7 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 	*/
 	for (int i = 0; i < map->GetHeightTileSize(); ++i) {
 		for (int j = 0; j < map->GetWidthTileSize(); ++j) {
+			if (lObjLayer[i][j] == 591) std::cout << "XD\n";
 			for (auto& js : jObjectConfig["bindings"]) {
 				if (lObjLayer[i][j] == js["tile"]) {
 					lSpriteCounter++;

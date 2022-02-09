@@ -120,6 +120,30 @@ void Game::AIHandler(void) {
 
 			}
 			else {
+				SpriteManager::GetSingleton().Remove(s);
+				//s->CallAction("run.left");
+			}
+		}
+		else {
+			if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveLeft(s->GetBox())) {
+				s->CallAction("run.left");
+			}
+			else {
+				SpriteManager::GetSingleton().Remove(s);
+				s->CallAction("run.right");
+			}
+		}
+		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
+	}
+
+	for (Sprite* s : SpriteManager::GetSingleton().GetTypeList("bigboss")) {
+		if (s->bDead)
+			continue;
+		if (s->bLooking) {
+			if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveRight(s->GetBox())) {
+				s->CallAction("run.right");
+			}
+			else {
 				s->CallAction("run.left");
 			}
 		}

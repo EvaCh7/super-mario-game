@@ -291,6 +291,12 @@
     <None Include="config\sprites\skull.json">
       <Filter>Resource Files\config\sprite</Filter>
     </None>
+    <None Include="config\sprites\bigboss.json">
+      <Filter>Resource Files\config\sprite</Filter>
+    </None>
+    <None Include="config\sprites\sushi.json">
+      <Filter>Resource Files\config\sprite</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\display\DisplayTools.h">
