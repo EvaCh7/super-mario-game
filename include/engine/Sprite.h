@@ -49,6 +49,7 @@ private:
 
 public:
 
+	int walk=0;
 	/*
 	* Meta Data
 	*/

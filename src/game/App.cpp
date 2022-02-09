@@ -941,6 +941,43 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								});
 						}
 
+						if (js["external_name"] == "bigboss") {
+							//specific callbacks for the main character
+							Game* game = &this->game;
+							newSprite->RegisterAction("attack.sword", [game](Sprite* s) {
+								//s->bAttacking = true;
+
+								Animator* pAnim, * pAnimBoomer = NULL;
+								if (s->bLooking)
+								{
+									//pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.right");
+									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.left");
+
+								}
+								else
+									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.left");
+
+
+
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.right")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
+								AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
+								if (pAnim->HasFinished()) {
+									//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
+									if (s->bLooking)
+										s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.left");
+
+										//s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.right");
+									else
+										s->currFilm = FilmHolder::Get().GetFilm(s->GetTrimmedID() + ".attack.sword.left");
+									((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
+									AnimatorManager::GetSingleton().MarkAsRunning(pAnim);
+								}
+								});
+						}
+
 						if (js["is_playable"]) {
 							newSprite->dx = 2;
 
@@ -950,7 +987,6 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								s->bAttacking = true;
 
 								Animator* pAnim, * pAnimBoomer = NULL;
-
 								if (s->bLooking)
 								{
 									pAnim = AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.right");
@@ -971,7 +1007,6 @@ bool SuperMario::SpawnObjects(json jObjectConfig) {
 								}
 								});
 						}
-
 
 						// test
 

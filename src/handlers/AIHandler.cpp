@@ -126,6 +126,8 @@ void Game::AIHandler(void) {
 		}
 		else {
 			if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveLeft(s->GetBox())) {
+				
+				
 				s->CallAction("run.left");
 			}
 			else {
@@ -137,22 +139,75 @@ void Game::AIHandler(void) {
 	}
 
 	for (Sprite* s : SpriteManager::GetSingleton().GetTypeList("bigboss")) {
+
 		if (s->bDead)
 			continue;
+
+
+		printf("s->walk: %d\n", s->walk);
 		if (s->bLooking) {
 			if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveRight(s->GetBox())) {
+
+				//s->CallAction("attack.sword.right");
+				//s->CallAction("attack.sword");
+				s->walk = 0;
+
 				s->CallAction("run.right");
 			}
 			else {
-				s->CallAction("run.left");
+
+
+
+				if (s->walk != 100 && s->walk >= 0) {
+					s->CallAction("run.left");
+
+				}
+				else if (s->walk == 100) {
+					s->CallAction("attack.sword");
+					s->walk = -55;
+
+
+				}
+
+				s->walk++;
+
 			}
 		}
 		else {
 			if (this->mMap->GetTileLayer()->GetGridLayer()->CanMoveLeft(s->GetBox())) {
-				s->CallAction("run.left");
+
+
+
+
+				if (s->walk != 100 && s->walk >= 0) {
+					s->CallAction("run.left");
+
+				}
+				else if (s->walk == 100) {
+					s->CallAction("attack.sword");
+					s->walk = -55;
+
+
+				}
+
+				s->walk++;
+
 			}
 			else {
+				
+				//s->CallAction("attack.sword.left");
+
+				s->walk = 0;
+
+
 				s->CallAction("run.right");
+
+
+				//s->CallAction("run.right");
+
+				//s->CallAction("attack.sword.right");
+
+				//s->CallAction("sword.attack.right");
 			}
 		}
 		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());

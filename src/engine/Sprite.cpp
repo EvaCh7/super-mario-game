@@ -61,6 +61,8 @@ void Sprite::RegisterDefaultActions(void)
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
 
+		//AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".attack.sword.left")->Stop();
+
 		if (pAnim->HasFinished()) {
 			//sMario->currFilm = FilmHolder::Get().GetFilm("mario.walking.right");
 			((FrameListAnimator*)pAnim)->Start(((FrameListAnimator*)pAnim)->getAnimation(), SystemClock::Get().getgametime());
@@ -82,6 +84,11 @@ void Sprite::RegisterDefaultActions(void)
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".run.left")->Stop();
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.right")->Stop();
 		AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s->id + ".idle.left")->Stop();
+
+
+
+
+
 
 		//s->currFilm = FilmHolder::Get().GetFilm(s->id + ".run.right");
 		//s->SetFrame((s->GetFrame() + 1) % s->currFilm->GetTotalFrames());
