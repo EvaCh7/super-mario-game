@@ -113,6 +113,12 @@
                         {
                             "width": 79,
                             "height": 102,
+                            "x_pos": 971,
+                            "y_pos": 215
+                        },
+                        {
+                            "width": 79,
+                            "height": 102,
                             "x_pos": 1255,
                             "y_pos": 215
                         },
