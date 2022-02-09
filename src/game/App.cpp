@@ -290,7 +290,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 						s1->y = 4 * 16;
 					}
 
-					if (s2->x == 4720 && s2->y == 176) {
+					if (s2->x == 4720 && s2->y == 320) {
 						s1->x = 169 * 16;
 						s1->y = 93 * 16;
 					}
