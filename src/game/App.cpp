@@ -380,10 +380,10 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 					s1->GetGravityHandler().Jump();
 
 					//SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/hppotion.json"), "hppotion", "hppotion", s2->x + 32, s2->y - 32, glLayer, g);
-					CollisionChecker::GetSingleton().Cancel(s1, s2);
+					//CollisionChecker::GetSingleton().Cancel(s1, s2);
 
 
-					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x, s2->y, glLayer, g);
+					Sprite* shell = SpriteManager::GetSingleton().SpawnSprite(Config::GetConfig("config/sprites/shell.json"), "shell", "shell", s2->x, s2->y-8, glLayer, g);
 
 					shell->bDead = true;
 
@@ -483,8 +483,8 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 
 
 
-
-					CollisionChecker::GetSingleton().Cancel(s1, s2);
+					CollisionChecker::GetSingleton().CancelAllCollisionsForSprite(s2);
+					//CollisionChecker::GetSingleton().Cancel(s1, s2);
 					SpriteManager::GetSingleton().Remove(s2);
 
 				}
