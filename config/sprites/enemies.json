@@ -43,7 +43,7 @@
           ]
         },
         {
-          "id": "turtle.run.idle.right",
+          "id": "turtle.idle.right",
           "animation_frames": [ 0, 1 ],
           "animation": [
             {
