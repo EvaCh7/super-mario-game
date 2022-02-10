@@ -50,7 +50,7 @@ void SuperMario::Initialise(void) {
 
 
 
-	//Audio::singleton.playSample("config/sounds/main.mp3", ALLEGRO_PLAYMODE_ONCE);
+	Audio::singleton.playSample("config/sounds/main_sound.mp3", ALLEGRO_PLAYMODE_LOOP	);
 
 	Audio::singleton.Voice = al_create_voice(
 		44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2
@@ -85,9 +85,7 @@ void SuperMario::Initialise(void) {
 	al_register_event_source(this->game.event_queue, al_get_timer_event_source(this->game.timer));
 	al_start_timer(this->game.timer);
 
-	/*
-	Audio* audio_sample = new Audio;
-	audio_sample->playSample("config/sounds/main.mp3");*/
+	
 
 }
 
@@ -344,6 +342,9 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 
 				g->iCoinCounter++;
 
+
+				Audio::singleton.playSample("config/sounds/smb_coin.wav", ALLEGRO_PLAYMODE_ONCE);
+
 				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s2->id + ".idle.right")->Stop();
 				SpriteManager::GetSingleton().RemoveTypeList("coin", s2);
 				SpriteManager::GetSingleton().Remove(s2);
@@ -455,6 +456,9 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 									else if (s2->GetBox().x < s1->GetBox().x) { //hit from left
 
 
+
+										Audio::singleton.playSample("config/sounds/smb_kick.wav", ALLEGRO_PLAYMODE_ONCE);
+
 										s1->x = s1->GetBox().x + 8;//be careful this 8 is very dangerous
 
 
@@ -463,6 +467,9 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 
 									}
 									else if (s2->GetBox().x > s1->GetBox().x) {//hit from right
+
+										Audio::singleton.playSample("config/sounds/smb_kick.wav", ALLEGRO_PLAYMODE_ONCE);
+
 
 										s1->x = s1->GetBox().x - 8;//be careful this 8 is very dangerous
 
@@ -516,12 +523,14 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 			}
 		);
 	}
-	for (Sprite* mushroom : SpriteManager::GetSingleton().GetTypeList("sushi"))
+	for (Sprite* sushi : SpriteManager::GetSingleton().GetTypeList("sushi"))
 	{
-		CollisionChecker::GetSingleton().Register(mario, mushroom,
+		CollisionChecker::GetSingleton().Register(mario, sushi,
 			[](Sprite* s1, Sprite* s2) {
 				CollisionChecker::GetSingleton().Cancel(s1, s2);
 				SpriteManager::GetSingleton().Remove(s2);
+
+				//Audio::singleton.playSample("config/sounds/smb_coin.wav", ALLEGRO_PLAYMODE_ONCE);
 
 				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.left")->Stop();
 				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".run.right")->Stop();
@@ -529,6 +538,7 @@ void registerCollisionsActions(GridLayer* glLayer, Game* g) {
 				AnimatorManager::GetSingleton().GetAnimatorByAnimationID(s1->id + ".idle.right")->Stop();
 				s1->id = "herochar";
 				s1->CallAction("idle");
+
 
 				std::cout << "Mario Ate Shroom" << std::endl;
 			}

@@ -6,6 +6,10 @@ void Audio::playSample(std::string path,  ALLEGRO_PLAYMODE moder ) {
 	//"config/sound.mp3"
 	this->sample = al_load_sample(path.c_str());
 
+	if (!this->sample) {
+		printf("error loading the sample\n");
+		return;
+	}
 
 	sample_instance = al_create_sample_instance(sample);
 

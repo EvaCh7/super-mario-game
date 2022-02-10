@@ -57,6 +57,7 @@ void Game::InputHandler(void) {
 			}
 
 			if (al_key_down(&ksKeyboardState, ALLEGRO_KEY_SPACE)) {
+
 				sMario->CallAction("jump");
 				bDidSomething = true;
 			}

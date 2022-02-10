@@ -6,6 +6,8 @@
       "animations": [
         {
           "id": "turtle.run.left",
+          "animation_frames": [ 0, 1,0,1 ],
+          "delay": 170,
           "animation": [
             {
               "width": 16,
@@ -23,6 +25,8 @@
         },
         {
           "id": "turtle.run.right",
+          "delay": 170,
+          "animation_frames": [ 0, 1,0,1 ],
           "animation": [
             {
               "width": 16,
@@ -39,7 +43,44 @@
           ]
         },
         {
+          "id": "turtle.run.idle.right",
+          "animation_frames": [ 0, 1 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 179,
+              "y_pos": 28
+            },
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 209,
+              "y_pos": 28
+            }
+          ]
+        },
+        {
+          "id": "turtle.idle.left",
+          "animation_frames": [ 0, 1 ],
+          "animation": [
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 212,
+              "y_pos": 58
+            },
+            {
+              "width": 16,
+              "height": 23,
+              "x_pos": 242,
+              "y_pos": 58
+            }
+          ]
+        },
+        {
           "id": "turtle.wings.left",
+          "animation_frames": [ 0 ],
           "animation": [
             {
               "width": 16,
@@ -51,6 +92,7 @@
         },
         {
           "id": "turtle.wings.right",
+          "animation_frames": [ 0 ],
           "animation": [
             {
               "width": 16,
@@ -103,7 +145,7 @@
       "animations": [
         {
           "id": "goomba.run.left",
-          "animation_frames": [ 0, 1 ],
+          "animation_frames": [ 0, 1,0,1 ],
           "animation": [
             {
               "width": 16,
@@ -121,7 +163,7 @@
         },
         {
           "id": "goomba.run.right",
-          "animation_frames": [ 0, 1 ],
+          "animation_frames": [ 0, 1,0,1 ],
           "animation": [
             {
               "width": 16,
